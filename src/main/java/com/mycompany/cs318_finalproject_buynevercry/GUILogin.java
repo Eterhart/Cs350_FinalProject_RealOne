@@ -107,7 +107,6 @@ public class GUILogin extends javax.swing.JFrame {
 
         emailtxt.setBackground(new java.awt.Color(247, 251, 255));
         emailtxt.setForeground(new java.awt.Color(12, 20, 33));
-        emailtxt.setText("Example@email.com");
         emailtxt.setBorder(null);
         emailtxt.setSelectedTextColor(new java.awt.Color(0, 0, 0));
         emailtxt.setSelectionColor(new java.awt.Color(204, 204, 204));
@@ -143,7 +142,6 @@ public class GUILogin extends javax.swing.JFrame {
         roundedPanel2.setPreferredSize(new java.awt.Dimension(48, 48));
 
         pwdtxt.setBackground(new java.awt.Color(247, 251, 255));
-        pwdtxt.setText("jPasswordField1");
         pwdtxt.setToolTipText("");
         pwdtxt.setBorder(null);
         pwdtxt.setSelectedTextColor(new java.awt.Color(0, 0, 0));
@@ -180,6 +178,7 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Sign in");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
         roundedPanel3.setLayout(roundedPanel3Layout);
@@ -199,13 +198,16 @@ public class GUILogin extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel8.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         jLabel8.setText("Don't you have an account?");
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         btnSignup.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         btnSignup.setForeground(new java.awt.Color(30, 74, 233));
         btnSignup.setText("Sign up");
+        btnSignup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSignup.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSignupMouseClicked(evt);
@@ -236,6 +238,7 @@ public class GUILogin extends javax.swing.JFrame {
         forgotpwbtn.setFont(new java.awt.Font("Inter 18pt", 0, 16)); // NOI18N
         forgotpwbtn.setForeground(new java.awt.Color(30, 74, 233));
         forgotpwbtn.setText("Forgot Password?");
+        forgotpwbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         forgotpwbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 forgotpwbtnMouseClicked(evt);
