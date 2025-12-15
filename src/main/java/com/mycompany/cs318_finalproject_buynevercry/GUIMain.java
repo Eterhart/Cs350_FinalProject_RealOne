@@ -18,6 +18,7 @@ import java.sql.*;
 public class GUIMain extends javax.swing.JFrame {
     
     private String userEmail;
+    private GUIEnvelope currentEnvelope;
     
     public void refreshData() {
         loadUserData();
@@ -1182,7 +1183,7 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnEnvelopeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeMouseClicked
         // TODO add your handling code here:
-        GUIEnvelope envelope = new GUIEnvelope();
+        GUIEnvelope envelope = new GUIEnvelope(userEmail);
         envelope.setVisible(true);
     }//GEN-LAST:event_btnEnvelopeMouseClicked
 
