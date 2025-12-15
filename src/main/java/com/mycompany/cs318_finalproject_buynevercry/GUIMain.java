@@ -8,6 +8,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import java.sql.*;
 
 /**
  *
@@ -34,9 +35,36 @@ public class GUIMain extends javax.swing.JFrame {
         
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
+        loadUserData();
     }
     
-    
+    private void loadUserData() {
+        // ถ้าไม่มีอีเมล หรือเป็นอีเมลทดสอบ ให้ข้ามไป (หรือจะใส่ค่า Default ก็ได้)
+        if (userEmail == null || userEmail.isEmpty()) {
+            return;
+        }
+
+        String url = "jdbc:sqlite:buynevercry.db";
+        String sql = "SELECT username FROM users WHERE email = ?";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, userEmail);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String username = rs.getString("username");
+                
+                // อัปเดต Label ทั้ง 2 จุด
+                jLabel5.setText(username);  // ตรง Profile ด้านซ้าย
+                jLabel22.setText(username); // ตรงข้อความทักทาย "Hey ..."
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading user data: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

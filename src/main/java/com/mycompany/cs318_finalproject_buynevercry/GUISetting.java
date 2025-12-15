@@ -43,7 +43,6 @@ public class GUISetting extends javax.swing.JFrame {
 
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
-                // 1. เพิ่ม column currency และ custom_label ในคำสั่งสร้างตาราง
                 String createTableSQL = "CREATE TABLE IF NOT EXISTS user_settings ("
                         + "email TEXT PRIMARY KEY, "
                         + "salary REAL DEFAULT 0, "
@@ -58,25 +57,21 @@ public class GUISetting extends javax.swing.JFrame {
                     stmt.execute(createTableSQL);
                 }
 
-                // 2. ดึงข้อมูล
                 String querySettings = "SELECT * FROM user_settings WHERE email = ?";
                 try (PreparedStatement pstmt = conn.prepareStatement(querySettings)) {
                     pstmt.setString(1, currentEmail);
                     ResultSet rs = pstmt.executeQuery();
 
                     if (rs.next()) {
-                        // A. กรณีมีข้อมูลเก่า
                         jTextFieldSalary.setText(String.valueOf(rs.getDouble("salary")));
                         jTextFieldHours.setText(String.valueOf(rs.getInt("hours_per_day")));
                         jTextFieldDays.setText(String.valueOf(rs.getInt("days_per_week")));
                         jTextFieldInvest.setText(String.valueOf(rs.getDouble("investment_return")));
                         
-                        // คืนค่า Currency และ Custom Label
                         String savedCurrency = rs.getString("currency");
                         if (savedCurrency != null) {
                             jComboBox3.setSelectedItem(savedCurrency);
                         } else {
-                        // ... (Set ค่า Default) ...
                         jComboBox3.setSelectedIndex(0); 
                         }
                         
@@ -85,7 +80,6 @@ public class GUISetting extends javax.swing.JFrame {
                         if (savedLabel != null) jTextField2.setText(savedLabel);
 
                     } else {
-                        // B. กรณี User ใหม่ (ดึง Salary จาก users table)
                         String queryUserMain = "SELECT yearly_salary FROM users WHERE email = ?";
                         try (PreparedStatement pstmtUser = conn.prepareStatement(queryUserMain)) {
                             pstmtUser.setString(1, currentEmail);
@@ -97,12 +91,11 @@ public class GUISetting extends javax.swing.JFrame {
                             }
                         }
                         
-                        // ค่า Default
                         jTextFieldHours.setText("8");
                         jTextFieldDays.setText("5");
                         jTextFieldInvest.setText("5.0");
-                        jComboBox3.setSelectedIndex(0); // เลือกอันแรกเป็น Default
-                        jTextField2.setText(""); // Label ว่างไว้
+                        jComboBox3.setSelectedIndex(0);
+                        jTextField2.setText("");
                     }
                     updateCurrencyLabel();
                 }
@@ -116,7 +109,6 @@ public class GUISetting extends javax.swing.JFrame {
         if (currentEmail == null || currentEmail.isEmpty()) return;
 
         String url = "jdbc:sqlite:buynevercry.db";
-        // อัปเดต SQL ให้บันทึก currency และ custom_label ด้วย
         String sql = "INSERT OR REPLACE INTO user_settings "
                    + "(email, salary, hours_per_day, days_per_week, investment_return, currency, custom_label) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -139,7 +131,6 @@ public class GUISetting extends javax.swing.JFrame {
                 return;
             }
 
-            // ดึงค่า Currency และ Custom Label
             String currency = (String) jComboBox3.getSelectedItem();
             String customLabel = jTextField2.getText();
 
@@ -148,8 +139,8 @@ public class GUISetting extends javax.swing.JFrame {
             pstmt.setInt(3, hours);
             pstmt.setInt(4, days);
             pstmt.setDouble(5, invest);
-            pstmt.setString(6, currency);     // ใส่ค่า Currency
-            pstmt.setString(7, customLabel);  // ใส่ค่า Custom Label
+            pstmt.setString(6, currency);
+            pstmt.setString(7, customLabel);
 
             pstmt.executeUpdate();
             System.out.println("Auto-saved all settings for: " + currentEmail);
@@ -159,7 +150,6 @@ public class GUISetting extends javax.swing.JFrame {
         }
     }
     private void initAutoSave() {
-        // Listener สำหรับการคลิกเมาส์หนีไปช่องอื่น (Focus Lost) -> ให้เซฟทันที
         java.awt.event.FocusAdapter focusLostListener = new java.awt.event.FocusAdapter() {
             @Override
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -167,55 +157,41 @@ public class GUISetting extends javax.swing.JFrame {
             }
         };
 
-        // Listener สำหรับการกด Enter หรือ เลือกค่าใน ComboBox
         java.awt.event.ActionListener actionListener = new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // เช็คก่อนว่าถ้าเป็นการเปลี่ยน ComboBox ให้เปลี่ยนสัญลักษณ์ค่าเงินทันที
                 if (evt.getSource() == jComboBox3) {
                     updateCurrencyLabel(); 
                 }
                 
-                // จากนั้นทำการบันทึกข้อมูลลง Database
                 saveSettings(); 
                 
-                // ถ้าเป็นการกด Enter ในช่องข้อความ ให้ย้าย Cursor ไปช่องถัดไปเพื่อความสะดวก
                 if (evt.getSource() instanceof javax.swing.JTextField) {
                    ((javax.swing.JTextField)evt.getSource()).transferFocus(); 
                 }
             }
         };
 
-        // --- เพิ่ม Listener ให้กับทุกช่อง ---
-
-        // 1. ช่องเงินเดือน (Salary)
         jTextFieldSalary.addFocusListener(focusLostListener);
         jTextFieldSalary.addActionListener(actionListener);
 
-        // 2. ช่องชั่วโมงทำงาน (Hours)
         jTextFieldHours.addFocusListener(focusLostListener);
         jTextFieldHours.addActionListener(actionListener);
 
-        // 3. ช่องวันทำงาน (Days)
         jTextFieldDays.addFocusListener(focusLostListener);
         jTextFieldDays.addActionListener(actionListener);
 
-        // 4. ช่องผลตอบแทนการลงทุน (Investment)
         jTextFieldInvest.addFocusListener(focusLostListener);
         jTextFieldInvest.addActionListener(actionListener);
 
-        // 5. ช่องชื่อหน่วยเงินพิเศษ (Custom Label)
         jTextField2.addFocusListener(focusLostListener);
         jTextField2.addActionListener(actionListener);
 
-        // 6. ช่องเลือกสกุลเงิน (Currency ComboBox)
         jComboBox3.addActionListener(actionListener); 
-        // หมายเหตุ: ComboBox ปกติไม่ต้องใช้ FocusListener เพราะการเลือกถือเป็น Action อยู่แล้ว
     }
     private void updateCurrencyLabel() {
         String selected = (String) jComboBox3.getSelectedItem();
         if (selected != null && selected.contains("(") && selected.contains(")")) {
-            // ตัดเอาเฉพาะตัวอักษรในวงเล็บ เช่น "THB (฿)" -> เอาแค่ "฿"
             String symbol = selected.substring(selected.indexOf("(") + 1, selected.indexOf(")"));
             currentcylabel.setText(symbol); 
         }
