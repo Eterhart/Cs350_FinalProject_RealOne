@@ -214,7 +214,7 @@ public class GUIMain extends javax.swing.JFrame {
         btnCreateGoal2 = new javax.swing.JPanel();
         jLabel60 = new javax.swing.JLabel();
         jLabel61 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        btnEnvelopeProgress = new javax.swing.JPanel();
         jLabel62 = new javax.swing.JLabel();
         jLabel63 = new javax.swing.JLabel();
 
@@ -274,7 +274,7 @@ public class GUIMain extends javax.swing.JFrame {
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel1Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel6)
@@ -416,7 +416,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addComponent(btnSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 659, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 661, Short.MAX_VALUE)
                 .addComponent(btnContactSupport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -465,7 +465,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel18)))
-                .addContainerGap(903, Short.MAX_VALUE))
+                .addContainerGap(900, Short.MAX_VALUE))
         );
         roundedPanel4Layout.setVerticalGroup(
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,7 +479,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)))
                 .addGap(0, 0, 0)
                 .addComponent(jLabel17)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jLabel14.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
@@ -638,7 +638,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel25)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         roundedPanel5Layout.setVerticalGroup(
             roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -764,6 +764,12 @@ public class GUIMain extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
                         .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(roundedPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel44)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel48)
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel66))
+                            .addGroup(roundedPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel45)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel49))
@@ -777,18 +783,11 @@ public class GUIMain extends javax.swing.JFrame {
                                 .addComponent(jLabel41)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel42)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 643, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 620, Short.MAX_VALUE)
                                 .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel44)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel48)
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel66)
-                        .addContainerGap())))
+                        .addGap(14, 14, 14))))
         );
         roundedPanel8Layout.setVerticalGroup(
             roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -826,7 +825,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addComponent(jLabel49))
                 .addGap(22, 22, 22)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
@@ -1044,7 +1043,13 @@ public class GUIMain extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        btnEnvelopeProgress.setBackground(new java.awt.Color(255, 255, 255));
+        btnEnvelopeProgress.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEnvelopeProgress.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEnvelopeProgressMouseClicked(evt);
+            }
+        });
 
         jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel62.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clock_black.png"))); // NOI18N
@@ -1053,20 +1058,20 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel63.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel63.setText("Progress");
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnEnvelopeProgressLayout = new javax.swing.GroupLayout(btnEnvelopeProgress);
+        btnEnvelopeProgress.setLayout(btnEnvelopeProgressLayout);
+        btnEnvelopeProgressLayout.setHorizontalGroup(
+            btnEnvelopeProgressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEnvelopeProgressLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(btnEnvelopeProgressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel63, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel62, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
+        btnEnvelopeProgressLayout.setVerticalGroup(
+            btnEnvelopeProgressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnEnvelopeProgressLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel62)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1105,7 +1110,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEnvelopeProgress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55))
         );
         roundedPanel3Layout.setVerticalGroup(
@@ -1130,7 +1135,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(roundedPanel3Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnEnvelopeProgress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1215,6 +1220,12 @@ public class GUIMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCreateGoal2MouseClicked
 
+    private void btnEnvelopeProgressMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeProgressMouseClicked
+        // TODO add your handling code here:
+        GUIEnvelopeProgress gp = new GUIEnvelopeProgress();
+        gp.setVisible(true);
+    }//GEN-LAST:event_btnEnvelopeProgressMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1245,6 +1256,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JPanel btnCreateGoal;
     private javax.swing.JPanel btnCreateGoal2;
     private javax.swing.JLabel btnEnvelope;
+    private javax.swing.JPanel btnEnvelopeProgress;
     private javax.swing.JPanel btnSetting;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1316,7 +1328,6 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPopupMenu jPopupMenu1;
