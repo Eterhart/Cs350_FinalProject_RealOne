@@ -5,7 +5,8 @@
 package com.mycompany.cs318_finalproject_buynevercry;
 
 import java.awt.*;
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.sql.*;
 
 /**
  *
@@ -16,17 +17,209 @@ public class GUISetting extends javax.swing.JFrame {
     /**
      * Creates new form GUISetting
      */
-    public GUISetting() {
+    private String currentEmail;
+    
+    public GUISetting(String email) {
+        this.currentEmail = email;
         initComponents();
         getContentPane().setBackground(new Color(255, 255, 255));
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
         
+        loadUserSettings();
         
         jComboBox3.setBackground(Color.WHITE);
         jComboBox3.setOpaque(true);
+        
+        initAutoSave();
     }
+    public GUISetting() {
+        initComponents();
+    }
+    private void loadUserSettings() {
+        if (currentEmail == null || currentEmail.isEmpty()) return;
 
+        String url = "jdbc:sqlite:buynevercry.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                // 1. เพิ่ม column currency และ custom_label ในคำสั่งสร้างตาราง
+                String createTableSQL = "CREATE TABLE IF NOT EXISTS user_settings ("
+                        + "email TEXT PRIMARY KEY, "
+                        + "salary REAL DEFAULT 0, "
+                        + "hours_per_day INTEGER DEFAULT 8, "
+                        + "days_per_week INTEGER DEFAULT 5, "
+                        + "investment_return REAL DEFAULT 5.0, "
+                        + "currency TEXT DEFAULT 'THB (฿)', "
+                        + "custom_label TEXT DEFAULT ''"
+                        + ");";
+                
+                try (Statement stmt = conn.createStatement()) {
+                    stmt.execute(createTableSQL);
+                }
+
+                // 2. ดึงข้อมูล
+                String querySettings = "SELECT * FROM user_settings WHERE email = ?";
+                try (PreparedStatement pstmt = conn.prepareStatement(querySettings)) {
+                    pstmt.setString(1, currentEmail);
+                    ResultSet rs = pstmt.executeQuery();
+
+                    if (rs.next()) {
+                        // A. กรณีมีข้อมูลเก่า
+                        jTextFieldSalary.setText(String.valueOf(rs.getDouble("salary")));
+                        jTextFieldHours.setText(String.valueOf(rs.getInt("hours_per_day")));
+                        jTextFieldDays.setText(String.valueOf(rs.getInt("days_per_week")));
+                        jTextFieldInvest.setText(String.valueOf(rs.getDouble("investment_return")));
+                        
+                        // คืนค่า Currency และ Custom Label
+                        String savedCurrency = rs.getString("currency");
+                        if (savedCurrency != null) {
+                            jComboBox3.setSelectedItem(savedCurrency);
+                        } else {
+                        // ... (Set ค่า Default) ...
+                        jComboBox3.setSelectedIndex(0); 
+                        }
+                        
+                        
+                        String savedLabel = rs.getString("custom_label");
+                        if (savedLabel != null) jTextField2.setText(savedLabel);
+
+                    } else {
+                        // B. กรณี User ใหม่ (ดึง Salary จาก users table)
+                        String queryUserMain = "SELECT yearly_salary FROM users WHERE email = ?";
+                        try (PreparedStatement pstmtUser = conn.prepareStatement(queryUserMain)) {
+                            pstmtUser.setString(1, currentEmail);
+                            ResultSet rsUser = pstmtUser.executeQuery();
+                            if (rsUser.next()) {
+                                jTextFieldSalary.setText(String.valueOf(rsUser.getDouble("yearly_salary")));
+                            } else {
+                                jTextFieldSalary.setText("0.0");
+                            }
+                        }
+                        
+                        // ค่า Default
+                        jTextFieldHours.setText("8");
+                        jTextFieldDays.setText("5");
+                        jTextFieldInvest.setText("5.0");
+                        jComboBox3.setSelectedIndex(0); // เลือกอันแรกเป็น Default
+                        jTextField2.setText(""); // Label ว่างไว้
+                    }
+                    updateCurrencyLabel();
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    private void saveSettings() {
+        if (currentEmail == null || currentEmail.isEmpty()) return;
+
+        String url = "jdbc:sqlite:buynevercry.db";
+        // อัปเดต SQL ให้บันทึก currency และ custom_label ด้วย
+        String sql = "INSERT OR REPLACE INTO user_settings "
+                   + "(email, salary, hours_per_day, days_per_week, investment_return, currency, custom_label) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            double salary = 0;
+            int hours = 8;
+            int days = 5;
+            double invest = 5.0;
+
+            try {
+                if (!jTextFieldSalary.getText().isEmpty()) salary = Double.parseDouble(jTextFieldSalary.getText());
+                if (!jTextFieldHours.getText().isEmpty()) hours = Integer.parseInt(jTextFieldHours.getText());
+                if (!jTextFieldDays.getText().isEmpty()) days = Integer.parseInt(jTextFieldDays.getText());
+                if (!jTextFieldInvest.getText().isEmpty()) invest = Double.parseDouble(jTextFieldInvest.getText());
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid format, skip save");
+                return;
+            }
+
+            // ดึงค่า Currency และ Custom Label
+            String currency = (String) jComboBox3.getSelectedItem();
+            String customLabel = jTextField2.getText();
+
+            pstmt.setString(1, currentEmail);
+            pstmt.setDouble(2, salary);
+            pstmt.setInt(3, hours);
+            pstmt.setInt(4, days);
+            pstmt.setDouble(5, invest);
+            pstmt.setString(6, currency);     // ใส่ค่า Currency
+            pstmt.setString(7, customLabel);  // ใส่ค่า Custom Label
+
+            pstmt.executeUpdate();
+            System.out.println("Auto-saved all settings for: " + currentEmail);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void initAutoSave() {
+        // Listener สำหรับการคลิกเมาส์หนีไปช่องอื่น (Focus Lost) -> ให้เซฟทันที
+        java.awt.event.FocusAdapter focusLostListener = new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                saveSettings();
+            }
+        };
+
+        // Listener สำหรับการกด Enter หรือ เลือกค่าใน ComboBox
+        java.awt.event.ActionListener actionListener = new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // เช็คก่อนว่าถ้าเป็นการเปลี่ยน ComboBox ให้เปลี่ยนสัญลักษณ์ค่าเงินทันที
+                if (evt.getSource() == jComboBox3) {
+                    updateCurrencyLabel(); 
+                }
+                
+                // จากนั้นทำการบันทึกข้อมูลลง Database
+                saveSettings(); 
+                
+                // ถ้าเป็นการกด Enter ในช่องข้อความ ให้ย้าย Cursor ไปช่องถัดไปเพื่อความสะดวก
+                if (evt.getSource() instanceof javax.swing.JTextField) {
+                   ((javax.swing.JTextField)evt.getSource()).transferFocus(); 
+                }
+            }
+        };
+
+        // --- เพิ่ม Listener ให้กับทุกช่อง ---
+
+        // 1. ช่องเงินเดือน (Salary)
+        jTextFieldSalary.addFocusListener(focusLostListener);
+        jTextFieldSalary.addActionListener(actionListener);
+
+        // 2. ช่องชั่วโมงทำงาน (Hours)
+        jTextFieldHours.addFocusListener(focusLostListener);
+        jTextFieldHours.addActionListener(actionListener);
+
+        // 3. ช่องวันทำงาน (Days)
+        jTextFieldDays.addFocusListener(focusLostListener);
+        jTextFieldDays.addActionListener(actionListener);
+
+        // 4. ช่องผลตอบแทนการลงทุน (Investment)
+        jTextFieldInvest.addFocusListener(focusLostListener);
+        jTextFieldInvest.addActionListener(actionListener);
+
+        // 5. ช่องชื่อหน่วยเงินพิเศษ (Custom Label)
+        jTextField2.addFocusListener(focusLostListener);
+        jTextField2.addActionListener(actionListener);
+
+        // 6. ช่องเลือกสกุลเงิน (Currency ComboBox)
+        jComboBox3.addActionListener(actionListener); 
+        // หมายเหตุ: ComboBox ปกติไม่ต้องใช้ FocusListener เพราะการเลือกถือเป็น Action อยู่แล้ว
+    }
+    private void updateCurrencyLabel() {
+        String selected = (String) jComboBox3.getSelectedItem();
+        if (selected != null && selected.contains("(") && selected.contains(")")) {
+            // ตัดเอาเฉพาะตัวอักษรในวงเล็บ เช่น "THB (฿)" -> เอาแค่ "฿"
+            String symbol = selected.substring(selected.indexOf("(") + 1, selected.indexOf(")"));
+            currentcylabel.setText(symbol); 
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,20 +234,20 @@ public class GUISetting extends javax.swing.JFrame {
         roundedPanel1 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel9 = new javax.swing.JLabel();
         roundedPanel3 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jTextFieldSalary = new javax.swing.JTextField();
+        currentcylabel = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         roundedPanel2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         roundedPanel7 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldHours = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         roundedPanel8 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldDays = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         roundedPanel9 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldInvest = new javax.swing.JTextField();
         roundedPanel5 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -82,27 +275,27 @@ public class GUISetting extends javax.swing.JFrame {
         roundedPanel3.setCornerRadius(8);
         roundedPanel3.setPreferredSize(new java.awt.Dimension(319, 54));
 
-        jTextField1.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldSalary.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
+        jTextFieldSalary.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldSalary.setBorder(null);
+        jTextFieldSalary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldSalaryActionPerformed(evt);
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jLabel7.setText("$");
+        currentcylabel.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        currentcylabel.setText("$");
 
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
         roundedPanel3.setLayout(roundedPanel3Layout);
         roundedPanel3Layout.setHorizontalGroup(
             roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel3Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(jLabel7)
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addComponent(currentcylabel)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45))
         );
         roundedPanel3Layout.setVerticalGroup(
@@ -110,8 +303,8 @@ public class GUISetting extends javax.swing.JFrame {
             .addGroup(roundedPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                    .addComponent(jLabel7))
+                    .addComponent(jTextFieldSalary, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(currentcylabel))
                 .addContainerGap())
         );
 
@@ -158,12 +351,12 @@ public class GUISetting extends javax.swing.JFrame {
         roundedPanel7.setCornerRadius(4);
         roundedPanel7.setPreferredSize(new java.awt.Dimension(304, 42));
 
-        jTextField3.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setBorder(null);
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldHours.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
+        jTextFieldHours.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldHours.setBorder(null);
+        jTextFieldHours.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jTextFieldHoursActionPerformed(evt);
             }
         });
 
@@ -173,14 +366,14 @@ public class GUISetting extends javax.swing.JFrame {
             roundedPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField3)
+                .addComponent(jTextFieldHours)
                 .addContainerGap())
         );
         roundedPanel7Layout.setVerticalGroup(
             roundedPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(jTextFieldHours, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -192,12 +385,12 @@ public class GUISetting extends javax.swing.JFrame {
         roundedPanel8.setCornerRadius(4);
         roundedPanel8.setPreferredSize(new java.awt.Dimension(304, 42));
 
-        jTextField5.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setBorder(null);
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldDays.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
+        jTextFieldDays.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldDays.setBorder(null);
+        jTextFieldDays.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                jTextFieldDaysActionPerformed(evt);
             }
         });
 
@@ -207,14 +400,14 @@ public class GUISetting extends javax.swing.JFrame {
             roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addComponent(jTextFieldDays, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundedPanel8Layout.setVerticalGroup(
             roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(jTextFieldDays, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -226,12 +419,12 @@ public class GUISetting extends javax.swing.JFrame {
         roundedPanel9.setCornerRadius(4);
         roundedPanel9.setPreferredSize(new java.awt.Dimension(304, 42));
 
-        jTextField6.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setBorder(null);
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldInvest.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
+        jTextFieldInvest.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldInvest.setBorder(null);
+        jTextFieldInvest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                jTextFieldInvestActionPerformed(evt);
             }
         });
 
@@ -241,14 +434,14 @@ public class GUISetting extends javax.swing.JFrame {
             roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField6)
+                .addComponent(jTextFieldInvest)
                 .addContainerGap())
         );
         roundedPanel9Layout.setVerticalGroup(
             roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(jTextFieldInvest, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -270,7 +463,7 @@ public class GUISetting extends javax.swing.JFrame {
                             .addComponent(roundedPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
                         .addGroup(roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                             .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
@@ -295,7 +488,7 @@ public class GUISetting extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(roundedPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         roundedPanel5.setBorderThickness(0.0F);
@@ -378,7 +571,7 @@ public class GUISetting extends javax.swing.JFrame {
                 .addGroup(roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(roundedPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -416,28 +609,29 @@ public class GUISetting extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldSalaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSalaryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldSalaryActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jTextFieldHoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldHoursActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jTextFieldHoursActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void jTextFieldDaysActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDaysActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_jTextFieldDaysActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void jTextFieldInvestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInvestActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_jTextFieldInvestActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel currentcylabel;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -449,13 +643,12 @@ public class GUISetting extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextFieldDays;
+    private javax.swing.JTextField jTextFieldHours;
+    private javax.swing.JTextField jTextFieldInvest;
+    private javax.swing.JTextField jTextFieldSalary;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel3;

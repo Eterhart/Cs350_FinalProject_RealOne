@@ -13,14 +13,18 @@ import javax.swing.table.JTableHeader;
  *
  * @author Nisha
  */
+
 public class GUIMain extends javax.swing.JFrame {
+    
+    private String userEmail;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIMain.class.getName());
 
     /**
      * Creates new form GUIMain
      */
-    public GUIMain() {
+    public GUIMain(String email) {
+        this.userEmail = email;
         initComponents();
         
 
@@ -987,7 +991,7 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnSettingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSettingMouseClicked
         // TODO add your handling code here:
-        GUISetting setting = new GUISetting();
+        GUISetting setting = new GUISetting(userEmail);
         setting.setVisible(true);
         
     }//GEN-LAST:event_btnSettingMouseClicked
@@ -1044,7 +1048,7 @@ public class GUIMain extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUIMain().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIMain("test@example.com").setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

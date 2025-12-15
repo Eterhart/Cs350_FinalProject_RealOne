@@ -384,7 +384,7 @@ public class GUILogin extends javax.swing.JFrame {
                 
                 this.dispose(); 
                 
-                GUIMain mainPage = new GUIMain();
+                GUIMain mainPage = new GUIMain(email);
                 mainPage.setVisible(true);
                 
             } else {
