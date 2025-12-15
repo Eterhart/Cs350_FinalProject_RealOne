@@ -18,9 +18,13 @@ public class GUISetting extends javax.swing.JFrame {
      * Creates new form GUISetting
      */
     private String currentEmail;
+    private GUIMain guiMain;
     
-    public GUISetting(String email) {
+    public GUISetting(String email, GUIMain main) {
         this.currentEmail = email;
+        this.guiMain = main;
+        
+        
         initComponents();
         getContentPane().setBackground(new Color(255, 255, 255));
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
@@ -144,7 +148,11 @@ public class GUISetting extends javax.swing.JFrame {
 
             pstmt.executeUpdate();
             System.out.println("Auto-saved all settings for: " + currentEmail);
-
+            
+            if (guiMain != null) {
+                guiMain.refreshData();
+            }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

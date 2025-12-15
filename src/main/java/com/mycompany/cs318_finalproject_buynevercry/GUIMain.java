@@ -19,6 +19,12 @@ public class GUIMain extends javax.swing.JFrame {
     
     private String userEmail;
     
+    public void refreshData() {
+        loadUserData();
+        loadUserCurrency();
+    }
+
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIMain.class.getName());
 
     /**
@@ -36,10 +42,10 @@ public class GUIMain extends javax.swing.JFrame {
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
         loadUserData();
+        loadUserCurrency();
     }
     
     private void loadUserData() {
-        // ถ้าไม่มีอีเมล หรือเป็นอีเมลทดสอบ ให้ข้ามไป (หรือจะใส่ค่า Default ก็ได้)
         if (userEmail == null || userEmail.isEmpty()) {
             return;
         }
@@ -56,12 +62,52 @@ public class GUIMain extends javax.swing.JFrame {
             if (rs.next()) {
                 String username = rs.getString("username");
                 
-                // อัปเดต Label ทั้ง 2 จุด
-                jLabel5.setText(username);  // ตรง Profile ด้านซ้าย
-                jLabel22.setText(username); // ตรงข้อความทักทาย "Hey ..."
+                jLabel5.setText(username);
+                jLabel22.setText(username);
             }
         } catch (SQLException e) {
             System.out.println("Error loading user data: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    private void loadUserCurrency() {
+        if (userEmail == null || userEmail.isEmpty()) {
+            return;
+        }
+
+        String url = "jdbc:sqlite:buynevercry.db";
+        String sql = "SELECT currency FROM user_settings WHERE email = ?";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, userEmail);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String currencyStr = rs.getString("currency");
+                
+                if (currencyStr != null && currencyStr.contains("(") && currencyStr.contains(")")) {
+                    String symbol = currencyStr.substring(currencyStr.indexOf("(") + 1, currencyStr.indexOf(")"));
+                    
+                    jLabel20.setText(symbol);
+                    jLabel32.setText(symbol);
+                    jLabel36.setText(symbol);
+                    jLabel38.setText(symbol);
+                    jLabel40.setText(symbol);
+                    jLabel66.setText(symbol); 
+                }
+            } else {
+                String defaultSymbol = "฿";
+                jLabel20.setText(defaultSymbol);
+                jLabel32.setText(defaultSymbol);
+                jLabel36.setText(defaultSymbol);
+                jLabel38.setText(defaultSymbol);
+                jLabel40.setText(defaultSymbol);
+                jLabel66.setText(defaultSymbol); 
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading currency: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -149,6 +195,7 @@ public class GUIMain extends javax.swing.JFrame {
         roundedPanel9 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel51 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
         btnEnvelope = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
@@ -226,7 +273,7 @@ public class GUIMain extends javax.swing.JFrame {
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel6)
@@ -368,7 +415,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addComponent(btnSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 661, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 659, Short.MAX_VALUE)
                 .addComponent(btnContactSupport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -417,7 +464,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel18)))
-                .addContainerGap(900, Short.MAX_VALUE))
+                .addContainerGap(903, Short.MAX_VALUE))
         );
         roundedPanel4Layout.setVerticalGroup(
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -431,7 +478,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)))
                 .addGap(0, 0, 0)
                 .addComponent(jLabel17)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         jLabel14.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
@@ -590,7 +637,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel25)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         roundedPanel5Layout.setVerticalGroup(
             roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -665,7 +712,7 @@ public class GUIMain extends javax.swing.JFrame {
 
         jLabel48.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel48.setText("4440 $");
+        jLabel48.setText("4440");
 
         jLabel49.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -690,6 +737,10 @@ public class GUIMain extends javax.swing.JFrame {
 
         jLabel50.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
         jLabel50.setText("Money saved");
+
+        jLabel66.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
+        jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel66.setText("$");
 
         javax.swing.GroupLayout roundedPanel8Layout = new javax.swing.GroupLayout(roundedPanel8);
         roundedPanel8.setLayout(roundedPanel8Layout);
@@ -716,10 +767,6 @@ public class GUIMain extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel49))
                             .addGroup(roundedPanel8Layout.createSequentialGroup()
-                                .addComponent(jLabel44)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel48))
-                            .addGroup(roundedPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel43)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel47))
@@ -729,11 +776,18 @@ public class GUIMain extends javax.swing.JFrame {
                                 .addComponent(jLabel41)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel42)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 620, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 643, Short.MAX_VALUE)
                                 .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(14, 14, 14))))
+                        .addGap(14, 14, 14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel48)
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel66)
+                        .addContainerGap())))
         );
         roundedPanel8Layout.setVerticalGroup(
             roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -763,14 +817,15 @@ public class GUIMain extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel44)
-                    .addComponent(jLabel48))
+                    .addComponent(jLabel48)
+                    .addComponent(jLabel66))
                 .addGap(13, 13, 13)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel45)
                     .addComponent(jLabel49))
                 .addGap(22, 22, 22)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
@@ -1120,7 +1175,7 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnSettingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSettingMouseClicked
         // TODO add your handling code here:
-        GUISetting setting = new GUISetting(userEmail);
+        GUISetting setting = new GUISetting(userEmail,this);
         setting.setVisible(true);
         
     }//GEN-LAST:event_btnSettingMouseClicked
@@ -1187,10 +1242,7 @@ public class GUIMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnContactSupport;
     private javax.swing.JPanel btnCreateGoal;
-    private javax.swing.JPanel btnCreateGoal1;
     private javax.swing.JPanel btnCreateGoal2;
-    private javax.swing.JPanel btnCreateGoal3;
-    private javax.swing.JPanel btnCreateGoal5;
     private javax.swing.JLabel btnEnvelope;
     private javax.swing.JPanel btnSetting;
     private javax.swing.JLabel jLabel1;
@@ -1246,17 +1298,12 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
-    private javax.swing.JLabel jLabel58;
-    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
-    private javax.swing.JLabel jLabel64;
-    private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel68;
-    private javax.swing.JLabel jLabel69;
+    private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1279,10 +1326,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel10;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel11;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel12;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel14;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel3;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel4;
