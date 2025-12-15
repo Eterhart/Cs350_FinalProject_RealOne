@@ -298,6 +298,7 @@ public class GUICreateAccount extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Sign in");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout signinbtnLayout = new javax.swing.GroupLayout(signinbtn);
         signinbtn.setLayout(signinbtnLayout);

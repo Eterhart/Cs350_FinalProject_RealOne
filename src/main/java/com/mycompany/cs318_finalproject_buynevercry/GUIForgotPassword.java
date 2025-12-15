@@ -6,6 +6,8 @@ package com.mycompany.cs318_finalproject_buynevercry;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.sql.*;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 /**
@@ -25,6 +27,8 @@ public class GUIForgotPassword extends javax.swing.JFrame {
         ).getImage();
         setIconImage(icon);
     }
+       
+   
     
 
     /**
@@ -41,11 +45,11 @@ public class GUIForgotPassword extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         roundedPanel2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         roundedPanel6 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField1 = new javax.swing.JTextField();
+        emailtxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         roundedPanel9 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        pwdtxt = new javax.swing.JPasswordField();
         roundedPanel3 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel10 = new javax.swing.JLabel();
 
@@ -98,10 +102,14 @@ public class GUIForgotPassword extends javax.swing.JFrame {
         roundedPanel6.setPanelColor(new java.awt.Color(243, 247, 251));
         roundedPanel6.setPreferredSize(new java.awt.Dimension(342, 42));
 
-        jTextField1.setBackground(new java.awt.Color(243, 247, 251));
-        jTextField1.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jTextField1.setText("Type something longer here...");
-        jTextField1.setBorder(null);
+        emailtxt.setBackground(new java.awt.Color(243, 247, 251));
+        emailtxt.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        emailtxt.setBorder(null);
+        emailtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailtxtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
         roundedPanel6.setLayout(roundedPanel6Layout);
@@ -109,14 +117,14 @@ public class GUIForgotPassword extends javax.swing.JFrame {
             roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel6Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emailtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         roundedPanel6Layout.setVerticalGroup(
             roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(emailtxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -133,8 +141,8 @@ public class GUIForgotPassword extends javax.swing.JFrame {
         roundedPanel9.setPanelColor(new java.awt.Color(243, 247, 251));
         roundedPanel9.setPreferredSize(new java.awt.Dimension(342, 42));
 
-        jPasswordField1.setBackground(new java.awt.Color(243, 247, 251));
-        jPasswordField1.setBorder(null);
+        pwdtxt.setBackground(new java.awt.Color(243, 247, 251));
+        pwdtxt.setBorder(null);
 
         javax.swing.GroupLayout roundedPanel9Layout = new javax.swing.GroupLayout(roundedPanel9);
         roundedPanel9.setLayout(roundedPanel9Layout);
@@ -142,14 +150,14 @@ public class GUIForgotPassword extends javax.swing.JFrame {
             roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel9Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                .addComponent(pwdtxt, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundedPanel9Layout.setVerticalGroup(
             roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(pwdtxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -166,6 +174,7 @@ public class GUIForgotPassword extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Reset Password");
+        jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
         roundedPanel3.setLayout(roundedPanel3Layout);
@@ -212,7 +221,7 @@ public class GUIForgotPassword extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roundedPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(roundedPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
                 .addComponent(jLabel2)
                 .addGap(97, 97, 97)
@@ -233,18 +242,67 @@ public class GUIForgotPassword extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void roundedPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roundedPanel3MouseClicked
-        // TODO add your handling code here:
+        String email = emailtxt.getText();
+        String newPassword = new String(pwdtxt.getPassword());
+
+        if (email.isEmpty() || newPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in both Email and New Password.", "Input Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Connection con = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:buynevercry.db");
+
+            String checkSql = "SELECT * FROM users WHERE email = ?";
+            PreparedStatement checkPst = con.prepareStatement(checkSql);
+            checkPst.setString(1, email);
+            ResultSet rs = checkPst.executeQuery();
+
+            if (rs.next()) {
+                String updateSql = "UPDATE users SET password = ? WHERE email = ?";
+                PreparedStatement updatePst = con.prepareStatement(updateSql);
+                updatePst.setString(1, newPassword);
+                updatePst.setString(2, email);
+                
+                int row = updatePst.executeUpdate();
+                
+                if(row > 0) {
+                    JOptionPane.showMessageDialog(this, "Password Reset Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose(); 
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Email not found in database.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "SQLite Driver not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_roundedPanel3MouseClicked
+
+    private void emailtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailtxtActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField emailtxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField pwdtxt;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel3;
