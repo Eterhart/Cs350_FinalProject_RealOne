@@ -7,6 +7,8 @@ package com.mycompany.cs318_finalproject_buynevercry;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,6 +28,24 @@ public class GUILogin extends javax.swing.JFrame {
         getClass().getResource("/images/appicon_normal.png")
         ).getImage();
         setIconImage(icon);
+        createTable();
+    }
+    public static void createTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection con = DriverManager.getConnection("jdbc:sqlite:buynevercry.db");
+            Statement stmt = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS users (" +
+                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                         "username TEXT NOT NULL," +
+                         "email TEXT NOT NULL UNIQUE," +
+                         "password TEXT NOT NULL," +
+                         "yearly_salary REAL)";
+            stmt.execute(sql);
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -44,16 +64,16 @@ public class GUILogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         roundedPanel1 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField1 = new javax.swing.JTextField();
+        emailtxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         roundedPanel2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        pwdtxt = new javax.swing.JPasswordField();
         roundedPanel3 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel7 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         btnSignup = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        forgotpwbtn = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         roundedPanel4 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
 
@@ -85,15 +105,15 @@ public class GUILogin extends javax.swing.JFrame {
         roundedPanel1.setPanelColor(new java.awt.Color(247, 251, 255));
         roundedPanel1.setPreferredSize(new java.awt.Dimension(48, 48));
 
-        jTextField1.setBackground(new java.awt.Color(247, 251, 255));
-        jTextField1.setForeground(new java.awt.Color(12, 20, 33));
-        jTextField1.setText("Example@email.com");
-        jTextField1.setBorder(null);
-        jTextField1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jTextField1.setSelectionColor(new java.awt.Color(204, 204, 204));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        emailtxt.setBackground(new java.awt.Color(247, 251, 255));
+        emailtxt.setForeground(new java.awt.Color(12, 20, 33));
+        emailtxt.setText("Example@email.com");
+        emailtxt.setBorder(null);
+        emailtxt.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        emailtxt.setSelectionColor(new java.awt.Color(204, 204, 204));
+        emailtxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                emailtxtActionPerformed(evt);
             }
         });
 
@@ -103,14 +123,14 @@ public class GUILogin extends javax.swing.JFrame {
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emailtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         roundedPanel1Layout.setVerticalGroup(
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addComponent(emailtxt, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -122,12 +142,12 @@ public class GUILogin extends javax.swing.JFrame {
         roundedPanel2.setPanelColor(new java.awt.Color(247, 251, 255));
         roundedPanel2.setPreferredSize(new java.awt.Dimension(48, 48));
 
-        jPasswordField1.setBackground(new java.awt.Color(247, 251, 255));
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setToolTipText("");
-        jPasswordField1.setBorder(null);
-        jPasswordField1.setSelectedTextColor(new java.awt.Color(0, 0, 0));
-        jPasswordField1.setSelectionColor(new java.awt.Color(204, 204, 204));
+        pwdtxt.setBackground(new java.awt.Color(247, 251, 255));
+        pwdtxt.setText("jPasswordField1");
+        pwdtxt.setToolTipText("");
+        pwdtxt.setBorder(null);
+        pwdtxt.setSelectedTextColor(new java.awt.Color(0, 0, 0));
+        pwdtxt.setSelectionColor(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout roundedPanel2Layout = new javax.swing.GroupLayout(roundedPanel2);
         roundedPanel2.setLayout(roundedPanel2Layout);
@@ -135,14 +155,14 @@ public class GUILogin extends javax.swing.JFrame {
             roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jPasswordField1)
+                .addComponent(pwdtxt)
                 .addContainerGap())
         );
         roundedPanel2Layout.setVerticalGroup(
             roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addComponent(pwdtxt, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -213,12 +233,12 @@ public class GUILogin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel9.setFont(new java.awt.Font("Inter 18pt", 0, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(30, 74, 233));
-        jLabel9.setText("Forgot Password?");
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        forgotpwbtn.setFont(new java.awt.Font("Inter 18pt", 0, 16)); // NOI18N
+        forgotpwbtn.setForeground(new java.awt.Color(30, 74, 233));
+        forgotpwbtn.setText("Forgot Password?");
+        forgotpwbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
+                forgotpwbtnMouseClicked(evt);
             }
         });
 
@@ -228,7 +248,7 @@ public class GUILogin extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -240,7 +260,7 @@ public class GUILogin extends javax.swing.JFrame {
                         .addComponent(jLabel10))
                     .addComponent(roundedPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                     .addComponent(roundedPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(forgotpwbtn, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(roundedPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -264,10 +284,10 @@ public class GUILogin extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
-                .addComponent(jLabel9)
+                .addComponent(forgotpwbtn)
                 .addGap(24, 24, 24)
                 .addComponent(roundedPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 263, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -329,15 +349,60 @@ public class GUILogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void emailtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailtxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_emailtxtActionPerformed
 
     private void roundedPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roundedPanel3MouseClicked
-        // TODO add your handling code here:
+                                        
+        String email = emailtxt.getText();
+        String password = new String(pwdtxt.getPassword());
+
+        if (email.isEmpty() || password.isEmpty() || email.equals("Example@email.com")) {
+            JOptionPane.showMessageDialog(this, "Please enter your Email and Password.", "Login Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Connection con = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:buynevercry.db");
+
+            String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, email);
+            pst.setString(2, password);
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String username = rs.getString("username");
+                JOptionPane.showMessageDialog(this, "Welcome back, " + username + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+                
+                this.dispose(); 
+                
+                GUIMain mainPage = new GUIMain();
+                mainPage.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid Email or Password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "SQLite Driver not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
     }//GEN-LAST:event_roundedPanel3MouseClicked
 
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+    private void forgotpwbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotpwbtnMouseClicked
         // TODO add your handling code here:
         
         getContentPane().setBackground(new Color(255, 255, 255));
@@ -346,7 +411,7 @@ public class GUILogin extends javax.swing.JFrame {
         setIconImage(icon);
         GUIForgotPassword uiresetpass = new GUIForgotPassword();
         uiresetpass.setVisible(true);
-    }//GEN-LAST:event_jLabel9MouseClicked
+    }//GEN-LAST:event_forgotpwbtnMouseClicked
 
     private void btnSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignupMouseClicked
         // TODO add your handling code here:
@@ -381,6 +446,8 @@ public class GUILogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnSignup;
+    private javax.swing.JTextField emailtxt;
+    private javax.swing.JLabel forgotpwbtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -389,12 +456,10 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField pwdtxt;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel3;

@@ -88,7 +88,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel2" max="32767" attributes="0"/>
+                  <Component id="jLabel2" pref="388" max="32767" attributes="0"/>
                   <Component id="jLabel3" alignment="1" max="32767" attributes="0"/>
                   <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel5" alignment="0" max="32767" attributes="0"/>
@@ -101,7 +101,7 @@
                           </Group>
                           <Component id="roundedPanel1" alignment="0" pref="362" max="32767" attributes="0"/>
                           <Component id="roundedPanel3" alignment="0" pref="362" max="32767" attributes="0"/>
-                          <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="forgotpwbtn" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="roundedPanel2" alignment="0" pref="362" max="32767" attributes="0"/>
                           <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -129,10 +129,10 @@
                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Component id="roundedPanel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      <Component id="forgotpwbtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="roundedPanel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="263" max="32767" attributes="0"/>
+                      <EmptySpace pref="254" max="32767" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -201,7 +201,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="334" max="-2" attributes="0"/>
+                          <Component id="emailtxt" min="-2" pref="334" max="-2" attributes="0"/>
                           <EmptySpace pref="12" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -210,14 +210,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField1" pref="36" max="32767" attributes="0"/>
+                          <Component id="emailtxt" pref="36" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JTextField" name="jTextField1">
+                <Component class="javax.swing.JTextField" name="emailtxt">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="fb" red="f7" type="rgb"/>
@@ -237,7 +237,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailtxtActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -271,7 +271,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="jPasswordField1" max="32767" attributes="0"/>
+                          <Component id="pwdtxt" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -280,14 +280,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPasswordField1" pref="36" max="32767" attributes="0"/>
+                          <Component id="pwdtxt" pref="36" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+                <Component class="javax.swing.JPasswordField" name="pwdtxt">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="fb" red="f7" type="rgb"/>
@@ -418,7 +418,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="jLabel9">
+            <Component class="javax.swing.JLabel" name="forgotpwbtn">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Inter 18pt" size="16" style="0"/>
@@ -429,7 +429,7 @@
                 <Property name="text" type="java.lang.String" value="Forgot Password?"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel9MouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="forgotpwbtnMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
