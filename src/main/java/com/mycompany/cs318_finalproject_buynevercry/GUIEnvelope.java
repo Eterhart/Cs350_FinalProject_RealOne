@@ -6,6 +6,7 @@ package com.mycompany.cs318_finalproject_buynevercry;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
 /**
@@ -22,6 +23,8 @@ public class GUIEnvelope extends javax.swing.JFrame {
      */
     public GUIEnvelope() {
         initComponents();
+        BufferedImage transparent = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        setIconImage(transparent);
         
         confettiPanel = new ConfettiPanel();
         confettiPanel.setBounds(0, 0, getWidth(), getHeight());
@@ -34,10 +37,6 @@ public class GUIEnvelope extends javax.swing.JFrame {
         });
         
         getContentPane().setBackground(new Color(255, 255, 255));
-        Image icon = new ImageIcon(
-        getClass().getResource("/images/appicon_normal.png")
-        ).getImage();
-        setIconImage(icon);
     }
     
     /**
