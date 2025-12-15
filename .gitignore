@@ -1,3 +1,4 @@
 ﻿/target/
 *.class
 /nbproject/private/
+/target/

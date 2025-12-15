@@ -7,6 +7,8 @@ package com.mycompany.cs318_finalproject_buynevercry;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,9 +24,26 @@ public class GUICreateAccount extends javax.swing.JFrame {
     public GUICreateAccount() {
         initComponents();
         getContentPane().setBackground(new Color(255, 255, 255));
-        
+        createTable();
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
+    }
+    public static void createTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection con = DriverManager.getConnection("jdbc:sqlite:buynevercry.db");
+            Statement stmt = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS users (" +
+                         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                         "username TEXT NOT NULL," +
+                         "email TEXT NOT NULL UNIQUE," +
+                         "password TEXT NOT NULL," +
+                         "yearly_salary REAL)";
+            stmt.execute(sql);
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -40,19 +59,19 @@ public class GUICreateAccount extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         roundedPanel2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        emaillabel = new javax.swing.JLabel();
         roundedPanel6 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        emailtxt = new javax.swing.JTextField();
+        pwdlabel = new javax.swing.JLabel();
         roundedPanel9 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel5 = new javax.swing.JLabel();
+        pwdtxt = new javax.swing.JPasswordField();
+        userlabel = new javax.swing.JLabel();
         roundedPanel10 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        usertxt = new javax.swing.JTextField();
+        salarylabel = new javax.swing.JLabel();
         roundedPanel11 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jTextField5 = new javax.swing.JTextField();
-        roundedPanel3 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        salarytxt = new javax.swing.JTextField();
+        signinbtn = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -101,19 +120,26 @@ public class GUICreateAccount extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(49, 57, 87));
         jLabel2.setText("To continue to Buynevercry services");
 
-        jLabel4.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(12, 20, 33));
-        jLabel4.setText("Email");
+        emaillabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        emaillabel.setForeground(new java.awt.Color(12, 20, 33));
+        emaillabel.setText("Email");
 
         roundedPanel6.setBorderColor(new java.awt.Color(212, 215, 227));
         roundedPanel6.setCornerRadius(8);
         roundedPanel6.setPanelColor(new java.awt.Color(243, 247, 251));
         roundedPanel6.setPreferredSize(new java.awt.Dimension(342, 42));
 
-        jTextField1.setBackground(new java.awt.Color(243, 247, 251));
-        jTextField1.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jTextField1.setText("Type something longer here...");
-        jTextField1.setBorder(null);
+        emailtxt.setBackground(new java.awt.Color(243, 247, 251));
+        emailtxt.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        emailtxt.setBorder(null);
+        emailtxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                emailtxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                emailtxtFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
         roundedPanel6.setLayout(roundedPanel6Layout);
@@ -121,29 +147,41 @@ public class GUICreateAccount extends javax.swing.JFrame {
             roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel6Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(emailtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         roundedPanel6Layout.setVerticalGroup(
             roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(emailtxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLabel6.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(12, 20, 33));
-        jLabel6.setText("Password");
+        pwdlabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        pwdlabel.setForeground(new java.awt.Color(12, 20, 33));
+        pwdlabel.setText("Password");
 
         roundedPanel9.setBorderColor(new java.awt.Color(212, 215, 227));
         roundedPanel9.setCornerRadius(8);
         roundedPanel9.setPanelColor(new java.awt.Color(243, 247, 251));
         roundedPanel9.setPreferredSize(new java.awt.Dimension(342, 42));
 
-        jPasswordField1.setBackground(new java.awt.Color(243, 247, 251));
-        jPasswordField1.setText("Type something longer here...");
-        jPasswordField1.setBorder(null);
+        pwdtxt.setBackground(new java.awt.Color(243, 247, 251));
+        pwdtxt.setBorder(null);
+        pwdtxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pwdtxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                pwdtxtFocusLost(evt);
+            }
+        });
+        pwdtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwdtxtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel9Layout = new javax.swing.GroupLayout(roundedPanel9);
         roundedPanel9.setLayout(roundedPanel9Layout);
@@ -151,33 +189,39 @@ public class GUICreateAccount extends javax.swing.JFrame {
             roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel9Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                .addComponent(pwdtxt, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundedPanel9Layout.setVerticalGroup(
             roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(pwdtxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
         );
 
-        jLabel5.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(12, 20, 33));
-        jLabel5.setText("Username");
+        userlabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        userlabel.setForeground(new java.awt.Color(12, 20, 33));
+        userlabel.setText("Username");
 
         roundedPanel10.setBorderColor(new java.awt.Color(212, 215, 227));
         roundedPanel10.setCornerRadius(8);
         roundedPanel10.setPanelColor(new java.awt.Color(243, 247, 251));
         roundedPanel10.setPreferredSize(new java.awt.Dimension(342, 42));
 
-        jTextField4.setBackground(new java.awt.Color(243, 247, 251));
-        jTextField4.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jTextField4.setText("Type something longer here...");
-        jTextField4.setBorder(null);
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        usertxt.setBackground(new java.awt.Color(243, 247, 251));
+        usertxt.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        usertxt.setToolTipText("");
+        usertxt.setBorder(null);
+        usertxt.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        usertxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                usertxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                usertxtFocusLost(evt);
+            }
+        });
+        usertxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                usertxtActionPerformed(evt);
             }
         });
 
@@ -187,33 +231,40 @@ public class GUICreateAccount extends javax.swing.JFrame {
             roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel10Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usertxt, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         roundedPanel10Layout.setVerticalGroup(
             roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(usertxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jLabel7.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(12, 20, 33));
-        jLabel7.setText("Yearly Salary");
+        salarylabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        salarylabel.setForeground(new java.awt.Color(12, 20, 33));
+        salarylabel.setText("Yearly Salary");
 
         roundedPanel11.setBorderColor(new java.awt.Color(212, 215, 227));
         roundedPanel11.setCornerRadius(8);
         roundedPanel11.setPanelColor(new java.awt.Color(243, 247, 251));
         roundedPanel11.setPreferredSize(new java.awt.Dimension(342, 42));
 
-        jTextField5.setBackground(new java.awt.Color(243, 247, 251));
-        jTextField5.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jTextField5.setText("Type something longer here...");
-        jTextField5.setBorder(null);
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        salarytxt.setBackground(new java.awt.Color(243, 247, 251));
+        salarytxt.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        salarytxt.setBorder(null);
+        salarytxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                salarytxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                salarytxtFocusLost(evt);
+            }
+        });
+        salarytxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                salarytxtActionPerformed(evt);
             }
         });
 
@@ -223,23 +274,23 @@ public class GUICreateAccount extends javax.swing.JFrame {
             roundedPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel11Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(salarytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         roundedPanel11Layout.setVerticalGroup(
             roundedPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel11Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(salarytxt, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        roundedPanel3.setBackground(new java.awt.Color(22, 45, 58));
-        roundedPanel3.setBorderColor(new java.awt.Color(22, 45, 58));
-        roundedPanel3.setPanelColor(new java.awt.Color(22, 45, 58));
-        roundedPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        signinbtn.setBackground(new java.awt.Color(22, 45, 58));
+        signinbtn.setBorderColor(new java.awt.Color(22, 45, 58));
+        signinbtn.setPanelColor(new java.awt.Color(22, 45, 58));
+        signinbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                roundedPanel3MouseClicked(evt);
+                signinbtnMouseClicked(evt);
             }
         });
 
@@ -248,18 +299,18 @@ public class GUICreateAccount extends javax.swing.JFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Sign in");
 
-        javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
-        roundedPanel3.setLayout(roundedPanel3Layout);
-        roundedPanel3Layout.setHorizontalGroup(
-            roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout signinbtnLayout = new javax.swing.GroupLayout(signinbtn);
+        signinbtn.setLayout(signinbtnLayout);
+        signinbtnLayout.setHorizontalGroup(
+            signinbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signinbtnLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        roundedPanel3Layout.setVerticalGroup(
-            roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel3Layout.createSequentialGroup()
+        signinbtnLayout.setVerticalGroup(
+            signinbtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signinbtnLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap())
@@ -277,15 +328,15 @@ public class GUICreateAccount extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(salarylabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(emaillabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(userlabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(roundedPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(signinbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(roundedPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(roundedPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)
+                            .addComponent(pwdlabel)
                             .addComponent(roundedPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
@@ -294,7 +345,7 @@ public class GUICreateAccount extends javax.swing.JFrame {
                                 .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24))))
+                        .addContainerGap(30, Short.MAX_VALUE))))
             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -305,28 +356,28 @@ public class GUICreateAccount extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(roundedPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(roundedPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
                 .addGap(16, 16, 16)
                 .addComponent(jLabel2)
                 .addGap(24, 24, 24)
-                .addComponent(jLabel5)
+                .addComponent(userlabel)
                 .addGap(8, 8, 8)
                 .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addComponent(emaillabel)
                 .addGap(8, 8, 8)
                 .addComponent(roundedPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(jLabel6)
+                .addComponent(pwdlabel)
                 .addGap(8, 8, 8)
                 .addComponent(roundedPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(salarylabel)
                 .addGap(8, 8, 8)
                 .addComponent(roundedPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
-                .addComponent(roundedPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(signinbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(24, 24, 24))
         );
@@ -335,17 +386,105 @@ public class GUICreateAccount extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void usertxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usertxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_usertxtActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void salarytxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salarytxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_salarytxtActionPerformed
 
-    private void roundedPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_roundedPanel3MouseClicked
+    private void signinbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signinbtnMouseClicked
+        String username = usertxt.getText();
+        String email = emailtxt.getText();
+        String password = new String(pwdtxt.getPassword());
+        String salaryStr = salarytxt.getText();
+
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || salaryStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields.", "Input Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Connection con = null;
+        try {
+            Class.forName("org.sqlite.JDBC");
+            con = DriverManager.getConnection("jdbc:sqlite:buynevercry.db");
+
+            String sql = "INSERT INTO users (username, email, password, yearly_salary) VALUES (?, ?, ?, ?)";
+            
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, username);
+            pst.setString(2, email);
+            pst.setString(3, password);
+            
+            try {
+                double salary = Double.parseDouble(salaryStr);
+                pst.setDouble(4, salary);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Yearly Salary must be a number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int row = pst.executeUpdate();
+
+            if (row > 0) {
+                JOptionPane.showMessageDialog(this, "Account Created Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }
+
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "SQLite Driver not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException e) {
+            if (e.getMessage().contains("UNIQUE constraint failed")) {
+                JOptionPane.showMessageDialog(this, "This email is already registered.", "Registration Failed", JOptionPane.ERROR_MESSAGE);
+            } else {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } finally {
+            try {
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_signinbtnMouseClicked
+
+    private void usertxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usertxtFocusGained
+
+    }//GEN-LAST:event_usertxtFocusGained
+
+    private void usertxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usertxtFocusLost
+
+    }//GEN-LAST:event_usertxtFocusLost
+
+    private void emailtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailtxtFocusGained
+  
+    }//GEN-LAST:event_emailtxtFocusGained
+
+    private void emailtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_emailtxtFocusLost
+
+    }//GEN-LAST:event_emailtxtFocusLost
+
+    private void pwdtxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdtxtFocusGained
+
+    }//GEN-LAST:event_pwdtxtFocusGained
+
+    private void pwdtxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdtxtFocusLost
+
+    }//GEN-LAST:event_pwdtxtFocusLost
+
+    private void salarytxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_salarytxtFocusGained
+
+    }//GEN-LAST:event_salarytxtFocusGained
+
+    private void salarytxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_salarytxtFocusLost
+
+    }//GEN-LAST:event_salarytxtFocusLost
+
+    private void pwdtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdtxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_roundedPanel3MouseClicked
+    }//GEN-LAST:event_pwdtxtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -367,30 +506,30 @@ public class GUICreateAccount extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new GUICreateAccount().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel emaillabel;
+    private javax.swing.JTextField emailtxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel pwdlabel;
+    private javax.swing.JPasswordField pwdtxt;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel10;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel11;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel3;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel6;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel9;
+    private javax.swing.JLabel salarylabel;
+    private javax.swing.JTextField salarytxt;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel signinbtn;
+    private javax.swing.JLabel userlabel;
+    private javax.swing.JTextField usertxt;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,4 +10,10 @@
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.mycompany.cs318_finalproject_buynevercry.CS318_FinalProject_BuyNeverCry</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.45.1.0</version> </dependency>
+    </dependencies>
 </project>
