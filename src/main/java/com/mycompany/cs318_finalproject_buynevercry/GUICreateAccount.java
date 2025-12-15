@@ -74,6 +74,9 @@ public class GUICreateAccount extends javax.swing.JFrame {
         signinbtn = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        cpwdlabel = new javax.swing.JLabel();
+        roundedPanel12 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        confirmPwdTxt = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Account");
@@ -297,7 +300,7 @@ public class GUICreateAccount extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Inter 18pt", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Sign in");
+        jLabel10.setText("Sign up");
         jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout signinbtnLayout = new javax.swing.GroupLayout(signinbtn);
@@ -322,13 +325,58 @@ public class GUICreateAccount extends javax.swing.JFrame {
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Powered By Buynevercry");
 
+        cpwdlabel.setFont(new java.awt.Font("Inter", 0, 16)); // NOI18N
+        cpwdlabel.setForeground(new java.awt.Color(12, 20, 33));
+        cpwdlabel.setText("Confirm Password");
+
+        roundedPanel12.setBorderColor(new java.awt.Color(212, 215, 227));
+        roundedPanel12.setCornerRadius(8);
+        roundedPanel12.setPanelColor(new java.awt.Color(243, 247, 251));
+        roundedPanel12.setPreferredSize(new java.awt.Dimension(342, 42));
+
+        confirmPwdTxt.setBackground(new java.awt.Color(243, 247, 251));
+        confirmPwdTxt.setBorder(null);
+        confirmPwdTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                confirmPwdTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                confirmPwdTxtFocusLost(evt);
+            }
+        });
+        confirmPwdTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmPwdTxtActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout roundedPanel12Layout = new javax.swing.GroupLayout(roundedPanel12);
+        roundedPanel12.setLayout(roundedPanel12Layout);
+        roundedPanel12Layout.setHorizontalGroup(
+            roundedPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel12Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(confirmPwdTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        roundedPanel12Layout.setVerticalGroup(
+            roundedPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(confirmPwdTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(roundedPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cpwdlabel))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(salarylabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(emaillabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(userlabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -347,7 +395,6 @@ public class GUICreateAccount extends javax.swing.JFrame {
                             .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(30, Short.MAX_VALUE))))
-            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,13 +419,17 @@ public class GUICreateAccount extends javax.swing.JFrame {
                 .addComponent(pwdlabel)
                 .addGap(8, 8, 8)
                 .addComponent(roundedPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cpwdlabel)
+                .addGap(8, 8, 8)
+                .addComponent(roundedPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(salarylabel)
                 .addGap(8, 8, 8)
                 .addComponent(roundedPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(signinbtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(24, 24, 24))
         );
@@ -396,13 +447,33 @@ public class GUICreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_salarytxtActionPerformed
 
     private void signinbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signinbtnMouseClicked
-        String username = usertxt.getText();
+String username = usertxt.getText();
         String email = emailtxt.getText();
         String password = new String(pwdtxt.getPassword());
+        
+
+        String confirmPassword = new String(confirmPwdTxt.getPassword()); 
+
         String salaryStr = salarytxt.getText();
 
         if (username.isEmpty() || email.isEmpty() || password.isEmpty() || salaryStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields.", "Input Required", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please fill all fields.", "Incomplete Info", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String emailPattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        if (!email.matches(emailPattern)) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid email address (e.g., user@example.com).", "Invalid Email", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (password.length() < 6) {
+            JOptionPane.showMessageDialog(this, "Password must be at least 6 characters long.", "Weak Password", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match. Please try again.", "Password Mismatch", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -412,7 +483,6 @@ public class GUICreateAccount extends javax.swing.JFrame {
             con = DriverManager.getConnection("jdbc:sqlite:buynevercry.db");
 
             String sql = "INSERT INTO users (username, email, password, yearly_salary) VALUES (?, ?, ?, ?)";
-            
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, username);
             pst.setString(2, email);
@@ -422,32 +492,25 @@ public class GUICreateAccount extends javax.swing.JFrame {
                 double salary = Double.parseDouble(salaryStr);
                 pst.setDouble(4, salary);
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Yearly Salary must be a number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Yearly Salary must be a valid number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             int row = pst.executeUpdate();
-
             if (row > 0) {
                 JOptionPane.showMessageDialog(this, "Account Created Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }
 
-        } catch (ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "SQLite Driver not found.", "Error", JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             if (e.getMessage().contains("UNIQUE constraint failed")) {
                 JOptionPane.showMessageDialog(this, "This email is already registered.", "Registration Failed", JOptionPane.ERROR_MESSAGE);
             } else {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } finally {
-            try {
-                if (con != null) con.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
+            try { if (con != null) con.close(); } catch (Exception ex) {}
         }
     }//GEN-LAST:event_signinbtnMouseClicked
 
@@ -487,6 +550,18 @@ public class GUICreateAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pwdtxtActionPerformed
 
+    private void confirmPwdTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_confirmPwdTxtFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmPwdTxtFocusGained
+
+    private void confirmPwdTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_confirmPwdTxtFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmPwdTxtFocusLost
+
+    private void confirmPwdTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmPwdTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmPwdTxtActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -513,6 +588,8 @@ public class GUICreateAccount extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField confirmPwdTxt;
+    private javax.swing.JLabel cpwdlabel;
     private javax.swing.JLabel emaillabel;
     private javax.swing.JTextField emailtxt;
     private javax.swing.JLabel jLabel1;
@@ -524,6 +601,7 @@ public class GUICreateAccount extends javax.swing.JFrame {
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel10;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel11;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel12;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel6;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel9;
