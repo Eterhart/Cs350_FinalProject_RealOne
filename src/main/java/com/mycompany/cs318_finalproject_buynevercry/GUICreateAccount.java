@@ -461,7 +461,7 @@ String username = usertxt.getText();
             return;
         }
         
-        String emailPattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String emailPattern = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$";
         if (!email.matches(emailPattern)) {
             JOptionPane.showMessageDialog(this, "Please enter a valid email address (e.g., user@example.com).", "Invalid Email", JOptionPane.WARNING_MESSAGE);
             return;
