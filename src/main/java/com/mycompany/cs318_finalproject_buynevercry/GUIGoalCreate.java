@@ -19,6 +19,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
     private String userEmail;
     
     private double calculatedMinutes = 0;
+    private double calculatedInvest = 0;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIGoalCreate.class.getName());
 
@@ -120,6 +121,8 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         
         double totalMinutesPerYear = 52 * workDays * workHours * 60;
         
+        
+        
         double moneyPerMinute = 0;
         if (totalMinutesPerYear > 0) {
             moneyPerMinute = salary / totalMinutesPerYear;
@@ -133,6 +136,8 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         this.calculatedMinutes = timeToEarnMinutes;
 
         double investedInstead = this.currentPrice + investFromDB;
+        
+        this.calculatedInvest = investedInstead;
 
         int hrs = (int) timeToEarnMinutes / 60;
         int mins = (int) timeToEarnMinutes % 60;
@@ -157,26 +162,31 @@ public class GUIGoalCreate extends javax.swing.JFrame {
                                 "email TEXT, " +
                                 "price REAL, " +
                                 "work_minutes REAL, " +
+                                "invest_amount REAL, " +
                                 "decision TEXT, " +
                                 "created_at DATETIME DEFAULT CURRENT_TIMESTAMP" +
                                 ");";
         
-        String insertSQL = "INSERT INTO goal_decisions (email, price, work_minutes, decision) VALUES (?, ?, ?, ?)";
+        String insertSQL = "INSERT INTO goal_decisions (email, price, work_minutes, invest_amount, decision) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) {
             
             stmt.execute(createTableSQL);
             
+            try {
+                stmt.execute("ALTER TABLE goal_decisions ADD COLUMN invest_amount REAL DEFAULT 0;");
+            } catch (SQLException e) {
+            }
+            
             try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
                 pstmt.setString(1, this.userEmail);
                 pstmt.setDouble(2, this.currentPrice);
                 pstmt.setDouble(3, this.calculatedMinutes);
-                pstmt.setString(4, decision);
+                pstmt.setDouble(4, this.calculatedInvest);
+                pstmt.setString(5, decision);
                 
                 pstmt.executeUpdate();
-                
-                System.out.println("Saved decision: " + decision);
             }
             
             this.dispose();
@@ -186,6 +196,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Save Error: " + e.getMessage());
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -53,6 +53,7 @@ public class GUIMain extends javax.swing.JFrame {
         
         initProgressDB();
         FlatLightLaf.setup();
+        updateDashboard();
        
         btnAnalytics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnCreateGoal1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -71,6 +72,7 @@ public class GUIMain extends javax.swing.JFrame {
         shuffleMoney();
         loadUserData();
         loadUserCurrency();
+        
         
     }
     
@@ -121,7 +123,7 @@ public class GUIMain extends javax.swing.JFrame {
                     
                     jLabel20.setText(symbol);
                     jLabel32.setText(symbol);
-                    jLabel36.setText(symbol);
+                    investlabel.setText(symbol);
                     jLabel38.setText(symbol);
                     jLabel40.setText(symbol);
                     jLabel66.setText(symbol); 
@@ -130,7 +132,7 @@ public class GUIMain extends javax.swing.JFrame {
                 String defaultSymbol = "$";
                 jLabel20.setText(defaultSymbol);
                 jLabel32.setText(defaultSymbol);
-                jLabel36.setText(defaultSymbol);
+                investlabel.setText(defaultSymbol);
                 jLabel38.setText(defaultSymbol);
                 jLabel40.setText(defaultSymbol);
                 jLabel66.setText(defaultSymbol); 
@@ -379,6 +381,43 @@ public class GUIMain extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    public void updateDashboard() {
+        String url = "jdbc:sqlite:buynevercry.db";
+        String sql = "SELECT SUM(price) as total_saved, " +
+                     "SUM(work_minutes) as total_time, " +
+                     "SUM(invest_amount) as total_invest " +
+                     "FROM goal_decisions WHERE email = ? AND decision = 'DONT_BUY'";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, userEmail);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                double totalSaved = rs.getDouble("total_saved");
+                double totalTimeMin = rs.getDouble("total_time");
+                double totalInvest = rs.getDouble("total_invest");
+                
+                int hrs = (int) totalTimeMin / 60;
+                int mins = (int) totalTimeMin % 60;
+                String timeStr;
+                if (hrs > 0) {
+                    timeStr = String.format("%d hr %d min", hrs, mins);
+                } else {
+                    timeStr = String.format("%d min", mins);
+                }
+
+                moneysavelabel.setText(String.format("%.2f", totalSaved));
+                onemoneysave.setText(String.format("%.2f", totalSaved));
+                timesavedlabel.setText(timeStr);
+                investlabel.setText(String.format("%.2f", totalInvest));
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Dashboard Error: " + e.getMessage());
+        }
+    }
     
 
 
@@ -435,26 +474,26 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        moneysavelabel = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
+        timesavedlabel = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
+        investlabel = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         roundedPanel6 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel26 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
         roundedPanel8 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel38 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
+        onemoneysave = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel40 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
+        moneysavelabel1 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel43 = new javax.swing.JLabel();
@@ -546,7 +585,7 @@ public class GUIMain extends javax.swing.JFrame {
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel6)
@@ -689,7 +728,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addComponent(btnSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 661, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 659, Short.MAX_VALUE)
                 .addComponent(btnContactSupport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -749,7 +788,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel18)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(jLabel61)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAnalytics)
@@ -792,8 +831,8 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
         jLabel20.setText("{Currency}");
 
-        jLabel29.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
-        jLabel29.setText("{Money_amt}");
+        moneysavelabel.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
+        moneysavelabel.setText("{Money_amt}");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -805,7 +844,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel20)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel29))
+                        .addComponent(moneysavelabel))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -822,7 +861,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(jLabel29))
+                    .addComponent(moneysavelabel))
                 .addContainerGap())
         );
 
@@ -837,8 +876,8 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
         jLabel32.setText("{Currency}");
 
-        jLabel33.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
-        jLabel33.setText("{Money_amt}");
+        timesavedlabel.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
+        timesavedlabel.setText("{Money_amt}");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -850,7 +889,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel32)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel33))
+                        .addComponent(timesavedlabel))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel31)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -867,7 +906,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel32)
-                    .addComponent(jLabel33))
+                    .addComponent(timesavedlabel))
                 .addContainerGap())
         );
 
@@ -879,8 +918,8 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel35.setForeground(new java.awt.Color(126, 126, 126));
         jLabel35.setText("Your Investments could grow to");
 
-        jLabel36.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
-        jLabel36.setText("{TimeSaved}");
+        investlabel.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
+        investlabel.setText("{TimeSaved}");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -889,7 +928,7 @@ public class GUIMain extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel36)
+                    .addComponent(investlabel)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel35)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -904,7 +943,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addComponent(jLabel34)
                     .addComponent(jLabel35))
                 .addGap(0, 0, 0)
-                .addComponent(jLabel36)
+                .addComponent(investlabel)
                 .addContainerGap())
         );
 
@@ -921,7 +960,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addComponent(jLabel25)
                 .addGap(14, 14, 14))
         );
@@ -951,8 +990,8 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
         jLabel38.setText("$");
 
-        jLabel39.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
-        jLabel39.setText("5,050");
+        onemoneysave.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
+        onemoneysave.setText("5,050");
 
         jProgressBar1.setBackground(new java.awt.Color(236, 234, 234));
         jProgressBar1.setForeground(new java.awt.Color(59, 118, 228));
@@ -963,8 +1002,8 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel40.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
         jLabel40.setText("{Currency}");
 
-        jLabel41.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
-        jLabel41.setText("{Monney_amt}");
+        moneysavelabel1.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
+        moneysavelabel1.setText("{Monney_amt}");
 
         jLabel42.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel42.setForeground(new java.awt.Color(126, 126, 126));
@@ -1044,7 +1083,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addGroup(roundedPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel38)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel39)
+                        .addComponent(onemoneysave)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
                         .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1065,10 +1104,10 @@ public class GUIMain extends javax.swing.JFrame {
                             .addGroup(roundedPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel40)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel41)
+                                .addComponent(moneysavelabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel42)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 620, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 643, Short.MAX_VALUE)
                                 .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1084,13 +1123,13 @@ public class GUIMain extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
-                    .addComponent(jLabel39))
+                    .addComponent(onemoneysave))
                 .addGap(8, 8, 8)
                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
-                    .addComponent(jLabel41)
+                    .addComponent(moneysavelabel1)
                     .addComponent(jLabel42)
                     .addComponent(jLabel46))
                 .addGap(24, 24, 24)
@@ -1110,7 +1149,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addComponent(jLabel49))
                 .addGap(22, 22, 22)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
@@ -1509,13 +1548,20 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnCreateGoalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateGoalMouseClicked
         
-        String input = JOptionPane.showInputDialog(null,"PURCHASE :");
+        String input = JOptionPane.showInputDialog(null, "PURCHASE :");
         if (input != null && !input.trim().isEmpty()) {
-        
-        GUIGoalCreate ggc = new GUIGoalCreate(input, this.userEmail); 
-        
-        ggc.setVisible(true);
-    }
+            
+            GUIGoalCreate ggc = new GUIGoalCreate(input, this.userEmail);
+            
+            ggc.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                    updateDashboard(); 
+                }
+            });
+            
+            ggc.setVisible(true);
+        }
     }//GEN-LAST:event_btnCreateGoalMouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
@@ -1602,6 +1648,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JPanel btnEnvelopeProgress;
     private javax.swing.JPanel btnSetting;
     private javax.swing.JPanel btnShuffle;
+    private javax.swing.JLabel investlabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1623,20 +1670,15 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
@@ -1679,6 +1721,9 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel moneysavelabel;
+    private javax.swing.JLabel moneysavelabel1;
+    private javax.swing.JLabel onemoneysave;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel10;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
@@ -1689,5 +1734,6 @@ public class GUIMain extends javax.swing.JFrame {
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel7;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel8;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel9;
+    private javax.swing.JLabel timesavedlabel;
     // End of variables declaration//GEN-END:variables
 }
