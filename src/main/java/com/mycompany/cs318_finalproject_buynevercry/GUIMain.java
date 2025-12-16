@@ -4,6 +4,7 @@
  */
 package com.mycompany.cs318_finalproject_buynevercry;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -37,6 +38,9 @@ public class GUIMain extends javax.swing.JFrame {
     public GUIMain(String email) {
         this.userEmail = email;
         initComponents();
+        
+        FlatLightLaf.setup();
+       
         btnAnalytics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnCreateGoal1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnShuffle.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -662,9 +666,9 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jLabel25)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         roundedPanel5Layout.setVerticalGroup(
             roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

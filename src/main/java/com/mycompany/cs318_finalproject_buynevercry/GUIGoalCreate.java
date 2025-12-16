@@ -49,6 +49,38 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
+    
+    private String loadUserCurrencySymbol() {
+    if (userEmail == null || userEmail.isEmpty()) {
+        return "$";
+    }
+
+    String url = "jdbc:sqlite:buynevercry.db";
+    String sql = "SELECT currency FROM user_settings WHERE email = ?";
+
+    try (Connection conn = DriverManager.getConnection(url);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setString(1, userEmail);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            String currencyStr = rs.getString("currency");
+
+            if (currencyStr != null && currencyStr.contains("(") && currencyStr.contains(")")) {
+                return currencyStr.substring(
+                        currencyStr.indexOf("(") + 1,
+                        currencyStr.indexOf(")")
+                );
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error loading currency: " + e.getMessage());
+    }
+
+    return "$"; // default
+}
+
     private void calculateAndShowData() {
         double salary = 0;
         double workDays = 0;
@@ -105,7 +137,8 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         }
 
         jLabel4.setText(timeString);
-        jLabel16.setText(String.format("%.2f", investedInstead));
+        String symbol = loadUserCurrencySymbol();
+        jLabel16.setText(String.format("%s%,.2f", symbol, investedInstead));
     }
 
     /**
@@ -132,7 +165,6 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         roundedPanel2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -146,6 +178,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 0, 0));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(384, 104));
 
         jLabel1.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
@@ -279,11 +312,6 @@ public class GUIGoalCreate extends javax.swing.JFrame {
             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
         );
 
-        jLabel9.setFont(new java.awt.Font("Inter 18pt Black", 0, 30)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(22, 163, 74));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("THB");
-
         jLabel10.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 18)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Invested Instead");
@@ -295,7 +323,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Inter 18pt Black", 0, 30)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(22, 163, 74));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("99999");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -306,18 +334,13 @@ public class GUIGoalCreate extends javax.swing.JFrame {
                 .addGap(136, 136, 136)
                 .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,9 +349,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabel10)
                 .addGap(14, 14, 14)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel16))
+                .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addContainerGap())
@@ -456,10 +477,11 @@ public class GUIGoalCreate extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(roundedPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(roundedPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -502,7 +524,6 @@ public class GUIGoalCreate extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
