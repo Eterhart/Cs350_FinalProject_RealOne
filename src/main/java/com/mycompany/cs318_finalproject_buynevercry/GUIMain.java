@@ -1237,6 +1237,12 @@ public class GUIMain extends javax.swing.JFrame {
     private void btnCreateGoalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateGoalMouseClicked
         
         String input = JOptionPane.showInputDialog(null,"PURCHASE :");
+        if (input != null && !input.trim().isEmpty()) {
+        
+        GUIGoalCreate ggc = new GUIGoalCreate(input, this.userEmail); 
+        
+        ggc.setVisible(true);
+    }
     }//GEN-LAST:event_btnCreateGoalMouseClicked
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
