@@ -1041,7 +1041,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="onemoneysave" min="-2" max="-2" attributes="0"/>
+                                  <Component id="moneysavelabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -1092,11 +1092,11 @@
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="onemoneysave" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="moneysavelabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="jProgressBar1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                          <Component id="jProgressBar1" min="-2" pref="10" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel40" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="moneysavelabel1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1137,7 +1137,7 @@
                     <Property name="text" type="java.lang.String" value="$"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="onemoneysave">
+                <Component class="javax.swing.JLabel" name="moneysavelabel2">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Inter 18pt Medium" size="18" style="0"/>

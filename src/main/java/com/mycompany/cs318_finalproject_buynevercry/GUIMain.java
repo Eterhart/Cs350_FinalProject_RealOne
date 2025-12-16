@@ -45,15 +45,19 @@ public class GUIMain extends javax.swing.JFrame {
      * Creates new form GUIMain
      */
     public GUIMain(String email) {
+        
+        
         this.userEmail = email;
         
         initAllTables();
         
         initComponents();
         
+        updateEnvelopeStats();
         initProgressDB();
         FlatLightLaf.setup();
         updateDashboard();
+        
        
         btnCreateGoal1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnShuffle.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -144,26 +148,23 @@ public class GUIMain extends javax.swing.JFrame {
     public void shuffleMoney() {
         String url = "jdbc:sqlite:buynevercry.db";
         
-        Set<Integer> usedNumbers = new HashSet<>();
-        String sqlSelect = "SELECT envelope_number FROM active_envelopes WHERE email = ?";
-        
+        // 1. เช็คเลขซ้ำ (เหมือนเดิม)
+        java.util.HashSet<Integer> usedNumbers = new java.util.HashSet<>();
         try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sqlSelect)) {
-            
+             PreparedStatement pstmt = conn.prepareStatement("SELECT envelope_number FROM active_envelopes WHERE email = ?")) {
             pstmt.setString(1, userEmail);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 usedNumbers.add(rs.getInt("envelope_number"));
             }
-        } catch (SQLException e) {
-            System.out.println("Check Duplicate Error: " + e.getMessage());
-        }
+        } catch (SQLException e) {}
 
         if (usedNumbers.size() >= 100) {
-            JOptionPane.showMessageDialog(this, "All 100 envelopes are opened! Please Archive to start over.");
+            JOptionPane.showMessageDialog(this, "All envelopes opened!");
             return; 
         }
 
+        // 2. สุ่มเลขใหม่
         int newRandom;
         do {
             newRandom = (int) (Math.random() * 100) + 1;
@@ -172,27 +173,19 @@ public class GUIMain extends javax.swing.JFrame {
         this.currentRandomAmount = newRandom;
         this.isCurrentRoundSaved = false; 
         
-        System.out.println("Shuffled! New Unique Amount: " + this.currentRandomAmount);
+        System.out.println("Shuffled (Pending): " + this.currentRandomAmount);
         
+        // 3. บันทึกสถานะ "ชั่วคราว" ลง user_progress (เพื่อให้เปิดซองแล้วเจอเลขนี้)
+        // แต่ ***ยังไม่เพิ่ม*** ลง active_envelopes
         updateProgressToDB(this.currentRandomAmount);
 
-        String sqlInsert = "INSERT OR IGNORE INTO active_envelopes (email, envelope_number) VALUES (?, ?)";
-        try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sqlInsert)) {
-            pstmt.setString(1, userEmail);
-            pstmt.setInt(2, this.currentRandomAmount);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Shuffle Save Error: " + e.getMessage());
-        }
-
-        // 6. อัปเดตหน้าจอต่างๆ
+        // 4. อัปเดตหน้าซอง (ให้เห็นเลข)
         if (envelopeWindow != null && envelopeWindow.isDisplayable()) {
             envelopeWindow.updateDisplay();
         }
-        if (progressWindow != null && progressWindow.isDisplayable()) {
-            progressWindow.loadAndShowData();
-        }
+        
+        // หมายเหตุ: ไม่ต้องเรียก updateEnvelopeStats() ตรงนี้ 
+        // เพราะ Stats ต้องไม่เปลี่ยนจนกว่าจะกด Save
     }
     public int getCurrentRandomAmount() {
         return currentRandomAmount;
@@ -205,11 +198,34 @@ public class GUIMain extends javax.swing.JFrame {
             this.savedCount++;
             this.isCurrentRoundSaved = true;
             
+            // 1. บันทึกเลขนี้ลง active_envelopes (ยืนยันการเก็บเงิน)
+            String url = "jdbc:sqlite:buynevercry.db";
+            String sqlInsert = "INSERT OR IGNORE INTO active_envelopes (email, envelope_number) VALUES (?, ?)";
+            try (Connection conn = DriverManager.getConnection(url);
+                 PreparedStatement pstmt = conn.prepareStatement(sqlInsert)) {
+                
+                pstmt.setString(1, userEmail);
+                pstmt.setInt(2, this.currentRandomAmount); // เอาเลขที่สุ่มได้มาบันทึก
+                pstmt.executeUpdate();
+                
+            } catch (SQLException e) {
+                System.out.println("Save Active Error: " + e.getMessage());
+            }
+
+            // 2. เคลียร์สถานะชั่วคราวเป็น 0 (จบเทิร์น)
             updateProgressToDB(0); 
-            
             this.currentRandomAmount = 0; 
             
             jLabel55.setText(savedCount + "/100 Envelopes");
+            
+            // 3. *** สั่งอัปเดต Dashboard ทันที ***
+            // ค่า moneysavelabel1, jLabel47, 48, 49 จะเปลี่ยนตอนนี้แหละ
+            updateEnvelopeStats(); 
+            
+            // 4. อัปเดตหน้าตารางซอง (ให้เป็นสีฟ้า)
+            if (progressWindow != null && progressWindow.isDisplayable()) {
+                progressWindow.loadAndShowData();
+            }
         }
     }
     private void initProgressDB() {
@@ -328,6 +344,7 @@ public class GUIMain extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(this, "Archived successfully!");
                 
+                updateEnvelopeStats();
                 shuffleMoney();
 
             } catch (SQLException e) {
@@ -408,7 +425,7 @@ public class GUIMain extends javax.swing.JFrame {
                 }
 
                 moneysavelabel.setText(String.format("%.2f", totalSaved));
-                onemoneysave.setText(String.format("%.2f", totalSaved));
+//                test.setText(String.format("%.2f", totalSaved));
                 timesavedlabel.setText(timeStr);
                 investlabel.setText(String.format("%.2f", totalInvest));
             }
@@ -417,7 +434,87 @@ public class GUIMain extends javax.swing.JFrame {
             System.out.println("Dashboard Error: " + e.getMessage());
         }
     }
-    
+    public void updateEnvelopeStats() {
+        String url = "jdbc:sqlite:buynevercry.db";
+        final int TARGET_AMOUNT = 5050;
+        final int TOTAL_ENVELOPES = 100;
+
+        double totalSaved = 0;
+        int openCount = 0;
+        double salary = 0;
+        double workDays = 0;
+        double workHours = 0;
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            
+            // 1. ดึงข้อมูลซองที่เก็บไปแล้ว (จาก active_envelopes)
+            String sqlEnv = "SELECT SUM(envelope_number) as total_val, COUNT(*) as count_val FROM active_envelopes WHERE email = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlEnv)) {
+                pstmt.setString(1, userEmail);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    totalSaved = rs.getDouble("total_val");
+                    openCount = rs.getInt("count_val");
+                }
+            }
+
+            // 2. ดึงเงินเดือนมาคำนวณเวลา
+            String sqlSalary = "SELECT salary, days_per_week, hours_per_day FROM user_settings WHERE email = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlSalary)) {
+                pstmt.setString(1, userEmail);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    salary = rs.getDouble("salary");
+                    workDays = rs.getDouble("days_per_week");
+                    workHours = rs.getDouble("hours_per_day");
+                }
+            }
+
+            // --- คำนวณ (Updated Logic) ---
+
+            // A. Moneysavelabel1 (ยอดที่เก็บได้แล้ว)
+            moneysavelabel1.setText(String.format("%.0f", totalSaved));
+
+            // B. jLabel48 (ขาดอีกเท่าไหร่ถึง 5050)
+            double remainingMoney = TARGET_AMOUNT - totalSaved;
+            if (remainingMoney < 0) remainingMoney = 0;
+            jLabel48.setText(String.format("%.0f", remainingMoney));
+
+            // C. jLabel49 (เหลืออีกกี่ซอง)
+            int remainingEnvelopes = TOTAL_ENVELOPES - openCount;
+            jLabel49.setText(String.valueOf(remainingEnvelopes));
+
+            // D. jLabel47 (Work Time Saved)
+            // เอา totalSaved มาคิดว่าเท่ากับเวลาทำงานกี่นาที
+            double moneyPerMinute = 0;
+            double totalMinutesWork = 52 * workDays * workHours * 60;
+            if (totalMinutesWork > 0) {
+                moneyPerMinute = salary / totalMinutesWork; 
+            }
+
+            double timeSavedMinutes = 0;
+            if (moneyPerMinute > 0) {
+                timeSavedMinutes = totalSaved / moneyPerMinute; // ใช้ totalSaved ตามโจทย์
+            }
+
+            // แสดงผลเวลา
+            int hrs = (int) timeSavedMinutes / 60;
+            int mins = (int) timeSavedMinutes % 60;
+            if (hrs > 0) {
+                jLabel47.setText(String.format("%d hr %d min", hrs, mins));
+            } else {
+                jLabel47.setText(String.format("%d min", mins));
+            }
+
+            // E. ProgressBar
+            int progress = (int) ((totalSaved / TARGET_AMOUNT) * 100);
+            jProgressBar1.setValue(progress);
+            jLabel46.setText(progress + "%");
+
+        } catch (SQLException e) {
+            System.out.println("Stats Error: " + e.getMessage());
+        }
+    }
 
 
     
@@ -489,7 +586,7 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         roundedPanel8 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel38 = new javax.swing.JLabel();
-        onemoneysave = new javax.swing.JLabel();
+        moneysavelabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel40 = new javax.swing.JLabel();
         moneysavelabel1 = new javax.swing.JLabel();
@@ -984,8 +1081,8 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel38.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
         jLabel38.setText("$");
 
-        onemoneysave.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
-        onemoneysave.setText("5,050");
+        moneysavelabel2.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
+        moneysavelabel2.setText("5,050");
 
         jProgressBar1.setBackground(new java.awt.Color(236, 234, 234));
         jProgressBar1.setForeground(new java.awt.Color(59, 118, 228));
@@ -1077,7 +1174,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addGroup(roundedPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel38)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(onemoneysave)
+                        .addComponent(moneysavelabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel8Layout.createSequentialGroup()
                         .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1117,10 +1214,10 @@ public class GUIMain extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
-                    .addComponent(onemoneysave))
+                    .addComponent(moneysavelabel2))
                 .addGap(8, 8, 8)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
                     .addComponent(moneysavelabel1)
@@ -1711,7 +1808,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel moneysavelabel;
     private javax.swing.JLabel moneysavelabel1;
-    private javax.swing.JLabel onemoneysave;
+    private javax.swing.JLabel moneysavelabel2;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel10;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
