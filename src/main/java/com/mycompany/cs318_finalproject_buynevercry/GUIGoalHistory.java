@@ -1,8 +1,14 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs
+ * Click nbfs
  */
 package com.mycompany.cs318_finalproject_buynevercry;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import javax.swing.*;
 
 /**
  *
@@ -17,7 +23,51 @@ public class GUIGoalHistory extends javax.swing.JFrame {
      */
     public GUIGoalHistory() {
         initComponents();
+        getContentPane().setBackground(new Color(255, 255, 255));
+        Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
+        setIconImage(icon);
+        
+        Font inter14 = new Font("Inter", Font.PLAIN, 14);
+        historyTable.setFont(inter14);
+        historyTable.getTableHeader().setFont(inter14);
+
+        historyTable.getTableHeader().setDefaultRenderer((table, value, isSelected, hasFocus, row, column) -> {
+            JLabel label = new JLabel(value.toString());
+            label.setOpaque(true);
+            label.setBackground(Color.decode("#FCFCFD"));  
+            label.setForeground(Color.BLACK);
+            label.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+            label.setHorizontalAlignment(JLabel.CENTER);
+            return label;
+            
+        });
+        
+        historyTable.setShowGrid(false);
+        historyTable.setIntercellSpacing(new Dimension(0, 0));
+       
+        historyTable.setBorder(null);
+       
+        jScrollPane1.setBorder(null);
+       
+        historyTable.setBackground(Color.WHITE);
+        historyTable.setOpaque(true);
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
+       
+        historyTable.getTableHeader().setBorder(
+            BorderFactory.createEmptyBorder()
+);
+        
+       
+        historyTable.setBackground(Color.decode("#FCFCFD"));
+        historyTable.setOpaque(true);
+        historyTable.getTableHeader().setBorder(
+            BorderFactory.createEmptyBorder()
+        );
+        jScrollPane1.getViewport().setBackground(Color.WHITE);
+
+
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,30 +78,144 @@ public class GUIGoalHistory extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel2 = new javax.swing.JLabel();
+        roundedPanel1 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        roundedPanel2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        historyTable = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(null);
+        setMinimumSize(null);
+
+        jLabel2.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
+        jLabel2.setText("Headline");
+
+        roundedPanel1.setBackground(new java.awt.Color(247, 250, 255));
+        roundedPanel1.setForeground(new java.awt.Color(247, 250, 255));
+        roundedPanel1.setBorderThickness(0.0F);
+        roundedPanel1.setCornerRadius(16);
+        roundedPanel1.setPanelColor(new java.awt.Color(247, 250, 255));
+
+        jLabel3.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 112, 255));
+        jLabel3.setText("Label text or value");
+
+        javax.swing.GroupLayout roundedPanel1Layout = new javax.swing.GroupLayout(roundedPanel1);
+        roundedPanel1.setLayout(roundedPanel1Layout);
+        roundedPanel1Layout.setHorizontalGroup(
+            roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        roundedPanel1Layout.setVerticalGroup(
+            roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jLabel3)
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 112, 133));
+        jLabel1.setText("A descriptive body text comes here");
+
+        roundedPanel2.setForeground(new java.awt.Color(255, 255, 255));
+        roundedPanel2.setBorderColor(new java.awt.Color(208, 213, 221));
+        roundedPanel2.setCornerRadius(8);
+
+        jLabel4.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(52, 64, 84));
+        jLabel4.setText("Export");
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cloud.png"))); // NOI18N
+
+        javax.swing.GroupLayout roundedPanel2Layout = new javax.swing.GroupLayout(roundedPanel2);
+        roundedPanel2.setLayout(roundedPanel2Layout);
+        roundedPanel2Layout.setHorizontalGroup(
+            roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        roundedPanel2Layout.setVerticalGroup(
+            roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        historyTable.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        historyTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date / Time", "Item Name", "Price", "Time at Work", "Decision Status"
+            }
+        ));
+        historyTable.setGridColor(new java.awt.Color(234, 236, 240));
+        historyTable.setSelectionBackground(new java.awt.Color(252, 252, 253));
+        jScrollPane1.setViewportView(historyTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(8, 8, 8)
+                        .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 709, Short.MAX_VALUE)
+                .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(roundedPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel1)))
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
      * @param args the command line arguments
      */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+       
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -63,12 +227,21 @@ public class GUIGoalHistory extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+       
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new GUIGoalHistory().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable historyTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
     // End of variables declaration//GEN-END:variables
 }

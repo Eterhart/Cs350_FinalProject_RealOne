@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs:
+ * Click nbfs:
  */
 package com.mycompany.cs318_finalproject_buynevercry;
 
@@ -37,9 +37,6 @@ public class GUIMain extends javax.swing.JFrame {
     public GUIMain(String email) {
         this.userEmail = email;
         initComponents();
-        
-
-    // ============================================================================================================================================
 
         getContentPane().setBackground(new Color(255, 255, 255));
         
@@ -213,13 +210,13 @@ public class GUIMain extends javax.swing.JFrame {
         btnCreateGoal = new javax.swing.JPanel();
         jLabel57 = new javax.swing.JLabel();
         jLabel52 = new javax.swing.JLabel();
-        roundedPanel11 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        btnCreateGoal2 = new javax.swing.JPanel();
-        jLabel60 = new javax.swing.JLabel();
-        jLabel61 = new javax.swing.JLabel();
         btnEnvelopeProgress = new javax.swing.JPanel();
         jLabel62 = new javax.swing.JLabel();
         jLabel63 = new javax.swing.JLabel();
+        roundedPanel10 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        btnCreateGoal1 = new javax.swing.JPanel();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel59 = new javax.swing.JLabel();
 
         jLabel27.setText("jLabel27");
 
@@ -442,7 +439,7 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel16.setText("Hey");
 
         jLabel17.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jLabel17.setText("You're 60% there! Keep going!");
+        jLabel17.setText("Quiz");
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/waving-hand-sign_1f44b.png"))); // NOI18N
 
@@ -459,7 +456,7 @@ public class GUIMain extends javax.swing.JFrame {
             .addGroup(roundedPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(roundedPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -468,7 +465,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel18)))
-                .addContainerGap(900, Short.MAX_VALUE))
+                .addContainerGap(359, Short.MAX_VALUE))
         );
         roundedPanel4Layout.setVerticalGroup(
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -990,62 +987,6 @@ public class GUIMain extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        roundedPanel11.setCornerRadius(8);
-        roundedPanel11.setPreferredSize(new java.awt.Dimension(149, 37));
-
-        btnCreateGoal2.setBackground(new java.awt.Color(255, 255, 255));
-        btnCreateGoal2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCreateGoal2MouseClicked(evt);
-            }
-        });
-
-        jLabel60.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel60.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clock_black.png"))); // NOI18N
-        jLabel60.setToolTipText("");
-        jLabel60.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel61.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jLabel61.setText("History");
-        jLabel61.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout btnCreateGoal2Layout = new javax.swing.GroupLayout(btnCreateGoal2);
-        btnCreateGoal2.setLayout(btnCreateGoal2Layout);
-        btnCreateGoal2Layout.setHorizontalGroup(
-            btnCreateGoal2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnCreateGoal2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel61)
-                .addContainerGap())
-        );
-        btnCreateGoal2Layout.setVerticalGroup(
-            btnCreateGoal2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btnCreateGoal2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(btnCreateGoal2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel61, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel60, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)))
-        );
-
-        javax.swing.GroupLayout roundedPanel11Layout = new javax.swing.GroupLayout(roundedPanel11);
-        roundedPanel11.setLayout(roundedPanel11Layout);
-        roundedPanel11Layout.setHorizontalGroup(
-            roundedPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel11Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(btnCreateGoal2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6))
-        );
-        roundedPanel11Layout.setVerticalGroup(
-            roundedPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel11Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(btnCreateGoal2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         btnEnvelopeProgress.setBackground(new java.awt.Color(255, 255, 255));
         btnEnvelopeProgress.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEnvelopeProgress.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1082,6 +1023,63 @@ public class GUIMain extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        roundedPanel10.setForeground(new java.awt.Color(255, 255, 255));
+        roundedPanel10.setCornerRadius(8);
+        roundedPanel10.setPreferredSize(new java.awt.Dimension(149, 37));
+
+        btnCreateGoal1.setBackground(new java.awt.Color(255, 255, 255));
+        btnCreateGoal1.setForeground(new java.awt.Color(255, 255, 255));
+        btnCreateGoal1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCreateGoal1MouseClicked(evt);
+            }
+        });
+
+        jLabel58.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel58.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clock_black.png"))); // NOI18N
+        jLabel58.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        jLabel59.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        jLabel59.setText("History");
+        jLabel59.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout btnCreateGoal1Layout = new javax.swing.GroupLayout(btnCreateGoal1);
+        btnCreateGoal1.setLayout(btnCreateGoal1Layout);
+        btnCreateGoal1Layout.setHorizontalGroup(
+            btnCreateGoal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnCreateGoal1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel59, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
+        );
+        btnCreateGoal1Layout.setVerticalGroup(
+            btnCreateGoal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnCreateGoal1Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(btnCreateGoal1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel59, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout roundedPanel10Layout = new javax.swing.GroupLayout(roundedPanel10);
+        roundedPanel10.setLayout(roundedPanel10Layout);
+        roundedPanel10Layout.setHorizontalGroup(
+            roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnCreateGoal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6))
+        );
+        roundedPanel10Layout.setVerticalGroup(
+            roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(roundedPanel10Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(btnCreateGoal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
         roundedPanel3.setLayout(roundedPanel3Layout);
         roundedPanel3Layout.setHorizontalGroup(
@@ -1092,9 +1090,9 @@ public class GUIMain extends javax.swing.JFrame {
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(roundedPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel14)
-                        .addGap(785, 785, 785)
-                        .addComponent(roundedPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addGap(790, 790, 790)
+                        .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(roundedPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(roundedPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1130,7 +1128,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addGroup(roundedPanel3Layout.createSequentialGroup()
                         .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(roundedPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(roundedPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(17, 17, 17)
@@ -1153,7 +1151,7 @@ public class GUIMain extends javax.swing.JFrame {
                                 .addContainerGap(39, Short.MAX_VALUE))))
                     .addGroup(roundedPanel3Layout.createSequentialGroup()
                         .addComponent(roundedPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 818, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1183,7 +1181,7 @@ public class GUIMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSettingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSettingMouseClicked
-        // TODO add your handling code here:
+        
         if (settingWindow == null || !settingWindow.isDisplayable()) {
             settingWindow = new GUISetting(userEmail,this);
             settingWindow.setVisible(true);
@@ -1195,7 +1193,7 @@ public class GUIMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSettingMouseClicked
 
     private void btnEnvelopeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeMouseClicked
-        // TODO add your handling code here:
+        
         if (envelopeWindow == null || !envelopeWindow.isDisplayable()) {
             envelopeWindow = new GUIEnvelope();
             envelopeWindow.setVisible(true);
@@ -1207,11 +1205,11 @@ public class GUIMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnvelopeMouseClicked
 
     private void btnContactSupportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContactSupportMouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnContactSupportMouseClicked
 
     private void btnCreateGoalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateGoalMouseClicked
-        // TODO add your handling code here:
+        
         String input = JOptionPane.showInputDialog(null,"PURCHASE :");
     }//GEN-LAST:event_btnCreateGoalMouseClicked
 
@@ -1230,24 +1228,26 @@ public class GUIMain extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel11MouseClicked
 
-    private void btnCreateGoal2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateGoal2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCreateGoal2MouseClicked
-
     private void btnEnvelopeProgressMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeProgressMouseClicked
-        // TODO add your handling code here:
+
         GUIEnvelopeProgress gp = new GUIEnvelopeProgress();
         gp.setVisible(true);
     }//GEN-LAST:event_btnEnvelopeProgressMouseClicked
+
+    private void btnCreateGoal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateGoal1MouseClicked
+        // TODO add your handling code here:
+        GUIGoalHistory history = new GUIGoalHistory();
+        history.setVisible(true);
+    }//GEN-LAST:event_btnCreateGoal1MouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http:
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -1259,7 +1259,7 @@ public class GUIMain extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new GUIMain("test@example.com").setVisible(true));
@@ -1268,7 +1268,7 @@ public class GUIMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnContactSupport;
     private javax.swing.JPanel btnCreateGoal;
-    private javax.swing.JPanel btnCreateGoal2;
+    private javax.swing.JPanel btnCreateGoal1;
     private javax.swing.JLabel btnEnvelope;
     private javax.swing.JPanel btnEnvelopeProgress;
     private javax.swing.JPanel btnSetting;
@@ -1325,9 +1325,9 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel60;
-    private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel66;
@@ -1352,7 +1352,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel11;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel10;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel3;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel4;
