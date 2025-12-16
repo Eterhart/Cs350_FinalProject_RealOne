@@ -1535,7 +1535,7 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
         shuffleMoney();
-        JOptionPane.showMessageDialog(this, "New number generated!");
+        JOptionPane.showMessageDialog(this, "New Envelope Generated!");
     }//GEN-LAST:event_jLabel53MouseClicked
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
