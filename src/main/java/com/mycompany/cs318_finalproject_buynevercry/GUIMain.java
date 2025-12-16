@@ -18,6 +18,8 @@ import java.sql.*;
 
 public class GUIMain extends javax.swing.JFrame {
     
+    
+    
     private GUISetting settingWindow;
     private GUIEnvelope envelopeWindow;
     
@@ -41,6 +43,9 @@ public class GUIMain extends javax.swing.JFrame {
      */
     public GUIMain(String email) {
         this.userEmail = email;
+        
+        initAllTables();
+        
         initComponents();
         
         initProgressDB();
@@ -242,7 +247,7 @@ public class GUIMain extends javax.swing.JFrame {
         }
 
         int confirm = JOptionPane.showConfirmDialog(this, 
-                "Archive current progress (" + savedCount + " envelopes)?\nThis will reset your counter to 0.", 
+                "Are you sure you want to do this? Archiving this challenge will reset all progress. This action cannot be undone.", 
                 "Confirm Archive", 
                 JOptionPane.YES_NO_OPTION);
 
@@ -270,6 +275,43 @@ public class GUIMain extends javax.swing.JFrame {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Archive Error: " + e.getMessage());
             }
+        }
+    }
+    private void initAllTables() {
+        String url = "jdbc:sqlite:buynevercry.db";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            
+            String createSettingsSQL = "CREATE TABLE IF NOT EXISTS user_settings ("
+                        + "email TEXT PRIMARY KEY, "
+                        + "salary REAL DEFAULT 0, "
+                        + "hours_per_day INTEGER DEFAULT 8, "
+                        + "days_per_week INTEGER DEFAULT 5, "
+                        + "investment_return REAL DEFAULT 5.0, "
+                        + "currency TEXT DEFAULT 'THB (฿)', "
+                        + "custom_label TEXT DEFAULT ''"
+                        + ");";
+            stmt.execute(createSettingsSQL);
+
+            String createProgressSQL = "CREATE TABLE IF NOT EXISTS user_progress (" +
+                                         "email TEXT PRIMARY KEY, " +
+                                         "saved_count INTEGER DEFAULT 0, " +
+                                         "current_random_amount INTEGER DEFAULT 0" + 
+                                         ");";
+            stmt.execute(createProgressSQL);
+            
+            String createArchiveSQL = "CREATE TABLE IF NOT EXISTS user_archive (" +
+                                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                        "email TEXT, " +
+                                        "total_saved_count INTEGER, " +
+                                        "archived_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                                        ");";
+            stmt.execute(createArchiveSQL);
+
+        } catch (SQLException e) {
+            System.out.println("Init DB Error: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

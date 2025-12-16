@@ -81,7 +81,7 @@ public class GUISetting extends javax.swing.JFrame {
                         
                         
                         String savedLabel = rs.getString("custom_label");
-                        if (savedLabel != null) jTextField2.setText(savedLabel);
+                        if (savedLabel != null);
 
                     } else {
                         String queryUserMain = "SELECT yearly_salary FROM users WHERE email = ?";
@@ -99,7 +99,6 @@ public class GUISetting extends javax.swing.JFrame {
                         jTextFieldDays.setText("5");
                         jTextFieldInvest.setText("5.0");
                         jComboBox3.setSelectedIndex(0);
-                        jTextField2.setText("");
                     }
                     updateCurrencyLabel();
                 }
@@ -136,7 +135,6 @@ public class GUISetting extends javax.swing.JFrame {
             }
 
             String currency = (String) jComboBox3.getSelectedItem();
-            String customLabel = jTextField2.getText();
 
             pstmt.setString(1, currentEmail);
             pstmt.setDouble(2, salary);
@@ -144,7 +142,6 @@ public class GUISetting extends javax.swing.JFrame {
             pstmt.setInt(4, days);
             pstmt.setDouble(5, invest);
             pstmt.setString(6, currency);
-            pstmt.setString(7, customLabel);
 
             pstmt.executeUpdate();
             System.out.println("Auto-saved all settings for: " + currentEmail);
@@ -192,8 +189,7 @@ public class GUISetting extends javax.swing.JFrame {
         jTextFieldInvest.addFocusListener(focusLostListener);
         jTextFieldInvest.addActionListener(actionListener);
 
-        jTextField2.addFocusListener(focusLostListener);
-        jTextField2.addActionListener(actionListener);
+
 
         jComboBox3.addActionListener(actionListener); 
     }
@@ -235,7 +231,6 @@ public class GUISetting extends javax.swing.JFrame {
         roundedPanel5 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel11 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
 
         jLabel2.setFont(new java.awt.Font("Inter 18pt", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(82, 82, 82));
@@ -273,7 +268,7 @@ public class GUISetting extends javax.swing.JFrame {
         roundedPanel3Layout.setHorizontalGroup(
             roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel3Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(currentcylabel)
                 .addGap(18, 18, 18)
                 .addComponent(jTextFieldSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -444,7 +439,7 @@ public class GUISetting extends javax.swing.JFrame {
                             .addComponent(roundedPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(36, 36, 36)
                         .addGroup(roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                             .addComponent(roundedPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
@@ -469,7 +464,7 @@ public class GUISetting extends javax.swing.JFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(roundedPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         roundedPanel5.setBorderThickness(0.0F);
@@ -484,8 +479,6 @@ public class GUISetting extends javax.swing.JFrame {
         jComboBox3.setBorder(null);
         jComboBox3.setPreferredSize(new java.awt.Dimension(304, 41));
 
-        jTextField2.setText("jTextField1");
-
         javax.swing.GroupLayout roundedPanel5Layout = new javax.swing.GroupLayout(roundedPanel5);
         roundedPanel5.setLayout(roundedPanel5Layout);
         roundedPanel5Layout.setHorizontalGroup(
@@ -493,21 +486,16 @@ public class GUISetting extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel5Layout.createSequentialGroup()
                 .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(roundedPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel11)
                     .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
         roundedPanel5Layout.setVerticalGroup(
             roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel5Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel11)
+                .addGap(39, 39, 39)
                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
         );
@@ -576,7 +564,6 @@ public class GUISetting extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextFieldDays;
     private javax.swing.JTextField jTextFieldHours;
     private javax.swing.JTextField jTextFieldInvest;
