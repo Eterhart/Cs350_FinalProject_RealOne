@@ -6,7 +6,8 @@ package com.mycompany.cs318_finalproject_buynevercry;
 
 import java.awt.*;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.sql.*;
 
 /**
  *
@@ -14,16 +15,97 @@ import javax.swing.ImageIcon;
  */
 public class GUIGoalCreate extends javax.swing.JFrame {
     
+    private double currentPrice;
+    private String userEmail;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIGoalCreate.class.getName());
 
     /**
      * Creates new form GUICreateGoal
      */
-    public GUIGoalCreate() {
+    public GUIGoalCreate(String priceInput, String email) {
+        
+        this.userEmail = email;
         initComponents();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
         getContentPane().setBackground(new Color(255, 255, 255));
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
+        
+        try {
+            this.currentPrice = Double.parseDouble(priceInput);
+            
+            calculateAndShowData(); 
+            
+        } catch (NumberFormatException e) {
+            this.currentPrice = 0;
+            jLabel4.setText("Invalid Price");
+        }
+        
+    }
+    public GUIGoalCreate() {
+        initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    }
+    private void calculateAndShowData() {
+        double salary = 0;
+        double workDays = 0;
+        double workHours = 0;
+        double investFromDB = 0;
+
+        String url = "jdbc:sqlite:buynevercry.db";
+        
+        String sql = "SELECT salary, days_per_week, hours_per_day, investment_return " +
+                     "FROM user_settings WHERE email = ?";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, this.userEmail);
+            
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                salary = rs.getDouble("salary");
+                workDays = rs.getDouble("days_per_week");
+                workHours = rs.getDouble("hours_per_day");
+                investFromDB = rs.getDouble("investment_return");
+            } else {
+                System.out.println("User setting not found for: " + this.userEmail);
+            }
+        } catch (SQLException e) {
+            System.out.println("DB Error: " + e.getMessage());
+        }
+
+        System.out.println("DEBUG -> Email: " + this.userEmail + " Salary: " + salary);
+        
+        double totalMinutesPerYear = 52 * workDays * workHours * 60;
+        
+        double moneyPerMinute = 0;
+        if (totalMinutesPerYear > 0) {
+            moneyPerMinute = salary / totalMinutesPerYear;
+        }
+
+        double timeToEarnMinutes = 0;
+        if (moneyPerMinute > 0) {
+            timeToEarnMinutes = this.currentPrice / moneyPerMinute;
+        }
+
+        double investedInstead = this.currentPrice + investFromDB;
+
+        int hrs = (int) timeToEarnMinutes / 60;
+        int mins = (int) timeToEarnMinutes % 60;
+        
+        String timeString;
+        if (hrs > 0) {
+            timeString = String.format("%d hr %d min", hrs, mins);
+        } else {
+            timeString = String.format("%d minutes", mins);
+        }
+
+        jLabel4.setText(timeString);
+        jLabel16.setText(String.format("%.2f", investedInstead));
     }
 
     /**
