@@ -122,7 +122,7 @@ public class GUIMain extends javax.swing.JFrame {
                     
                     jLabel20.setText(symbol);
                     jLabel32.setText(symbol);
-                    investlabel.setText(symbol);
+                    investlabel1.setText(symbol);
                     jLabel38.setText(symbol);
                     jLabel40.setText(symbol);
                     jLabel66.setText(symbol); 
@@ -131,7 +131,7 @@ public class GUIMain extends javax.swing.JFrame {
                 String defaultSymbol = "$";
                 jLabel20.setText(defaultSymbol);
                 jLabel32.setText(defaultSymbol);
-                investlabel.setText(defaultSymbol);
+                investlabel1.setText(defaultSymbol);
                 jLabel38.setText(defaultSymbol);
                 jLabel40.setText(defaultSymbol);
                 jLabel66.setText(defaultSymbol); 
@@ -482,6 +482,7 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         investlabel = new javax.swing.JLabel();
+        investlabel1 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         roundedPanel6 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel26 = new javax.swing.JLabel();
@@ -777,7 +778,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel18)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(jLabel61)
                 .addGap(162, 162, 162))
         );
@@ -906,6 +907,9 @@ public class GUIMain extends javax.swing.JFrame {
         investlabel.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
         investlabel.setText("{TimeSaved}");
 
+        investlabel1.setFont(new java.awt.Font("Inter 18pt Medium", 0, 20)); // NOI18N
+        investlabel1.setText("{Currency}");
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -913,12 +917,15 @@ public class GUIMain extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(investlabel)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(investlabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(investlabel1))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel35)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel34)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -928,7 +935,9 @@ public class GUIMain extends javax.swing.JFrame {
                     .addComponent(jLabel34)
                     .addComponent(jLabel35))
                 .addGap(0, 0, 0)
-                .addComponent(investlabel)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(investlabel)
+                    .addComponent(investlabel1))
                 .addContainerGap())
         );
 
@@ -1627,6 +1636,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JPanel btnSetting;
     private javax.swing.JPanel btnShuffle;
     private javax.swing.JLabel investlabel;
+    private javax.swing.JLabel investlabel1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
