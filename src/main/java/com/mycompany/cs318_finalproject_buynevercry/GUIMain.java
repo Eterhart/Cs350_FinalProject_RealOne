@@ -144,10 +144,8 @@ public class GUIMain extends javax.swing.JFrame {
         
         System.out.println("Shuffled! New Amount: " + this.currentRandomAmount);
         
-        // 1. อัปเดตตาราง Progress ปกติ (เพื่อเก็บค่า current_random ล่าสุด)
         updateProgressToDB();
 
-        // 2. [เพิ่มส่วนนี้] บันทึกเลขนี้ลงใน active_envelopes (เก็บสะสมไว้)
         String url = "jdbc:sqlite:buynevercry.db";
         String sql = "INSERT OR IGNORE INTO active_envelopes (email, envelope_number) VALUES (?, ?)";
         
@@ -160,7 +158,6 @@ public class GUIMain extends javax.swing.JFrame {
             System.out.println("Shuffle Save Error: " + e.getMessage());
         }
 
-        // สั่งอัปเดตหน้าจอ
         if (envelopeWindow != null && envelopeWindow.isDisplayable()) {
             envelopeWindow.updateDisplay();
         }
@@ -218,7 +215,7 @@ public class GUIMain extends javax.swing.JFrame {
         String url = "jdbc:sqlite:buynevercry.db";
         String sql = "SELECT saved_count, current_random_amount FROM user_progress WHERE email = ?";
         
-        boolean needShuffle = false; // 1. สร้างตัวแปรเช็คว่าต้องสุ่มใหม่ไหม
+        boolean needShuffle = false;
 
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -233,11 +230,9 @@ public class GUIMain extends javax.swing.JFrame {
                 if (dbRandom > 0) {
                     this.currentRandomAmount = dbRandom;
                 } else {
-                    // ถ้าเป็น 0 อย่าเพิ่งเรียก shuffleMoney() ตรงนี้ เพราะ Connection ยังเปิดอยู่
                     needShuffle = true; 
                 }
             } else {
-                // ถ้าไม่เคยมีข้อมูล ก็ต้องสุ่มใหม่
                 needShuffle = true;
             }
             
@@ -247,7 +242,6 @@ public class GUIMain extends javax.swing.JFrame {
             System.out.println("Load Error: " + e.getMessage());
         }
         
-        // 2. เรียก shuffleMoney() ตรงนี้ (เมื่อ Connection ข้างบนปิดสนิทแล้ว)
         if (needShuffle) {
             shuffleMoney();
         }
@@ -289,17 +283,14 @@ public class GUIMain extends javax.swing.JFrame {
                     pstmtDel.executeUpdate();
                 }
 
-                // รีเซ็ตค่าอื่นๆ
                 this.savedCount = 0;
                 this.isCurrentRoundSaved = false; 
-                this.currentRandomAmount = 0; // รีเซ็ตเลขปัจจุบันด้วยก็ได้
+                this.currentRandomAmount = 0;
                 
-                updateProgressToDB(); // บันทึกค่า 0 ลง DB หลัก
+                updateProgressToDB();
                 
-                // อัปเดต UI
                 jLabel55.setText("0/100 Envelopes");
                 
-                // ถ้าเปิดหน้า Progress อยู่ ให้มันรีเฟรชเป็นขาวล้วนทันที
                 if (progressWindow != null && progressWindow.isDisplayable()) {
                     progressWindow.loadAndShowData();
                 }

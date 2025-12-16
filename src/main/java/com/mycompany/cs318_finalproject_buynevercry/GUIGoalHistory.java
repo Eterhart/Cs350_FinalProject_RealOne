@@ -4,15 +4,14 @@
  */
 package com.mycompany.cs318_finalproject_buynevercry;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
 import javax.swing.*;
 import java.sql.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import java.io.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableModel;
 
 
 /**
@@ -96,7 +95,6 @@ public class GUIGoalHistory extends javax.swing.JFrame {
         label.setForeground(Color.BLACK);
         label.setOpaque(true);
 
-        // ระยะห่าง + เส้นล่าง
         label.setBorder(BorderFactory.createMatteBorder(
                 0, 0, 1, 0, Color.decode("#EAECF0")
         ));
@@ -144,6 +142,64 @@ public class GUIGoalHistory extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Error loading history: " + e.getMessage());
+        }
+    }
+    private void exportToCSV() {
+        if (historyTable.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No data to export!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save as CSV");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("CSV Files (*.csv)", "csv"));
+        
+        fileChooser.setSelectedFile(new File("my_goal_history.csv"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            
+            if (!fileToSave.getAbsolutePath().endsWith(".csv")) {
+                fileToSave = new File(fileToSave.getAbsolutePath() + ".csv");
+            }
+
+            try (FileWriter fw = new FileWriter(fileToSave)) {
+                TableModel model = historyTable.getModel();
+
+                for (int i = 0; i < model.getColumnCount(); i++) {
+                    fw.write(model.getColumnName(i));
+                    if (i < model.getColumnCount() - 1) {
+                        fw.write(",");
+                    }
+                }
+                fw.write("\n");
+
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    for (int j = 0; j < model.getColumnCount(); j++) {
+                        Object value = model.getValueAt(i, j);
+                        String data = (value == null) ? "" : value.toString();
+                        
+                        if (data.contains(",") || data.contains("\"") || data.contains("\n")) {
+                            data = "\"" + data.replace("\"", "\"\"") + "\"";
+                        }
+                        
+                        fw.write(data);
+                        
+                        if (j < model.getColumnCount() - 1) {
+                            fw.write(",");
+                        }
+                    }
+                    fw.write("\n");
+                }
+
+                JOptionPane.showMessageDialog(this, "Export successfully!\nSaved to: " + fileToSave.getAbsolutePath());
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error exporting file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -220,6 +276,11 @@ public class GUIGoalHistory extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(52, 64, 84));
         jLabel4.setText("Export");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cloud.png"))); // NOI18N
 
@@ -313,8 +374,12 @@ public class GUIGoalHistory extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
-        // TODO add your handling code here:
+        exportToCSV();
     }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        exportToCSV();
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
