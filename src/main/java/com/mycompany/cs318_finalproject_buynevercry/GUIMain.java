@@ -1443,6 +1443,8 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnAnalyticsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalyticsMouseClicked
         // TODO add your handling code here:
+        GUIQuiz quiz = new GUIQuiz();
+        quiz.setVisible(true);
     }//GEN-LAST:event_btnAnalyticsMouseClicked
 
     private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked

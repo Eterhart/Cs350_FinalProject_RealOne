@@ -28,6 +28,10 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         this.userEmail = email;
         initComponents();
         
+        btnDontBuy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnBuy.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnUnsure.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
         getContentPane().setBackground(new Color(255, 255, 255));
@@ -169,14 +173,14 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         roundedPanel3 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel12 = new javax.swing.JLabel();
+        btnDontBuy = new javax.swing.JLabel();
         roundedPanel4 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel13 = new javax.swing.JLabel();
+        btnUnsure = new javax.swing.JLabel();
         roundedPanel6 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel15 = new javax.swing.JLabel();
+        btnBuy = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(204, 0, 0));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(384, 104));
@@ -358,10 +362,10 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         roundedPanel3.setPanelColor(new java.awt.Color(204, 0, 0));
         roundedPanel3.setPreferredSize(new java.awt.Dimension(336, 48));
 
-        jLabel12.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText(" Don't Buy");
+        btnDontBuy.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
+        btnDontBuy.setForeground(new java.awt.Color(255, 255, 255));
+        btnDontBuy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnDontBuy.setText(" Don't Buy");
 
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
         roundedPanel3.setLayout(roundedPanel3Layout);
@@ -369,23 +373,23 @@ public class GUIGoalCreate extends javax.swing.JFrame {
             roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                .addComponent(btnDontBuy, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundedPanel3Layout.setVerticalGroup(
             roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addComponent(btnDontBuy, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         roundedPanel4.setPanelColor(new java.awt.Color(242, 242, 242));
         roundedPanel4.setPreferredSize(new java.awt.Dimension(336, 48));
 
-        jLabel13.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText(" Unsure");
+        btnUnsure.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
+        btnUnsure.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnUnsure.setText(" Unsure");
 
         javax.swing.GroupLayout roundedPanel4Layout = new javax.swing.GroupLayout(roundedPanel4);
         roundedPanel4.setLayout(roundedPanel4Layout);
@@ -393,24 +397,24 @@ public class GUIGoalCreate extends javax.swing.JFrame {
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addComponent(btnUnsure, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundedPanel4Layout.setVerticalGroup(
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addComponent(btnUnsure, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         roundedPanel6.setPanelColor(new java.awt.Color(0, 51, 255));
         roundedPanel6.setPreferredSize(new java.awt.Dimension(336, 48));
 
-        jLabel15.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText(" Buy");
+        btnBuy.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
+        btnBuy.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnBuy.setText(" Buy");
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
         roundedPanel6.setLayout(roundedPanel6Layout);
@@ -418,14 +422,14 @@ public class GUIGoalCreate extends javax.swing.JFrame {
             roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundedPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addComponent(btnBuy, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
                 .addContainerGap())
         );
         roundedPanel6Layout.setVerticalGroup(
             roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addComponent(btnBuy, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -510,12 +514,12 @@ public class GUIGoalCreate extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnBuy;
+    private javax.swing.JLabel btnDontBuy;
+    private javax.swing.JLabel btnUnsure;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
