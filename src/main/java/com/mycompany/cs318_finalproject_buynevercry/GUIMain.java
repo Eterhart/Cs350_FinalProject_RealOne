@@ -10,6 +10,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -139,18 +141,43 @@ public class GUIMain extends javax.swing.JFrame {
         }
     }
     public void shuffleMoney() {
-        this.currentRandomAmount = (int) (Math.random() * 100) + 1;
-        this.isCurrentRoundSaved = false; 
-        
-        System.out.println("Shuffled! New Amount: " + this.currentRandomAmount);
-        
-        updateProgressToDB();
-
         String url = "jdbc:sqlite:buynevercry.db";
-        String sql = "INSERT OR IGNORE INTO active_envelopes (email, envelope_number) VALUES (?, ?)";
+        
+        Set<Integer> usedNumbers = new HashSet<>();
+        String sqlSelect = "SELECT envelope_number FROM active_envelopes WHERE email = ?";
         
         try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sqlSelect)) {
+            
+            pstmt.setString(1, userEmail);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                usedNumbers.add(rs.getInt("envelope_number"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Check Duplicate Error: " + e.getMessage());
+        }
+
+        if (usedNumbers.size() >= 100) {
+            JOptionPane.showMessageDialog(this, "All 100 envelopes are opened! Please Archive to start over.");
+            return; 
+        }
+
+        int newRandom;
+        do {
+            newRandom = (int) (Math.random() * 100) + 1;
+        } while (usedNumbers.contains(newRandom));
+
+        this.currentRandomAmount = newRandom;
+        this.isCurrentRoundSaved = false; 
+        
+        System.out.println("Shuffled! New Unique Amount: " + this.currentRandomAmount);
+        
+        updateProgressToDB(this.currentRandomAmount);
+
+        String sqlInsert = "INSERT OR IGNORE INTO active_envelopes (email, envelope_number) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sqlInsert)) {
             pstmt.setString(1, userEmail);
             pstmt.setInt(2, this.currentRandomAmount);
             pstmt.executeUpdate();
@@ -158,6 +185,7 @@ public class GUIMain extends javax.swing.JFrame {
             System.out.println("Shuffle Save Error: " + e.getMessage());
         }
 
+        // 6. อัปเดตหน้าจอต่างๆ
         if (envelopeWindow != null && envelopeWindow.isDisplayable()) {
             envelopeWindow.updateDisplay();
         }
@@ -176,7 +204,9 @@ public class GUIMain extends javax.swing.JFrame {
             this.savedCount++;
             this.isCurrentRoundSaved = true;
             
-            updateProgressToDB();
+            updateProgressToDB(0); 
+            
+            this.currentRandomAmount = 0; 
             
             jLabel55.setText(savedCount + "/100 Envelopes");
         }
@@ -246,7 +276,7 @@ public class GUIMain extends javax.swing.JFrame {
             shuffleMoney();
         }
     }
-    private void updateProgressToDB() {
+    private void updateProgressToDB(int amountToSave) {
         String url = "jdbc:sqlite:buynevercry.db";
         String sql = "INSERT OR REPLACE INTO user_progress (email, saved_count, current_random_amount) VALUES (?, ?, ?)";
         
@@ -255,7 +285,7 @@ public class GUIMain extends javax.swing.JFrame {
             
             pstmt.setString(1, userEmail);
             pstmt.setInt(2, this.savedCount);
-            pstmt.setInt(3, this.currentRandomAmount);
+            pstmt.setInt(3,amountToSave);
             pstmt.executeUpdate();
             
         } catch (SQLException e) {
@@ -287,7 +317,7 @@ public class GUIMain extends javax.swing.JFrame {
                 this.isCurrentRoundSaved = false; 
                 this.currentRandomAmount = 0;
                 
-                updateProgressToDB();
+                updateProgressToDB(0);
                 
                 jLabel55.setText("0/100 Envelopes");
                 
@@ -1459,13 +1489,17 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnEnvelopeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeMouseClicked
         
+        if (this.currentRandomAmount == 0) {
+            shuffleMoney();
+        }
+
         if (envelopeWindow == null || !envelopeWindow.isDisplayable()) {
-            envelopeWindow = new GUIEnvelope(userEmail,this);
+            envelopeWindow = new GUIEnvelope(this.userEmail, this); 
             envelopeWindow.setVisible(true);
         } else {
             envelopeWindow.setVisible(true);
             envelopeWindow.toFront();
-            envelopeWindow.updateDisplay();
+            envelopeWindow.updateDisplay(); 
         }
     }//GEN-LAST:event_btnEnvelopeMouseClicked
 
