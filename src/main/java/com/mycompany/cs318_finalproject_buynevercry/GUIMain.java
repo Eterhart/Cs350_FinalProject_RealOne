@@ -434,9 +434,10 @@ public class GUIMain extends javax.swing.JFrame {
             System.out.println("Dashboard Error: " + e.getMessage());
         }
     }
+    // ฟังก์ชันอัปเดตสถานะ Envelope Challenge
     public void updateEnvelopeStats() {
         String url = "jdbc:sqlite:buynevercry.db";
-        final int TARGET_AMOUNT = 5050;
+        final double TARGET_AMOUNT = 5050.0; // เป้าหมาย 5050
         final int TOTAL_ENVELOPES = 100;
 
         double totalSaved = 0;
@@ -447,7 +448,7 @@ public class GUIMain extends javax.swing.JFrame {
 
         try (Connection conn = DriverManager.getConnection(url)) {
             
-            // 1. ดึงข้อมูลซองที่เก็บไปแล้ว (จาก active_envelopes)
+            // 1. ดึงข้อมูลยอดเงินรวม (Sum) และจำนวนซอง (Count)
             String sqlEnv = "SELECT SUM(envelope_number) as total_val, COUNT(*) as count_val FROM active_envelopes WHERE email = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sqlEnv)) {
                 pstmt.setString(1, userEmail);
@@ -458,7 +459,7 @@ public class GUIMain extends javax.swing.JFrame {
                 }
             }
 
-            // 2. ดึงเงินเดือนมาคำนวณเวลา
+            // 2. ดึงข้อมูลเงินเดือน
             String sqlSalary = "SELECT salary, days_per_week, hours_per_day FROM user_settings WHERE email = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sqlSalary)) {
                 pstmt.setString(1, userEmail);
@@ -470,9 +471,9 @@ public class GUIMain extends javax.swing.JFrame {
                 }
             }
 
-            // --- คำนวณ (Updated Logic) ---
+            // --- คำนวณและแสดงผล ---
 
-            // A. Moneysavelabel1 (ยอดที่เก็บได้แล้ว)
+            // A. Moneysavelabel1 (ยอดที่เก็บได้จริง)
             moneysavelabel1.setText(String.format("%.0f", totalSaved));
 
             // B. jLabel48 (ขาดอีกเท่าไหร่ถึง 5050)
@@ -484,8 +485,7 @@ public class GUIMain extends javax.swing.JFrame {
             int remainingEnvelopes = TOTAL_ENVELOPES - openCount;
             jLabel49.setText(String.valueOf(remainingEnvelopes));
 
-            // D. jLabel47 (Work Time Saved)
-            // เอา totalSaved มาคิดว่าเท่ากับเวลาทำงานกี่นาที
+            // D. jLabel47 (ประหยัดเวลาทำงานไปกี่นาที)
             double moneyPerMinute = 0;
             double totalMinutesWork = 52 * workDays * workHours * 60;
             if (totalMinutesWork > 0) {
@@ -494,10 +494,10 @@ public class GUIMain extends javax.swing.JFrame {
 
             double timeSavedMinutes = 0;
             if (moneyPerMinute > 0) {
-                timeSavedMinutes = totalSaved / moneyPerMinute; // ใช้ totalSaved ตามโจทย์
+                timeSavedMinutes = totalSaved / moneyPerMinute;
             }
 
-            // แสดงผลเวลา
+            // แสดงผลเวลา (hr/min)
             int hrs = (int) timeSavedMinutes / 60;
             int mins = (int) timeSavedMinutes % 60;
             if (hrs > 0) {
@@ -506,10 +506,21 @@ public class GUIMain extends javax.swing.JFrame {
                 jLabel47.setText(String.format("%d min", mins));
             }
 
-            // E. ProgressBar
-            int progress = (int) ((totalSaved / TARGET_AMOUNT) * 100);
-            jProgressBar1.setValue(progress);
-            jLabel46.setText(progress + "%");
+            // E. ProgressBar & Percentage (ส่วนที่แก้ไข Logic)
+            // คำนวณ % จากยอดเงินเทียบกับ 5050
+            double progressPercentage = (totalSaved / TARGET_AMOUNT) * 100;
+            
+            // จำกัดไม่ให้เกิน 100% (เผื่อ error)
+            if (progressPercentage > 100) progressPercentage = 100;
+            
+            int progressInt = (int) progressPercentage;
+
+            jProgressBar1.setMaximum(100);
+            jProgressBar1.setValue(progressInt);
+            
+            // แสดงตัวเลขเปอร์เซ็นต์
+            jLabel46.setText(progressInt + "%");
+            jLabel17.setText("You're "+progressInt + "% there! Keep going!");
 
         } catch (SQLException e) {
             System.out.println("Stats Error: " + e.getMessage());
@@ -1012,17 +1023,16 @@ public class GUIMain extends javax.swing.JFrame {
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(investlabel)
+                        .addComponent(investlabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(investlabel1))
+                        .addComponent(investlabel))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel35)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel34)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1051,7 +1061,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel25)
                 .addGap(14, 14, 14))
         );
