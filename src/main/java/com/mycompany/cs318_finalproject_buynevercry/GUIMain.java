@@ -37,6 +37,10 @@ public class GUIMain extends javax.swing.JFrame {
     public GUIMain(String email) {
         this.userEmail = email;
         initComponents();
+        btnAnalytics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnCreateGoal1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnShuffle.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnArchive.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         getContentPane().setBackground(new Color(255, 255, 255));
         
@@ -99,7 +103,7 @@ public class GUIMain extends javax.swing.JFrame {
                     jLabel66.setText(symbol); 
                 }
             } else {
-                String defaultSymbol = "฿";
+                String defaultSymbol = "$";
                 jLabel20.setText(defaultSymbol);
                 jLabel32.setText(defaultSymbol);
                 jLabel36.setText(defaultSymbol);
@@ -156,6 +160,8 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        btnAnalytics = new javax.swing.JLabel();
+        jLabel61 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         roundedPanel5 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -198,10 +204,10 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel50 = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
         btnEnvelope = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        btnArchive = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        btnShuffle = new javax.swing.JPanel();
         jLabel53 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jLabel55 = new javax.swing.JLabel();
@@ -439,7 +445,7 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel16.setText("Hey");
 
         jLabel17.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jLabel17.setText("Quiz");
+        jLabel17.setText("Answer 4 simple questions and we’ll show you if your lifestyle is sustainable… or just living in denial.");
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/waving-hand-sign_1f44b.png"))); // NOI18N
 
@@ -448,6 +454,17 @@ public class GUIMain extends javax.swing.JFrame {
 
         jLabel23.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
         jLabel23.setText(",");
+
+        btnAnalytics.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
+        btnAnalytics.setForeground(new java.awt.Color(59, 118, 228));
+        btnAnalytics.setText("View Analytics");
+        btnAnalytics.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnalyticsMouseClicked(evt);
+            }
+        });
+
+        jLabel61.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/banklocker.png"))); // NOI18N
 
         javax.swing.GroupLayout roundedPanel4Layout = new javax.swing.GroupLayout(roundedPanel4);
         roundedPanel4.setLayout(roundedPanel4Layout);
@@ -465,7 +482,11 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel18)))
-                .addContainerGap(359, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addComponent(jLabel61)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAnalytics)
+                .addGap(54, 54, 54))
         );
         roundedPanel4Layout.setVerticalGroup(
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,7 +500,12 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)))
                 .addGap(0, 0, 0)
                 .addComponent(jLabel17)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(roundedPanel4Layout.createSequentialGroup()
+                .addGroup(roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel61, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAnalytics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jLabel14.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
@@ -865,7 +891,7 @@ public class GUIMain extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        btnArchive.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/archive_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png"))); // NOI18N
@@ -873,20 +899,20 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 14)); // NOI18N
         jLabel24.setText("Archive");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnArchiveLayout = new javax.swing.GroupLayout(btnArchive);
+        btnArchive.setLayout(btnArchiveLayout);
+        btnArchiveLayout.setHorizontalGroup(
+            btnArchiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnArchiveLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(btnArchiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        btnArchiveLayout.setVerticalGroup(
+            btnArchiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnArchiveLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -894,7 +920,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        btnShuffle.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-shuffle-64.png"))); // NOI18N
@@ -903,20 +929,20 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("Shuffle");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnShuffleLayout = new javax.swing.GroupLayout(btnShuffle);
+        btnShuffle.setLayout(btnShuffleLayout);
+        btnShuffleLayout.setHorizontalGroup(
+            btnShuffleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnShuffleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(btnShuffleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel54, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        btnShuffleLayout.setVerticalGroup(
+            btnShuffleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnShuffleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel53)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1102,7 +1128,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(roundedPanel3Layout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnArchive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(190, 190, 190)
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel55, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1110,7 +1136,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addComponent(btnEnvelope, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnShuffle, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnvelopeProgress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(55, 55, 55))
         );
@@ -1139,8 +1165,8 @@ public class GUIMain extends javax.swing.JFrame {
                                 .addComponent(btnEnvelopeProgress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btnShuffle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnArchive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(52, 52, 52))
                             .addGroup(roundedPanel3Layout.createSequentialGroup()
                                 .addComponent(btnEnvelope, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1240,6 +1266,10 @@ public class GUIMain extends javax.swing.JFrame {
         history.setVisible(true);
     }//GEN-LAST:event_btnCreateGoal1MouseClicked
 
+    private void btnAnalyticsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalyticsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAnalyticsMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1266,12 +1296,15 @@ public class GUIMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnAnalytics;
+    private javax.swing.JPanel btnArchive;
     private javax.swing.JPanel btnContactSupport;
     private javax.swing.JPanel btnCreateGoal;
     private javax.swing.JPanel btnCreateGoal1;
     private javax.swing.JLabel btnEnvelope;
     private javax.swing.JPanel btnEnvelopeProgress;
     private javax.swing.JPanel btnSetting;
+    private javax.swing.JPanel btnShuffle;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1328,6 +1361,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel66;
@@ -1339,9 +1373,7 @@ public class GUIMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPopupMenu jPopupMenu1;
