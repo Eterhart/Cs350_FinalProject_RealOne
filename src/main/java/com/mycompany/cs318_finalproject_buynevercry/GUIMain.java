@@ -1479,7 +1479,7 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnCreateGoal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateGoal1MouseClicked
         // TODO add your handling code here:
-        GUIGoalHistory history = new GUIGoalHistory();
+        GUIGoalHistory history = new GUIGoalHistory(this.userEmail);
         history.setVisible(true);
     }//GEN-LAST:event_btnCreateGoal1MouseClicked
 

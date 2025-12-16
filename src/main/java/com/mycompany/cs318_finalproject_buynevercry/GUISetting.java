@@ -356,7 +356,7 @@ public class GUISetting extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(64, 64, 64));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Days per week (Default: 8)");
+        jLabel6.setText("Days per week (Default: 5)");
 
         roundedPanel8.setCornerRadius(4);
         roundedPanel8.setPreferredSize(new java.awt.Dimension(304, 42));
@@ -390,7 +390,7 @@ public class GUISetting extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(64, 64, 64));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Investment Return % (Default: 3)");
+        jLabel14.setText("Investment Return % (Default: 5)");
 
         roundedPanel9.setCornerRadius(4);
         roundedPanel9.setPreferredSize(new java.awt.Dimension(304, 42));

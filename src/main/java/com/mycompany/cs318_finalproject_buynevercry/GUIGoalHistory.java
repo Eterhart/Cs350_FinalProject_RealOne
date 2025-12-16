@@ -9,6 +9,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import javax.swing.*;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -16,12 +19,16 @@ import javax.swing.*;
  */
 public class GUIGoalHistory extends javax.swing.JFrame {
     
+    private String userEmail;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIGoalHistory.class.getName());
 
     /**
      * Creates new form GUIGoalHistory
      */
-    public GUIGoalHistory() {
+    public GUIGoalHistory(String email) {
+        this.userEmail = email;
+        
         initComponents();
         getContentPane().setBackground(new Color(255, 255, 255));
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
@@ -65,9 +72,51 @@ public class GUIGoalHistory extends javax.swing.JFrame {
         );
         jScrollPane1.getViewport().setBackground(Color.WHITE);
 
-
+        
+        loadHistoryData();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
-    
+    public GUIGoalHistory() {
+        initComponents();
+    }
+    private void loadHistoryData() {
+        String[] columnNames = {"Date/Time", "Price", "Work Time", "Decision"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        
+        String url = "jdbc:sqlite:buynevercry.db";
+        String sql = "SELECT created_at, price, work_minutes, decision FROM goal_decisions WHERE email = ? ORDER BY created_at DESC";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, this.userEmail);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String date = rs.getString("created_at");
+                double price = rs.getDouble("price");
+                double minutes = rs.getDouble("work_minutes");
+                String decision = rs.getString("decision");
+                
+                int hrs = (int) minutes / 60;
+                int mins = (int) minutes % 60;
+                String timeStr;
+                if (hrs > 0) {
+                    timeStr = String.format("%d hr %d min", hrs, mins);
+                } else {
+                    timeStr = String.format("%d min", mins);
+                }
+
+                model.addRow(new Object[]{date, price, timeStr, decision});
+            }
+            
+            historyTable.setModel(model);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error loading history: " + e.getMessage());
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,7 +238,7 @@ public class GUIGoalHistory extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Date / Time", "Item Name", "Price", "Time at Work", "Decision Status"
+                "Date / Time", "Price", "Time at Work", "Decision Status"
             }
         ));
         historyTable.setGridColor(new java.awt.Color(234, 236, 240));

@@ -339,7 +339,7 @@
               <Color blue="40" green="40" red="40" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Days per week (Default: 8)"/>
+            <Property name="text" type="java.lang.String" value="Days per week (Default: 5)"/>
           </Properties>
         </Component>
         <Container class="com.mycompany.cs318_finalproject_buynevercry.RoundedPanel" name="roundedPanel8">
@@ -396,7 +396,7 @@
               <Color blue="40" green="40" red="40" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Investment Return % (Default: 3)"/>
+            <Property name="text" type="java.lang.String" value="Investment Return % (Default: 5)"/>
           </Properties>
         </Component>
         <Container class="com.mycompany.cs318_finalproject_buynevercry.RoundedPanel" name="roundedPanel9">

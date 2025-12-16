@@ -18,6 +18,8 @@ public class GUIGoalCreate extends javax.swing.JFrame {
     private double currentPrice;
     private String userEmail;
     
+    private double calculatedMinutes = 0;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIGoalCreate.class.getName());
 
     /**
@@ -97,7 +99,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
                      "FROM user_settings WHERE email = ?";
 
         try (Connection conn = DriverManager.getConnection(url);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, this.userEmail);
             
             ResultSet rs = pstmt.executeQuery();
@@ -127,6 +129,8 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         if (moneyPerMinute > 0) {
             timeToEarnMinutes = this.currentPrice / moneyPerMinute;
         }
+        
+        this.calculatedMinutes = timeToEarnMinutes;
 
         double investedInstead = this.currentPrice + investFromDB;
 
@@ -143,6 +147,49 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         jLabel4.setText(timeString);
         String symbol = loadUserCurrencySymbol();
         jLabel16.setText(String.format("%s%,.2f", symbol, investedInstead));
+        
+    }
+    private void saveDecision(String decision) {
+        String url = "jdbc:sqlite:buynevercry.db";
+        
+        // SQL สำหรับสร้างตาราง (ถ้ายังไม่มี)
+        String createTableSQL = "CREATE TABLE IF NOT EXISTS goal_decisions (" +
+                                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                "email TEXT, " +
+                                "price REAL, " +
+                                "work_minutes REAL, " +
+                                "decision TEXT, " +
+                                "created_at DATETIME DEFAULT CURRENT_TIMESTAMP" +
+                                ");";
+        
+        // SQL สำหรับบันทึกข้อมูล
+        String insertSQL = "INSERT INTO goal_decisions (email, price, work_minutes, decision) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            
+            // 1. สร้างตารางก่อนเสมอ (กันเหนียว)
+            stmt.execute(createTableSQL);
+            
+            // 2. บันทึกข้อมูล
+            try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
+                pstmt.setString(1, this.userEmail);
+                pstmt.setDouble(2, this.currentPrice);
+                pstmt.setDouble(3, this.calculatedMinutes); // เอาค่าที่เก็บไว้มาใช้
+                pstmt.setString(4, decision); // 'BUY', 'DONT_BUY', 'UNSURE'
+                
+                pstmt.executeUpdate();
+                
+                System.out.println("Saved decision: " + decision);
+            }
+            
+            // 3. ปิดหน้านี้หลังจากบันทึกเสร็จ
+            this.dispose();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Save Error: " + e.getMessage());
+        }
     }
 
     /**
@@ -209,7 +256,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addContainerGap(61, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(24, 24, 24))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,6 +413,11 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         btnDontBuy.setForeground(new java.awt.Color(255, 255, 255));
         btnDontBuy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnDontBuy.setText(" Don't Buy");
+        btnDontBuy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDontBuyMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
         roundedPanel3.setLayout(roundedPanel3Layout);
@@ -390,6 +442,11 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         btnUnsure.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
         btnUnsure.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnUnsure.setText(" Unsure");
+        btnUnsure.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUnsureMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel4Layout = new javax.swing.GroupLayout(roundedPanel4);
         roundedPanel4.setLayout(roundedPanel4Layout);
@@ -415,6 +472,11 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         btnBuy.setForeground(new java.awt.Color(255, 255, 255));
         btnBuy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnBuy.setText(" Buy");
+        btnBuy.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuyMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
         roundedPanel6.setLayout(roundedPanel6Layout);
@@ -487,6 +549,18 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuyMouseClicked
+        saveDecision("BUY");
+    }//GEN-LAST:event_btnBuyMouseClicked
+
+    private void btnDontBuyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDontBuyMouseClicked
+        saveDecision("DONT_BUY");
+    }//GEN-LAST:event_btnDontBuyMouseClicked
+
+    private void btnUnsureMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUnsureMouseClicked
+        saveDecision("UNSURE");
+    }//GEN-LAST:event_btnUnsureMouseClicked
 
     /**
      * @param args the command line arguments
