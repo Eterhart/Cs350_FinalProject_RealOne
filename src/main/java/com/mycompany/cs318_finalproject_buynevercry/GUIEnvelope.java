@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,14 +21,17 @@ public class GUIEnvelope extends javax.swing.JFrame {
     private ConfettiPanel confettiPanel;
     private javax.swing.Timer confettiTimer;
     
+    private GUIMain mainPage;
+    
     private String userEmail;
     
     /**
      * Creates new form GUIEnvelope
      */
-    public GUIEnvelope(String email) {
+    public GUIEnvelope(String email,GUIMain main) {
         
         this.userEmail = email;
+        this.mainPage = main;
         
         
         initComponents();
@@ -47,10 +51,11 @@ public class GUIEnvelope extends javax.swing.JFrame {
         getContentPane().setBackground(new Color(255, 255, 255));
         
         loadUserCurrency();
+        updateDisplay();
         
     }
     public GUIEnvelope() {
-        this("test@example.com"); 
+        this("test@example.com", null); 
     }
     
     private void loadUserCurrency() {
@@ -81,6 +86,17 @@ public class GUIEnvelope extends javax.swing.JFrame {
     public void updateCurrencyDisplay() {
         loadUserCurrency(); 
     }
+    public void updateDisplay() {
+        if (mainPage != null) {
+            int amount = mainPage.getCurrentRandomAmount();
+            
+            if (numberlabel != null) {
+                numberlabel.setText(String.valueOf(amount));
+            }
+            
+            jLabel6.setText(mainPage.getSavedCount() + "/100");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,6 +115,7 @@ public class GUIEnvelope extends javax.swing.JFrame {
         roundedPanel1 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         btnAcceptChallenge = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        numberlabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -146,7 +163,7 @@ public class GUIEnvelope extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         roundedPanel1.setBackground(new java.awt.Color(238, 53, 114));
@@ -180,6 +197,11 @@ public class GUIEnvelope extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/envelope.png"))); // NOI18N
 
+        numberlabel.setFont(new java.awt.Font("Inter 24pt ExtraBold", 0, 40)); // NOI18N
+        numberlabel.setForeground(new java.awt.Color(238, 53, 114));
+        numberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        numberlabel.setText("{RANDOM}");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -189,13 +211,18 @@ public class GUIEnvelope extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(137, 137, 137)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(138, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(numberlabel)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,7 +232,9 @@ public class GUIEnvelope extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addGap(54, 54, 54)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(numberlabel))
                 .addGap(4, 4, 4)
                 .addComponent(jLabel2)
                 .addGap(53, 53, 53)
@@ -223,16 +252,25 @@ public class GUIEnvelope extends javax.swing.JFrame {
     private void btnAcceptChallengeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAcceptChallengeMouseClicked
         // TODO add your handling code here:
         java.awt.Component src = (java.awt.Component) evt.getSource();
-
         java.awt.Point p = javax.swing.SwingUtilities.convertPoint(
                 src,
                 src.getWidth() / 2,
                 src.getHeight() / 2,
                 confettiPanel
         );
-
         confettiPanel.burstFrom(p.x, p.y);
         confettiTimer.start();
+        
+        if (mainPage.isCurrentRoundSaved) {
+//            JOptionPane.showMessageDialog(this, "You already saved this round. Please Shuffle new number.");
+            return;
+        }
+
+        mainPage.markAsSaved();
+
+        jLabel6.setText(mainPage.getSavedCount() + "/100");
+        
+
     }//GEN-LAST:event_btnAcceptChallengeMouseClicked
 
     /**
@@ -269,6 +307,7 @@ public class GUIEnvelope extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel numberlabel;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
     // End of variables declaration//GEN-END:variables
 }

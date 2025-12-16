@@ -369,26 +369,25 @@ public class GUILogin extends javax.swing.JFrame {
             return;
         }
 
+        boolean loginSuccess = false;
+        
         Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
         try {
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:buynevercry.db");
 
             String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-            PreparedStatement pst = con.prepareStatement(sql);
+            pst = con.prepareStatement(sql);
             pst.setString(1, email);
             pst.setString(2, password);
 
-            ResultSet rs = pst.executeQuery();
+            rs = pst.executeQuery();
 
             if (rs.next()) {
-                String username = rs.getString("username");
-                
-                this.dispose(); 
-                
-                GUIMain mainPage = new GUIMain(email);
-                mainPage.setVisible(true);
-                
+                loginSuccess = true;
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Email or Password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
             }
@@ -400,10 +399,18 @@ public class GUILogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
-                if (con != null) con.close();
+                if (rs != null) rs.close();
+                if (pst != null) pst.close();
+                if (con != null) con.close(); 
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+        }
+
+        if (loginSuccess) {
+            this.dispose(); 
+            GUIMain mainPage = new GUIMain(email);
+            mainPage.setVisible(true);
         }
     }//GEN-LAST:event_roundedPanel3MouseClicked
 

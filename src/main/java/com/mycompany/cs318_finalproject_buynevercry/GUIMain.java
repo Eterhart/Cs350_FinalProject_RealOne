@@ -21,6 +21,10 @@ public class GUIMain extends javax.swing.JFrame {
     private GUISetting settingWindow;
     private GUIEnvelope envelopeWindow;
     
+    private int currentRandomAmount = 0;
+    private int savedCount = 0;
+    public boolean isCurrentRoundSaved = false;
+    
     private String userEmail;
     private GUIEnvelope currentEnvelope;
     
@@ -39,6 +43,7 @@ public class GUIMain extends javax.swing.JFrame {
         this.userEmail = email;
         initComponents();
         
+        initProgressDB();
         FlatLightLaf.setup();
        
         btnAnalytics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -50,8 +55,15 @@ public class GUIMain extends javax.swing.JFrame {
         
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
+        
+        
+        initProgressDB();
+        loadUserProgress();
+        
+        shuffleMoney();
         loadUserData();
         loadUserCurrency();
+        
     }
     
     private void loadUserData() {
@@ -120,6 +132,149 @@ public class GUIMain extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    public void shuffleMoney() {
+        this.currentRandomAmount = (int) (Math.random() * 100) + 1;
+        this.isCurrentRoundSaved = false; 
+        
+        System.out.println("Shuffled! New Amount: " + this.currentRandomAmount);
+        
+        updateProgressToDB();
+
+        if (envelopeWindow != null && envelopeWindow.isDisplayable()) {
+            envelopeWindow.updateDisplay();
+        }
+    }
+    public int getCurrentRandomAmount() {
+        return currentRandomAmount;
+    }
+    public int getSavedCount() {
+        return savedCount;
+    }
+    public void markAsSaved() {
+        if (!isCurrentRoundSaved) {
+            this.savedCount++;
+            this.isCurrentRoundSaved = true;
+            
+            updateProgressToDB();
+            
+            jLabel55.setText(savedCount + "/100 Envelopes");
+        }
+    }
+    private void initProgressDB() {
+        String url = "jdbc:sqlite:buynevercry.db";
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement()) {
+            
+
+            String createProgressTable = "CREATE TABLE IF NOT EXISTS user_progress (" +
+                                         "email TEXT PRIMARY KEY, " +
+                                         "saved_count INTEGER DEFAULT 0, " +
+                                         "current_random_amount INTEGER DEFAULT 0" + 
+                                         ");";
+            stmt.execute(createProgressTable);
+
+            try {
+                stmt.execute("ALTER TABLE user_progress ADD COLUMN current_random_amount INTEGER DEFAULT 0;");
+            } catch (SQLException e) {
+            }
+
+            String createArchiveTable = "CREATE TABLE IF NOT EXISTS user_archive (" +
+                                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                        "email TEXT, " +
+                                        "total_saved_count INTEGER, " +
+                                        "archived_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                                        ");";
+            stmt.execute(createArchiveTable);
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadUserProgress() {
+        String url = "jdbc:sqlite:buynevercry.db";
+        String sql = "SELECT saved_count, current_random_amount FROM user_progress WHERE email = ?";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, userEmail);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                this.savedCount = rs.getInt("saved_count");
+                int dbRandom = rs.getInt("current_random_amount");
+                
+                if (dbRandom > 0) {
+                    this.currentRandomAmount = dbRandom;
+                } else {
+                    shuffleMoney(); 
+                }
+            } else {
+                shuffleMoney();
+            }
+            
+            jLabel55.setText(this.savedCount + "/100 Envelopes");
+            
+        } catch (SQLException e) {
+            System.out.println("Load Error: " + e.getMessage());
+        }
+    }
+    private void updateProgressToDB() {
+        String url = "jdbc:sqlite:buynevercry.db";
+        String sql = "INSERT OR REPLACE INTO user_progress (email, saved_count, current_random_amount) VALUES (?, ?, ?)";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, userEmail);
+            pstmt.setInt(2, this.savedCount);
+            pstmt.setInt(3, this.currentRandomAmount);
+            pstmt.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println("Save Error: " + e.getMessage());
+        }
+    }
+    private void archiveGoal() {
+        if (this.savedCount == 0) {
+            JOptionPane.showMessageDialog(this, "No progress to archive yet!");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Archive current progress (" + savedCount + " envelopes)?\nThis will reset your counter to 0.", 
+                "Confirm Archive", 
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            String url = "jdbc:sqlite:buynevercry.db";
+            
+            try (Connection conn = DriverManager.getConnection(url)) {
+                String insertHistory = "INSERT INTO user_archive (email, total_saved_count) VALUES (?, ?)";
+                try (PreparedStatement pstmtHist = conn.prepareStatement(insertHistory)) {
+                    pstmtHist.setString(1, userEmail);
+                    pstmtHist.setInt(2, this.savedCount);
+                    pstmtHist.executeUpdate();
+                }
+
+                this.savedCount = 0;
+                this.isCurrentRoundSaved = false;
+                
+                updateProgressToDB();
+
+                jLabel55.setText("0/100 Envelopes");
+                
+                JOptionPane.showMessageDialog(this, "Archived successfully!");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Archive Error: " + e.getMessage());
+            }
+        }
+    }
+
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -284,7 +439,7 @@ public class GUIMain extends javax.swing.JFrame {
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel1Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel6)
@@ -426,7 +581,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19)
                 .addComponent(btnSetting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 661, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 659, Short.MAX_VALUE)
                 .addComponent(btnContactSupport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -486,7 +641,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel18)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
                 .addComponent(jLabel61)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAnalytics)
@@ -666,7 +821,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
                 .addComponent(jLabel25)
                 .addGap(14, 14, 14))
         );
@@ -813,7 +968,7 @@ public class GUIMain extends javax.swing.JFrame {
                                 .addComponent(jLabel41)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel42)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 620, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 643, Short.MAX_VALUE)
                                 .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -855,7 +1010,7 @@ public class GUIMain extends javax.swing.JFrame {
                     .addComponent(jLabel49))
                 .addGap(22, 22, 22)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
@@ -899,6 +1054,11 @@ public class GUIMain extends javax.swing.JFrame {
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/archive_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png"))); // NOI18N
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+        });
 
         jLabel24.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 14)); // NOI18N
         jLabel24.setText("Archive");
@@ -928,6 +1088,11 @@ public class GUIMain extends javax.swing.JFrame {
 
         jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel53.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-shuffle-64.png"))); // NOI18N
+        jLabel53.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel53MouseClicked(evt);
+            }
+        });
 
         jLabel54.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 14)); // NOI18N
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1225,12 +1390,12 @@ public class GUIMain extends javax.swing.JFrame {
     private void btnEnvelopeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeMouseClicked
         
         if (envelopeWindow == null || !envelopeWindow.isDisplayable()) {
-            envelopeWindow = new GUIEnvelope();
+            envelopeWindow = new GUIEnvelope(userEmail,this);
             envelopeWindow.setVisible(true);
         } else {
             envelopeWindow.setVisible(true);
             envelopeWindow.toFront();
-            envelopeWindow.requestFocus();
+            envelopeWindow.updateDisplay();
         }
     }//GEN-LAST:event_btnEnvelopeMouseClicked
 
@@ -1279,6 +1444,15 @@ public class GUIMain extends javax.swing.JFrame {
     private void btnAnalyticsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalyticsMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAnalyticsMouseClicked
+
+    private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
+        shuffleMoney();
+        JOptionPane.showMessageDialog(this, "New number generated!");
+    }//GEN-LAST:event_jLabel53MouseClicked
+
+    private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
+        archiveGoal();
+    }//GEN-LAST:event_jLabel15MouseClicked
 
     /**
      * @param args the command line arguments
