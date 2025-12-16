@@ -12,14 +12,14 @@ import javax.swing.ImageIcon;
  *
  * @author Nisha
  */
-public class GUICreateGoal extends javax.swing.JFrame {
+public class GUIGoalCreate extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUICreateGoal.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIGoalCreate.class.getName());
 
     /**
      * Creates new form GUICreateGoal
      */
-    public GUICreateGoal() {
+    public GUIGoalCreate() {
         initComponents();
         getContentPane().setBackground(new Color(255, 255, 255));
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
@@ -402,7 +402,7 @@ public class GUICreateGoal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new GUICreateGoal().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new GUIGoalCreate().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
