@@ -46,10 +46,9 @@ public class GUIEnvelopeProgress extends javax.swing.JFrame {
     public GUIEnvelopeProgress() {
         initComponents();
     }
-    public void loadAndShowData() {// 1. ดึง Currency (เหมือนเดิม)
+    public void loadAndShowData() {
         String currencySymbol = "฿";
         String url = "jdbc:sqlite:buynevercry.db";
-        // ... (โค้ดดึง currency เดิม ใช้ได้เลย) ...
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement("SELECT currency FROM user_settings WHERE email = ?")) {
             pstmt.setString(1, userEmail);
@@ -64,7 +63,6 @@ public class GUIEnvelopeProgress extends javax.swing.JFrame {
             }
         } catch (SQLException e) { System.out.println("DB Error: " + e.getMessage()); }
 
-        // 2. [แก้ใหม่] ดึงรายชื่อเลขที่เคยสุ่มได้ทั้งหมด (Active List)
         java.util.HashSet<Integer> activeNumbers = new java.util.HashSet<>();
         String sqlActive = "SELECT envelope_number FROM active_envelopes WHERE email = ?";
         
@@ -75,17 +73,14 @@ public class GUIEnvelopeProgress extends javax.swing.JFrame {
             ResultSet rs = pstmt.executeQuery();
             
             while (rs.next()) {
-                // เก็บเลขทั้งหมดที่เคยสุ่มได้ลงใน Set
                 activeNumbers.add(rs.getInt("envelope_number"));
             }
         } catch (SQLException e) {
             System.out.println("Load Active Error: " + e.getMessage());
         }
 
-        // 3. วนลูปแสดงผล 1-100
         for (int i = 1; i <= 100; i++) {
             
-            // --- ส่วนที่ 1: รูปภาพ ---
             try {
                 String envName = "envelope" + i;
                 Field envField = this.getClass().getDeclaredField(envName);
@@ -95,8 +90,6 @@ public class GUIEnvelopeProgress extends javax.swing.JFrame {
                 if (envLbl != null) {
                     String imagePath = "/images/envelope_white.png";
                     
-                    // [แก้ใหม่] เช็คจาก List แทนที่จะเช็คแค่ currentRandom
-                    // ถ้าเลข i นี้เคยถูกสุ่มมาแล้ว (อยู่ใน Set) -> ให้เป็นสีฟ้า
                     if (activeNumbers.contains(i)) {
                         imagePath = "/images/envelope_blue.png";
                     } 
@@ -105,7 +98,6 @@ public class GUIEnvelopeProgress extends javax.swing.JFrame {
                 }
             } catch (Exception e) {}
 
-            // --- ส่วนที่ 2: สกุลเงิน (เหมือนเดิม) ---
             try {
                 String priceName = "priceLabel" + i;
                 Field priceField = this.getClass().getDeclaredField(priceName);

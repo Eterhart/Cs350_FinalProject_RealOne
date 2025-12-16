@@ -152,7 +152,6 @@ public class GUIGoalCreate extends javax.swing.JFrame {
     private void saveDecision(String decision) {
         String url = "jdbc:sqlite:buynevercry.db";
         
-        // SQL สำหรับสร้างตาราง (ถ้ายังไม่มี)
         String createTableSQL = "CREATE TABLE IF NOT EXISTS goal_decisions (" +
                                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                 "email TEXT, " +
@@ -162,28 +161,24 @@ public class GUIGoalCreate extends javax.swing.JFrame {
                                 "created_at DATETIME DEFAULT CURRENT_TIMESTAMP" +
                                 ");";
         
-        // SQL สำหรับบันทึกข้อมูล
         String insertSQL = "INSERT INTO goal_decisions (email, price, work_minutes, decision) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(url);
              Statement stmt = conn.createStatement()) {
             
-            // 1. สร้างตารางก่อนเสมอ (กันเหนียว)
             stmt.execute(createTableSQL);
             
-            // 2. บันทึกข้อมูล
             try (PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
                 pstmt.setString(1, this.userEmail);
                 pstmt.setDouble(2, this.currentPrice);
-                pstmt.setDouble(3, this.calculatedMinutes); // เอาค่าที่เก็บไว้มาใช้
-                pstmt.setString(4, decision); // 'BUY', 'DONT_BUY', 'UNSURE'
+                pstmt.setDouble(3, this.calculatedMinutes);
+                pstmt.setString(4, decision);
                 
                 pstmt.executeUpdate();
                 
                 System.out.println("Saved decision: " + decision);
             }
             
-            // 3. ปิดหน้านี้หลังจากบันทึกเสร็จ
             this.dispose();
             
         } catch (SQLException e) {
