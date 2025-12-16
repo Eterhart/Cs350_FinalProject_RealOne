@@ -5,7 +5,9 @@
 package com.mycompany.cs318_finalproject_buynevercry;
 
 import java.awt.*;
-import javax.swing.ImageIcon;
+import java.lang.reflect.Field;
+import java.sql.*;
+import javax.swing.*;
 import com.formdev.flatlaf.FlatLightLaf;
 
 /**
@@ -14,23 +16,107 @@ import com.formdev.flatlaf.FlatLightLaf;
  */
 public class GUIEnvelopeProgress extends javax.swing.JFrame {
     
+    private GUIMain mainPage;
+    private String userEmail;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUIEnvelopeProgress.class.getName());
 
     /**
      * Creates new form GUIEnvelopeProgress
      */
 
-    public GUIEnvelopeProgress() {
+    public GUIEnvelopeProgress(GUIMain main, String email) {
+        
+        this.mainPage = main;
+        this.userEmail = email;
+        
         FlatLightLaf.setup();
-            javax.swing.UIManager.put("ScrollBar.width", 6);
+        javax.swing.UIManager.put("ScrollBar.width", 6);
         
         initComponents();
+        loadAndShowData();
         
         getContentPane().setBackground(new Color(255, 255, 255));
-        Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
-        setIconImage(icon);
+//        Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
+//        setIconImage(icon);
         
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
+    }
+    public GUIEnvelopeProgress() {
+        initComponents();
+    }
+    public void loadAndShowData() {// 1. ดึง Currency (เหมือนเดิม)
+        String currencySymbol = "฿";
+        String url = "jdbc:sqlite:buynevercry.db";
+        // ... (โค้ดดึง currency เดิม ใช้ได้เลย) ...
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement("SELECT currency FROM user_settings WHERE email = ?")) {
+            pstmt.setString(1, userEmail);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                String fullCurrency = rs.getString("currency"); 
+                 if (fullCurrency != null && fullCurrency.contains("(") && fullCurrency.contains(")")) {
+                    try {
+                        currencySymbol = fullCurrency.substring(fullCurrency.indexOf("(") + 1, fullCurrency.indexOf(")")); 
+                    } catch (Exception e) { currencySymbol = fullCurrency; }
+                } else { currencySymbol = fullCurrency; }
+            }
+        } catch (SQLException e) { System.out.println("DB Error: " + e.getMessage()); }
+
+        // 2. [แก้ใหม่] ดึงรายชื่อเลขที่เคยสุ่มได้ทั้งหมด (Active List)
+        java.util.HashSet<Integer> activeNumbers = new java.util.HashSet<>();
+        String sqlActive = "SELECT envelope_number FROM active_envelopes WHERE email = ?";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sqlActive)) {
+            
+            pstmt.setString(1, userEmail);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                // เก็บเลขทั้งหมดที่เคยสุ่มได้ลงใน Set
+                activeNumbers.add(rs.getInt("envelope_number"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Load Active Error: " + e.getMessage());
+        }
+
+        // 3. วนลูปแสดงผล 1-100
+        for (int i = 1; i <= 100; i++) {
+            
+            // --- ส่วนที่ 1: รูปภาพ ---
+            try {
+                String envName = "envelope" + i;
+                Field envField = this.getClass().getDeclaredField(envName);
+                envField.setAccessible(true);
+                JLabel envLbl = (JLabel) envField.get(this);
+
+                if (envLbl != null) {
+                    String imagePath = "/images/envelope_white.png";
+                    
+                    // [แก้ใหม่] เช็คจาก List แทนที่จะเช็คแค่ currentRandom
+                    // ถ้าเลข i นี้เคยถูกสุ่มมาแล้ว (อยู่ใน Set) -> ให้เป็นสีฟ้า
+                    if (activeNumbers.contains(i)) {
+                        imagePath = "/images/envelope_blue.png";
+                    } 
+                    
+                    envLbl.setIcon(new ImageIcon(getClass().getResource(imagePath)));
+                }
+            } catch (Exception e) {}
+
+            // --- ส่วนที่ 2: สกุลเงิน (เหมือนเดิม) ---
+            try {
+                String priceName = "priceLabel" + i;
+                Field priceField = this.getClass().getDeclaredField(priceName);
+                priceField.setAccessible(true);
+                JLabel priceLbl = (JLabel) priceField.get(this);
+                if (priceLbl != null) {
+                    priceLbl.setText(currencySymbol); 
+                    priceLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                }
+            } catch (Exception e) {}
+        }
     }
 
     /**

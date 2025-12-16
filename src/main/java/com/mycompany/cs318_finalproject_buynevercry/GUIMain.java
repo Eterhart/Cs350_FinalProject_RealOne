@@ -22,6 +22,7 @@ public class GUIMain extends javax.swing.JFrame {
     
     private GUISetting settingWindow;
     private GUIEnvelope envelopeWindow;
+    private GUIEnvelopeProgress progressWindow;
     
     private int currentRandomAmount = 0;
     private int savedCount = 0;
@@ -143,10 +144,28 @@ public class GUIMain extends javax.swing.JFrame {
         
         System.out.println("Shuffled! New Amount: " + this.currentRandomAmount);
         
+        // 1. อัปเดตตาราง Progress ปกติ (เพื่อเก็บค่า current_random ล่าสุด)
         updateProgressToDB();
 
+        // 2. [เพิ่มส่วนนี้] บันทึกเลขนี้ลงใน active_envelopes (เก็บสะสมไว้)
+        String url = "jdbc:sqlite:buynevercry.db";
+        String sql = "INSERT OR IGNORE INTO active_envelopes (email, envelope_number) VALUES (?, ?)";
+        
+        try (Connection conn = DriverManager.getConnection(url);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userEmail);
+            pstmt.setInt(2, this.currentRandomAmount);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Shuffle Save Error: " + e.getMessage());
+        }
+
+        // สั่งอัปเดตหน้าจอ
         if (envelopeWindow != null && envelopeWindow.isDisplayable()) {
             envelopeWindow.updateDisplay();
+        }
+        if (progressWindow != null && progressWindow.isDisplayable()) {
+            progressWindow.loadAndShowData();
         }
     }
     public int getCurrentRandomAmount() {
@@ -199,6 +218,8 @@ public class GUIMain extends javax.swing.JFrame {
         String url = "jdbc:sqlite:buynevercry.db";
         String sql = "SELECT saved_count, current_random_amount FROM user_progress WHERE email = ?";
         
+        boolean needShuffle = false; // 1. สร้างตัวแปรเช็คว่าต้องสุ่มใหม่ไหม
+
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
@@ -212,16 +233,23 @@ public class GUIMain extends javax.swing.JFrame {
                 if (dbRandom > 0) {
                     this.currentRandomAmount = dbRandom;
                 } else {
-                    shuffleMoney(); 
+                    // ถ้าเป็น 0 อย่าเพิ่งเรียก shuffleMoney() ตรงนี้ เพราะ Connection ยังเปิดอยู่
+                    needShuffle = true; 
                 }
             } else {
-                shuffleMoney();
+                // ถ้าไม่เคยมีข้อมูล ก็ต้องสุ่มใหม่
+                needShuffle = true;
             }
             
             jLabel55.setText(this.savedCount + "/100 Envelopes");
             
         } catch (SQLException e) {
             System.out.println("Load Error: " + e.getMessage());
+        }
+        
+        // 2. เรียก shuffleMoney() ตรงนี้ (เมื่อ Connection ข้างบนปิดสนิทแล้ว)
+        if (needShuffle) {
+            shuffleMoney();
         }
     }
     private void updateProgressToDB() {
@@ -255,21 +283,30 @@ public class GUIMain extends javax.swing.JFrame {
             String url = "jdbc:sqlite:buynevercry.db";
             
             try (Connection conn = DriverManager.getConnection(url)) {
-                String insertHistory = "INSERT INTO user_archive (email, total_saved_count) VALUES (?, ?)";
-                try (PreparedStatement pstmtHist = conn.prepareStatement(insertHistory)) {
-                    pstmtHist.setString(1, userEmail);
-                    pstmtHist.setInt(2, this.savedCount);
-                    pstmtHist.executeUpdate();
+                String deleteActiveSQL = "DELETE FROM active_envelopes WHERE email = ?";
+                try (PreparedStatement pstmtDel = conn.prepareStatement(deleteActiveSQL)) {
+                    pstmtDel.setString(1, userEmail);
+                    pstmtDel.executeUpdate();
                 }
 
+                // รีเซ็ตค่าอื่นๆ
                 this.savedCount = 0;
-                this.isCurrentRoundSaved = false;
+                this.isCurrentRoundSaved = false; 
+                this.currentRandomAmount = 0; // รีเซ็ตเลขปัจจุบันด้วยก็ได้
                 
-                updateProgressToDB();
-
+                updateProgressToDB(); // บันทึกค่า 0 ลง DB หลัก
+                
+                // อัปเดต UI
                 jLabel55.setText("0/100 Envelopes");
                 
+                // ถ้าเปิดหน้า Progress อยู่ ให้มันรีเฟรชเป็นขาวล้วนทันที
+                if (progressWindow != null && progressWindow.isDisplayable()) {
+                    progressWindow.loadAndShowData();
+                }
+
                 JOptionPane.showMessageDialog(this, "Archived successfully!");
+                
+                shuffleMoney();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -308,12 +345,20 @@ public class GUIMain extends javax.swing.JFrame {
                                         "archived_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
                                         ");";
             stmt.execute(createArchiveSQL);
+            
+            String createActiveEnvSQL = "CREATE TABLE IF NOT EXISTS active_envelopes (" +
+                                        "email TEXT, " +
+                                        "envelope_number INTEGER, " +
+                                        "PRIMARY KEY (email, envelope_number)" + 
+                                        ");";
+            stmt.execute(createActiveEnvSQL);
 
         } catch (SQLException e) {
             System.out.println("Init DB Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
+    
 
 
     
@@ -549,6 +594,7 @@ public class GUIMain extends javax.swing.JFrame {
         );
 
         btnContactSupport.setBackground(new java.awt.Color(255, 255, 255));
+        btnContactSupport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnContactSupport.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnContactSupportMouseClicked(evt);
@@ -1473,8 +1519,15 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnEnvelopeProgressMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeProgressMouseClicked
 
-        GUIEnvelopeProgress gp = new GUIEnvelopeProgress();
-        gp.setVisible(true);
+        if (progressWindow == null || !progressWindow.isDisplayable()) {
+            progressWindow = new GUIEnvelopeProgress(this, this.userEmail);
+            progressWindow.setVisible(true);
+        } else {
+            progressWindow.setVisible(true);
+            progressWindow.toFront();
+            progressWindow.loadAndShowData();
+        }
+        
     }//GEN-LAST:event_btnEnvelopeProgressMouseClicked
 
     private void btnCreateGoal1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCreateGoal1MouseClicked
