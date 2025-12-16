@@ -4,6 +4,9 @@
  */
 package com.mycompany.cs318_finalproject_buynevercry;
 
+import java.awt.Cursor;
+import javax.swing.ButtonGroup;
+
 /**
  *
  * @author Nisha
@@ -17,7 +20,31 @@ public class GUIQuiz extends javax.swing.JFrame {
      */
     public GUIQuiz() {
         initComponents();
+            showPanelQuestion1();
+            setLocationRelativeTo(null); // optional
+            
+            btnNextQ1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+}
+    public void showPanelQuestion1() {
+        panelQuestion1.setVisible(true);
+        panelQuestion2.setVisible(false);
+        panelQuestion3.setVisible(false);
+        panelQuestion4.setVisible(false);
+        panelQuestionFinal.setVisible(false);
+
+        mainPanel.revalidate();
+        mainPanel.repaint();
+
+        this.pack(); // ✅ สำคัญ: ย่อ/ปรับขนาด JFrame ให้พอดีกับ panel ที่แสดงอยู่
+        
+        ButtonGroup group = new ButtonGroup();
+        group.add(q1a1);
+        group.add(q1a2);
+        group.add(q1a3);
+        group.add(q1a4);
+
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,24 +55,18 @@ public class GUIQuiz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
         panelQuestion1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         roundedPanel1 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        roundedPanel2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel5 = new javax.swing.JLabel();
-        roundedPanel3 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel6 = new javax.swing.JLabel();
-        roundedPanel4 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel7 = new javax.swing.JLabel();
-        roundedPanel5 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel8 = new javax.swing.JLabel();
-        roundedPanel7 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel10 = new javax.swing.JLabel();
-        roundedPanel6 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        q1a1 = new javax.swing.JRadioButton();
+        q1a2 = new javax.swing.JRadioButton();
+        q1a3 = new javax.swing.JRadioButton();
+        q1a4 = new javax.swing.JRadioButton();
+        btnNextQ1 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel9 = new javax.swing.JLabel();
         panelQuestion2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -53,21 +74,15 @@ public class GUIQuiz extends javax.swing.JFrame {
         roundedPanel8 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        roundedPanel9 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel15 = new javax.swing.JLabel();
-        roundedPanel10 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel16 = new javax.swing.JLabel();
-        roundedPanel11 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel17 = new javax.swing.JLabel();
-        roundedPanel12 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel18 = new javax.swing.JLabel();
-        roundedPanel31 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel43 = new javax.swing.JLabel();
-        roundedPanel32 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel44 = new javax.swing.JLabel();
+        q2a1 = new javax.swing.JCheckBox();
+        q2a2 = new javax.swing.JCheckBox();
+        q2a3 = new javax.swing.JCheckBox();
+        q2a4 = new javax.swing.JCheckBox();
+        q2a5 = new javax.swing.JCheckBox();
+        q2a6 = new javax.swing.JCheckBox();
         roundedPanel14 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel20 = new javax.swing.JLabel();
-        roundedPanel13 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        btnNextQ2 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel19 = new javax.swing.JLabel();
         panelQuestion3 = new javax.swing.JPanel();
         jLabel45 = new javax.swing.JLabel();
@@ -75,14 +90,12 @@ public class GUIQuiz extends javax.swing.JFrame {
         roundedPanel33 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
-        roundedPanel34 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel49 = new javax.swing.JLabel();
-        roundedPanel35 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel50 = new javax.swing.JLabel();
         jLabel69 = new javax.swing.JLabel();
+        q3a1 = new javax.swing.JRadioButton();
+        q3a2 = new javax.swing.JRadioButton();
         roundedPanel40 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel55 = new javax.swing.JLabel();
-        roundedPanel41 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        btnNextQ3 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel56 = new javax.swing.JLabel();
         panelQuestion4 = new javax.swing.JPanel();
         jLabel57 = new javax.swing.JLabel();
@@ -90,21 +103,15 @@ public class GUIQuiz extends javax.swing.JFrame {
         roundedPanel42 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel59 = new javax.swing.JLabel();
         jLabel60 = new javax.swing.JLabel();
-        roundedPanel43 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel61 = new javax.swing.JLabel();
-        roundedPanel44 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel62 = new javax.swing.JLabel();
-        roundedPanel45 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel63 = new javax.swing.JLabel();
-        roundedPanel46 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel64 = new javax.swing.JLabel();
-        roundedPanel47 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel65 = new javax.swing.JLabel();
-        roundedPanel48 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
-        jLabel66 = new javax.swing.JLabel();
+        q4a1 = new javax.swing.JRadioButton();
+        q4a2 = new javax.swing.JRadioButton();
+        q4a3 = new javax.swing.JRadioButton();
+        q4a4 = new javax.swing.JRadioButton();
+        q4a5 = new javax.swing.JRadioButton();
+        q4a6 = new javax.swing.JRadioButton();
         roundedPanel49 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel67 = new javax.swing.JLabel();
-        roundedPanel50 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
+        btnNextQ4 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel68 = new javax.swing.JLabel();
         panelQuestionFinal = new javax.swing.JPanel();
         roundedPanel36 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
@@ -115,9 +122,9 @@ public class GUIQuiz extends javax.swing.JFrame {
         roundedPanel15 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
         jLabel25 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        mainPanel.setBackground(new java.awt.Color(102, 102, 102));
 
         panelQuestion1.setBackground(new java.awt.Color(255, 255, 255));
         panelQuestion1.setPreferredSize(new java.awt.Dimension(360, 800));
@@ -139,97 +146,22 @@ public class GUIQuiz extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel4.setText("How much are you looking to save?");
 
-        roundedPanel2.setCornerRadius(5);
-        roundedPanel2.setPreferredSize(new java.awt.Dimension(296, 36));
+        q1a1.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q1a1.setText("$50 to $500");
 
-        jLabel5.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel5.setText("$50 to $500");
+        q1a2.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q1a2.setText("$500 to $5,000");
+        q1a2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q1a2ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout roundedPanel2Layout = new javax.swing.GroupLayout(roundedPanel2);
-        roundedPanel2.setLayout(roundedPanel2Layout);
-        roundedPanel2Layout.setHorizontalGroup(
-            roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel2Layout.setVerticalGroup(
-            roundedPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel5)
-                .addContainerGap())
-        );
+        q1a3.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q1a3.setText("$5,000 to $25,000");
 
-        roundedPanel3.setCornerRadius(5);
-        roundedPanel3.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel6.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel6.setText("$500 to $5,000");
-
-        javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
-        roundedPanel3.setLayout(roundedPanel3Layout);
-        roundedPanel3Layout.setHorizontalGroup(
-            roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel3Layout.setVerticalGroup(
-            roundedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel3Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel6)
-                .addContainerGap())
-        );
-
-        roundedPanel4.setCornerRadius(5);
-        roundedPanel4.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel7.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel7.setText("$100,000+");
-
-        javax.swing.GroupLayout roundedPanel4Layout = new javax.swing.GroupLayout(roundedPanel4);
-        roundedPanel4.setLayout(roundedPanel4Layout);
-        roundedPanel4Layout.setHorizontalGroup(
-            roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel4Layout.setVerticalGroup(
-            roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel4Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel7)
-                .addContainerGap())
-        );
-
-        roundedPanel5.setCornerRadius(5);
-        roundedPanel5.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel8.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel8.setText("$5,000 to $25,000");
-
-        javax.swing.GroupLayout roundedPanel5Layout = new javax.swing.GroupLayout(roundedPanel5);
-        roundedPanel5.setLayout(roundedPanel5Layout);
-        roundedPanel5Layout.setHorizontalGroup(
-            roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel5Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel5Layout.setVerticalGroup(
-            roundedPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel5Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel8)
-                .addContainerGap())
-        );
+        q1a4.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q1a4.setText("$100,000+");
 
         javax.swing.GroupLayout roundedPanel1Layout = new javax.swing.GroupLayout(roundedPanel1);
         roundedPanel1.setLayout(roundedPanel1Layout);
@@ -238,13 +170,13 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addGroup(roundedPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(q1a1)
+                    .addComponent(q1a2)
+                    .addComponent(q1a4)
+                    .addComponent(q1a3)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel1)
-                    .addComponent(roundedPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jLabel1))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         roundedPanel1Layout.setVerticalGroup(
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,61 +186,42 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel4)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(roundedPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(roundedPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(roundedPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q1a1)
+                .addGap(29, 29, 29)
+                .addComponent(q1a2)
+                .addGap(29, 29, 29)
+                .addComponent(q1a3)
+                .addGap(29, 29, 29)
+                .addComponent(q1a4)
                 .addGap(20, 20, 20))
         );
 
-        roundedPanel7.setCornerRadius(5);
-        roundedPanel7.setPanelColor(new java.awt.Color(15, 70, 154));
-        roundedPanel7.setPreferredSize(new java.awt.Dimension(78, 34));
-        roundedPanel7.setShadowBlurRadius(5);
-
-        jLabel10.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Previous");
-
-        javax.swing.GroupLayout roundedPanel7Layout = new javax.swing.GroupLayout(roundedPanel7);
-        roundedPanel7.setLayout(roundedPanel7Layout);
-        roundedPanel7Layout.setHorizontalGroup(
-            roundedPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel7Layout.setVerticalGroup(
-            roundedPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-        );
-
-        roundedPanel6.setCornerRadius(5);
-        roundedPanel6.setPanelColor(new java.awt.Color(15, 70, 154));
-        roundedPanel6.setPreferredSize(new java.awt.Dimension(78, 34));
-        roundedPanel6.setShadowBlurRadius(5);
+        btnNextQ1.setCornerRadius(5);
+        btnNextQ1.setPanelColor(new java.awt.Color(15, 70, 154));
+        btnNextQ1.setPreferredSize(new java.awt.Dimension(78, 34));
+        btnNextQ1.setShadowBlurRadius(5);
+        btnNextQ1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNextQ1MouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Next");
 
-        javax.swing.GroupLayout roundedPanel6Layout = new javax.swing.GroupLayout(roundedPanel6);
-        roundedPanel6.setLayout(roundedPanel6Layout);
-        roundedPanel6Layout.setHorizontalGroup(
-            roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel6Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnNextQ1Layout = new javax.swing.GroupLayout(btnNextQ1);
+        btnNextQ1.setLayout(btnNextQ1Layout);
+        btnNextQ1Layout.setHorizontalGroup(
+            btnNextQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNextQ1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        roundedPanel6Layout.setVerticalGroup(
-            roundedPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnNextQ1Layout.setVerticalGroup(
+            btnNextQ1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
@@ -318,16 +231,14 @@ public class GUIQuiz extends javax.swing.JFrame {
             panelQuestion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuestion1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNextQ1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
             .addGroup(panelQuestion1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuestion1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(roundedPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(roundedPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelQuestion1Layout.setVerticalGroup(
             panelQuestion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,12 +248,10 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jLabel3)
                 .addGap(47, 47, 47)
-                .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addGroup(panelQuestion1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(roundedPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(btnNextQ1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(338, 338, 338))
         );
 
         panelQuestion2.setBackground(new java.awt.Color(255, 255, 255));
@@ -365,143 +274,53 @@ public class GUIQuiz extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel14.setText("What are you the top things you're saving?");
 
-        roundedPanel9.setCornerRadius(5);
-        roundedPanel9.setPreferredSize(new java.awt.Dimension(296, 36));
+        q2a1.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q2a1.setText("Travel & Experiences");
+        q2a1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q2a1ActionPerformed(evt);
+            }
+        });
 
-        jLabel15.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel15.setText("Travel & Experiences");
+        q2a2.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q2a2.setText("Big Purchase");
+        q2a2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q2a2ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout roundedPanel9Layout = new javax.swing.GroupLayout(roundedPanel9);
-        roundedPanel9.setLayout(roundedPanel9Layout);
-        roundedPanel9Layout.setHorizontalGroup(
-            roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel9Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel9Layout.setVerticalGroup(
-            roundedPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel9Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel15)
-                .addContainerGap())
-        );
+        q2a3.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q2a3.setText("Travel & Experiences");
+        q2a3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q2a3ActionPerformed(evt);
+            }
+        });
 
-        roundedPanel10.setCornerRadius(5);
-        roundedPanel10.setPreferredSize(new java.awt.Dimension(296, 36));
+        q2a4.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q2a4.setText("Travel & Experiences");
+        q2a4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q2a4ActionPerformed(evt);
+            }
+        });
 
-        jLabel16.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel16.setText("Big Purchase");
+        q2a5.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q2a5.setText("Big Purchase");
+        q2a5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q2a5ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout roundedPanel10Layout = new javax.swing.GroupLayout(roundedPanel10);
-        roundedPanel10.setLayout(roundedPanel10Layout);
-        roundedPanel10Layout.setHorizontalGroup(
-            roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel10Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel10Layout.setVerticalGroup(
-            roundedPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel10Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel16)
-                .addContainerGap())
-        );
-
-        roundedPanel11.setCornerRadius(5);
-        roundedPanel11.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel17.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel17.setText("Emergency Fund");
-
-        javax.swing.GroupLayout roundedPanel11Layout = new javax.swing.GroupLayout(roundedPanel11);
-        roundedPanel11.setLayout(roundedPanel11Layout);
-        roundedPanel11Layout.setHorizontalGroup(
-            roundedPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel11Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel11Layout.setVerticalGroup(
-            roundedPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel11Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel17)
-                .addContainerGap())
-        );
-
-        roundedPanel12.setCornerRadius(5);
-        roundedPanel12.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel18.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel18.setText("Home");
-
-        javax.swing.GroupLayout roundedPanel12Layout = new javax.swing.GroupLayout(roundedPanel12);
-        roundedPanel12.setLayout(roundedPanel12Layout);
-        roundedPanel12Layout.setHorizontalGroup(
-            roundedPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel12Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel12Layout.setVerticalGroup(
-            roundedPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel12Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel18)
-                .addContainerGap())
-        );
-
-        roundedPanel31.setCornerRadius(5);
-        roundedPanel31.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel43.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel43.setText("Family & Life Events");
-
-        javax.swing.GroupLayout roundedPanel31Layout = new javax.swing.GroupLayout(roundedPanel31);
-        roundedPanel31.setLayout(roundedPanel31Layout);
-        roundedPanel31Layout.setHorizontalGroup(
-            roundedPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel31Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel43, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel31Layout.setVerticalGroup(
-            roundedPanel31Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel31Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel43)
-                .addContainerGap())
-        );
-
-        roundedPanel32.setCornerRadius(5);
-        roundedPanel32.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel44.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel44.setText("Retirement");
-
-        javax.swing.GroupLayout roundedPanel32Layout = new javax.swing.GroupLayout(roundedPanel32);
-        roundedPanel32.setLayout(roundedPanel32Layout);
-        roundedPanel32Layout.setHorizontalGroup(
-            roundedPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel32Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel44, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel32Layout.setVerticalGroup(
-            roundedPanel32Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel32Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel44)
-                .addContainerGap())
-        );
+        q2a6.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q2a6.setText("Family & Life Events");
+        q2a6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q2a6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel8Layout = new javax.swing.GroupLayout(roundedPanel8);
         roundedPanel8.setLayout(roundedPanel8Layout);
@@ -510,15 +329,15 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addGroup(roundedPanel8Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundedPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(q2a1)
+                    .addComponent(q2a2)
+                    .addComponent(q2a3)
+                    .addComponent(q2a5)
+                    .addComponent(q2a4)
                     .addComponent(jLabel14)
                     .addComponent(jLabel13)
-                    .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(q2a6))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         roundedPanel8Layout.setVerticalGroup(
             roundedPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,17 +347,17 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel14)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q2a1)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q2a2)
+                .addGap(18, 18, 18)
+                .addComponent(q2a3)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q2a4)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q2a5)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel32, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(roundedPanel31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q2a6)
                 .addGap(20, 20, 20))
         );
 
@@ -566,27 +385,27 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        roundedPanel13.setCornerRadius(5);
-        roundedPanel13.setPanelColor(new java.awt.Color(15, 70, 154));
-        roundedPanel13.setPreferredSize(new java.awt.Dimension(78, 34));
-        roundedPanel13.setShadowBlurRadius(5);
+        btnNextQ2.setCornerRadius(5);
+        btnNextQ2.setPanelColor(new java.awt.Color(15, 70, 154));
+        btnNextQ2.setPreferredSize(new java.awt.Dimension(78, 34));
+        btnNextQ2.setShadowBlurRadius(5);
 
         jLabel19.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Next");
 
-        javax.swing.GroupLayout roundedPanel13Layout = new javax.swing.GroupLayout(roundedPanel13);
-        roundedPanel13.setLayout(roundedPanel13Layout);
-        roundedPanel13Layout.setHorizontalGroup(
-            roundedPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel13Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnNextQ2Layout = new javax.swing.GroupLayout(btnNextQ2);
+        btnNextQ2.setLayout(btnNextQ2Layout);
+        btnNextQ2Layout.setHorizontalGroup(
+            btnNextQ2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNextQ2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        roundedPanel13Layout.setVerticalGroup(
-            roundedPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnNextQ2Layout.setVerticalGroup(
+            btnNextQ2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
@@ -602,7 +421,7 @@ public class GUIQuiz extends javax.swing.JFrame {
                     .addGroup(panelQuestion2Layout.createSequentialGroup()
                         .addComponent(roundedPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
-                        .addComponent(roundedPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnNextQ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(roundedPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
@@ -614,12 +433,12 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jLabel12)
                 .addGap(47, 47, 47)
-                .addComponent(roundedPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roundedPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addGroup(panelQuestion2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(roundedPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(btnNextQ2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(234, 234, 234))
         );
 
         panelQuestion3.setBackground(new java.awt.Color(255, 255, 255));
@@ -642,54 +461,14 @@ public class GUIQuiz extends javax.swing.JFrame {
         jLabel48.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel48.setText("Feel like you work hard but");
 
-        roundedPanel34.setCornerRadius(5);
-        roundedPanel34.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel49.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel49.setText("yes");
-
-        javax.swing.GroupLayout roundedPanel34Layout = new javax.swing.GroupLayout(roundedPanel34);
-        roundedPanel34.setLayout(roundedPanel34Layout);
-        roundedPanel34Layout.setHorizontalGroup(
-            roundedPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel34Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel49, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel34Layout.setVerticalGroup(
-            roundedPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel34Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel49)
-                .addContainerGap())
-        );
-
-        roundedPanel35.setCornerRadius(5);
-        roundedPanel35.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel50.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel50.setText("no");
-
-        javax.swing.GroupLayout roundedPanel35Layout = new javax.swing.GroupLayout(roundedPanel35);
-        roundedPanel35.setLayout(roundedPanel35Layout);
-        roundedPanel35Layout.setHorizontalGroup(
-            roundedPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel35Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel50, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel35Layout.setVerticalGroup(
-            roundedPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel35Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel50)
-                .addContainerGap())
-        );
-
         jLabel69.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel69.setText("don't have enough money left over?");
+
+        q3a1.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q3a1.setText("yes");
+
+        q3a2.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q3a2.setText("no");
 
         javax.swing.GroupLayout roundedPanel33Layout = new javax.swing.GroupLayout(roundedPanel33);
         roundedPanel33.setLayout(roundedPanel33Layout);
@@ -698,12 +477,12 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addGroup(roundedPanel33Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(roundedPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(q3a2)
+                    .addComponent(q3a1)
                     .addComponent(jLabel69)
-                    .addComponent(roundedPanel34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel48)
-                    .addComponent(jLabel47)
-                    .addComponent(roundedPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(jLabel47))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         roundedPanel33Layout.setVerticalGroup(
             roundedPanel33Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -715,9 +494,9 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel69)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q3a1)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q3a2)
                 .addGap(20, 20, 20))
         );
 
@@ -745,27 +524,27 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addComponent(jLabel55, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        roundedPanel41.setCornerRadius(5);
-        roundedPanel41.setPanelColor(new java.awt.Color(15, 70, 154));
-        roundedPanel41.setPreferredSize(new java.awt.Dimension(78, 34));
-        roundedPanel41.setShadowBlurRadius(5);
+        btnNextQ3.setCornerRadius(5);
+        btnNextQ3.setPanelColor(new java.awt.Color(15, 70, 154));
+        btnNextQ3.setPreferredSize(new java.awt.Dimension(78, 34));
+        btnNextQ3.setShadowBlurRadius(5);
 
         jLabel56.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
         jLabel56.setForeground(new java.awt.Color(255, 255, 255));
         jLabel56.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel56.setText("Next");
 
-        javax.swing.GroupLayout roundedPanel41Layout = new javax.swing.GroupLayout(roundedPanel41);
-        roundedPanel41.setLayout(roundedPanel41Layout);
-        roundedPanel41Layout.setHorizontalGroup(
-            roundedPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel41Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnNextQ3Layout = new javax.swing.GroupLayout(btnNextQ3);
+        btnNextQ3.setLayout(btnNextQ3Layout);
+        btnNextQ3Layout.setHorizontalGroup(
+            btnNextQ3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNextQ3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        roundedPanel41Layout.setVerticalGroup(
-            roundedPanel41Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnNextQ3Layout.setVerticalGroup(
+            btnNextQ3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
@@ -781,9 +560,9 @@ public class GUIQuiz extends javax.swing.JFrame {
                     .addGroup(panelQuestion3Layout.createSequentialGroup()
                         .addComponent(roundedPanel40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
-                        .addComponent(roundedPanel41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnNextQ3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(roundedPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelQuestion3Layout.setVerticalGroup(
             panelQuestion3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -793,12 +572,12 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jLabel46)
                 .addGap(47, 47, 47)
-                .addComponent(roundedPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roundedPanel33, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addGroup(panelQuestion3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(roundedPanel40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(btnNextQ3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(426, 426, 426))
         );
 
         panelQuestion4.setBackground(new java.awt.Color(255, 255, 255));
@@ -816,148 +595,43 @@ public class GUIQuiz extends javax.swing.JFrame {
         roundedPanel42.setPreferredSize(new java.awt.Dimension(328, 350));
 
         jLabel59.setFont(new java.awt.Font("Inter 18pt Medium", 0, 10)); // NOI18N
-        jLabel59.setText("Question: 3/4");
+        jLabel59.setText("Question: 4/4");
 
         jLabel60.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel60.setText("What are you the top things you're saving?");
 
-        roundedPanel43.setCornerRadius(5);
-        roundedPanel43.setPreferredSize(new java.awt.Dimension(296, 36));
+        q4a1.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q4a1.setText("Unexpected expenses");
+        q4a1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q4a1ActionPerformed(evt);
+            }
+        });
 
-        jLabel61.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel61.setText("Travel & Experiences");
+        q4a2.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q4a2.setText("Impulse spending");
+        q4a2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q4a2ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout roundedPanel43Layout = new javax.swing.GroupLayout(roundedPanel43);
-        roundedPanel43.setLayout(roundedPanel43Layout);
-        roundedPanel43Layout.setHorizontalGroup(
-            roundedPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel43Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel61, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel43Layout.setVerticalGroup(
-            roundedPanel43Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel43Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel61)
-                .addContainerGap())
-        );
+        q4a3.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q4a3.setText("Not tracking my money");
 
-        roundedPanel44.setCornerRadius(5);
-        roundedPanel44.setPreferredSize(new java.awt.Dimension(296, 36));
+        q4a4.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q4a4.setText("High costs");
 
-        jLabel62.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel62.setText("Big Purchase");
+        q4a5.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q4a5.setText("Debt and bils");
 
-        javax.swing.GroupLayout roundedPanel44Layout = new javax.swing.GroupLayout(roundedPanel44);
-        roundedPanel44.setLayout(roundedPanel44Layout);
-        roundedPanel44Layout.setHorizontalGroup(
-            roundedPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel44Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel62, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel44Layout.setVerticalGroup(
-            roundedPanel44Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel44Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel62)
-                .addContainerGap())
-        );
-
-        roundedPanel45.setCornerRadius(5);
-        roundedPanel45.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel63.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel63.setText("Emergency Fund");
-
-        javax.swing.GroupLayout roundedPanel45Layout = new javax.swing.GroupLayout(roundedPanel45);
-        roundedPanel45.setLayout(roundedPanel45Layout);
-        roundedPanel45Layout.setHorizontalGroup(
-            roundedPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel45Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel63, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel45Layout.setVerticalGroup(
-            roundedPanel45Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel45Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel63)
-                .addContainerGap())
-        );
-
-        roundedPanel46.setCornerRadius(5);
-        roundedPanel46.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel64.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel64.setText("Home");
-
-        javax.swing.GroupLayout roundedPanel46Layout = new javax.swing.GroupLayout(roundedPanel46);
-        roundedPanel46.setLayout(roundedPanel46Layout);
-        roundedPanel46Layout.setHorizontalGroup(
-            roundedPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel46Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel64, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel46Layout.setVerticalGroup(
-            roundedPanel46Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel46Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel64)
-                .addContainerGap())
-        );
-
-        roundedPanel47.setCornerRadius(5);
-        roundedPanel47.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel65.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel65.setText("Family & Life Events");
-
-        javax.swing.GroupLayout roundedPanel47Layout = new javax.swing.GroupLayout(roundedPanel47);
-        roundedPanel47.setLayout(roundedPanel47Layout);
-        roundedPanel47Layout.setHorizontalGroup(
-            roundedPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel47Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel65, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel47Layout.setVerticalGroup(
-            roundedPanel47Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel47Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel65)
-                .addContainerGap())
-        );
-
-        roundedPanel48.setCornerRadius(5);
-        roundedPanel48.setPreferredSize(new java.awt.Dimension(296, 36));
-
-        jLabel66.setFont(new java.awt.Font("Inter 18pt Medium", 0, 12)); // NOI18N
-        jLabel66.setText("Retirement");
-
-        javax.swing.GroupLayout roundedPanel48Layout = new javax.swing.GroupLayout(roundedPanel48);
-        roundedPanel48.setLayout(roundedPanel48Layout);
-        roundedPanel48Layout.setHorizontalGroup(
-            roundedPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundedPanel48Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel66, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        roundedPanel48Layout.setVerticalGroup(
-            roundedPanel48Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel48Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel66)
-                .addContainerGap())
-        );
+        q4a6.setFont(new java.awt.Font("Inter 18pt", 0, 12)); // NOI18N
+        q4a6.setText("Lack of financial planning");
+        q4a6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                q4a6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel42Layout = new javax.swing.GroupLayout(roundedPanel42);
         roundedPanel42.setLayout(roundedPanel42Layout);
@@ -966,15 +640,15 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addGroup(roundedPanel42Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(roundedPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(roundedPanel43, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(q4a1)
+                    .addComponent(q4a2)
+                    .addComponent(q4a4)
+                    .addComponent(q4a3)
                     .addComponent(jLabel60)
                     .addComponent(jLabel59)
-                    .addComponent(roundedPanel44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel46, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel47, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel48, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(q4a6)
+                    .addComponent(q4a5))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         roundedPanel42Layout.setVerticalGroup(
             roundedPanel42Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -984,17 +658,17 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel60)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel43, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q4a1)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q4a2)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel46, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q4a3)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel45, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q4a4)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel48, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q4a5)
                 .addGap(20, 20, 20)
-                .addComponent(roundedPanel47, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(q4a6)
                 .addGap(20, 20, 20))
         );
 
@@ -1022,27 +696,27 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addComponent(jLabel67, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
-        roundedPanel50.setCornerRadius(5);
-        roundedPanel50.setPanelColor(new java.awt.Color(15, 70, 154));
-        roundedPanel50.setPreferredSize(new java.awt.Dimension(78, 34));
-        roundedPanel50.setShadowBlurRadius(5);
+        btnNextQ4.setCornerRadius(5);
+        btnNextQ4.setPanelColor(new java.awt.Color(15, 70, 154));
+        btnNextQ4.setPreferredSize(new java.awt.Dimension(78, 34));
+        btnNextQ4.setShadowBlurRadius(5);
 
         jLabel68.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
         jLabel68.setForeground(new java.awt.Color(255, 255, 255));
         jLabel68.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel68.setText("Next");
 
-        javax.swing.GroupLayout roundedPanel50Layout = new javax.swing.GroupLayout(roundedPanel50);
-        roundedPanel50.setLayout(roundedPanel50Layout);
-        roundedPanel50Layout.setHorizontalGroup(
-            roundedPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel50Layout.createSequentialGroup()
+        javax.swing.GroupLayout btnNextQ4Layout = new javax.swing.GroupLayout(btnNextQ4);
+        btnNextQ4.setLayout(btnNextQ4Layout);
+        btnNextQ4Layout.setHorizontalGroup(
+            btnNextQ4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNextQ4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel68, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        roundedPanel50Layout.setVerticalGroup(
-            roundedPanel50Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnNextQ4Layout.setVerticalGroup(
+            btnNextQ4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel68, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
         );
 
@@ -1058,9 +732,9 @@ public class GUIQuiz extends javax.swing.JFrame {
                     .addGroup(panelQuestion4Layout.createSequentialGroup()
                         .addComponent(roundedPanel49, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
-                        .addComponent(roundedPanel50, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnNextQ4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(roundedPanel42, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelQuestion4Layout.setVerticalGroup(
             panelQuestion4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1070,12 +744,12 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jLabel58)
                 .addGap(47, 47, 47)
-                .addComponent(roundedPanel42, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(roundedPanel42, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addGroup(panelQuestion4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(roundedPanel49, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(roundedPanel50, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(btnNextQ4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(226, 226, 226))
         );
 
         panelQuestionFinal.setBackground(new java.awt.Color(255, 255, 255));
@@ -1157,7 +831,7 @@ public class GUIQuiz extends javax.swing.JFrame {
             .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuestionFinalLayout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelQuestionFinalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelQuestionFinalLayout.createSequentialGroup()
                         .addComponent(roundedPanel36, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1180,22 +854,22 @@ public class GUIQuiz extends javax.swing.JFrame {
                 .addGap(40, 40, 40))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelQuestion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelQuestion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelQuestion3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelQuestion4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelQuestionFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelQuestion2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelQuestion3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelQuestion4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelQuestionFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelQuestion1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(panelQuestion1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelQuestion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1212,17 +886,64 @@ public class GUIQuiz extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void q1a2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q1a2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q1a2ActionPerformed
+
+    private void q2a1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q2a1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q2a1ActionPerformed
+
+    private void q2a2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q2a2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q2a2ActionPerformed
+
+    private void q2a3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q2a3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q2a3ActionPerformed
+
+    private void q2a5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q2a5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q2a5ActionPerformed
+
+    private void q2a4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q2a4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q2a4ActionPerformed
+
+    private void q2a6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q2a6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q2a6ActionPerformed
+
+    private void q4a2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q4a2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q4a2ActionPerformed
+
+    private void q4a6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q4a6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q4a6ActionPerformed
+
+    private void q4a1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_q4a1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_q4a1ActionPerformed
+
+    private void btnNextQ1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNextQ1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNextQ1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1250,16 +971,15 @@ public class GUIQuiz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel btnNextQ1;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel btnNextQ2;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel btnNextQ3;
+    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel btnNextQ4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -1270,71 +990,52 @@ public class GUIQuiz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
-    private javax.swing.JLabel jLabel61;
-    private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel63;
-    private javax.swing.JLabel jLabel64;
-    private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel69;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel panelQuestion1;
     private javax.swing.JPanel panelQuestion2;
     private javax.swing.JPanel panelQuestion3;
     private javax.swing.JPanel panelQuestion4;
     private javax.swing.JPanel panelQuestionFinal;
+    private javax.swing.JRadioButton q1a1;
+    private javax.swing.JRadioButton q1a2;
+    private javax.swing.JRadioButton q1a3;
+    private javax.swing.JRadioButton q1a4;
+    private javax.swing.JCheckBox q2a1;
+    private javax.swing.JCheckBox q2a2;
+    private javax.swing.JCheckBox q2a3;
+    private javax.swing.JCheckBox q2a4;
+    private javax.swing.JCheckBox q2a5;
+    private javax.swing.JCheckBox q2a6;
+    private javax.swing.JRadioButton q3a1;
+    private javax.swing.JRadioButton q3a2;
+    private javax.swing.JRadioButton q4a1;
+    private javax.swing.JRadioButton q4a2;
+    private javax.swing.JRadioButton q4a3;
+    private javax.swing.JRadioButton q4a4;
+    private javax.swing.JRadioButton q4a5;
+    private javax.swing.JRadioButton q4a6;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel1;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel10;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel11;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel12;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel13;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel14;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel15;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel2;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel3;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel31;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel32;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel33;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel34;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel35;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel36;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel4;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel40;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel41;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel42;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel43;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel44;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel45;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel46;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel47;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel48;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel49;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel5;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel50;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel6;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel7;
     private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel8;
-    private com.mycompany.cs318_finalproject_buynevercry.RoundedPanel roundedPanel9;
     // End of variables declaration//GEN-END:variables
 }
