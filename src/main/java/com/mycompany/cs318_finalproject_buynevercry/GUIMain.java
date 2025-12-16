@@ -54,7 +54,6 @@ public class GUIMain extends javax.swing.JFrame {
         initProgressDB();
         FlatLightLaf.setup();
        
-        btnAnalytics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnCreateGoal1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnShuffle.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnArchive.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -427,7 +426,6 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        btnAnalytics = new javax.swing.JLabel();
         jLabel61 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         roundedPanel5 = new com.mycompany.cs318_finalproject_buynevercry.RoundedPanel();
@@ -712,7 +710,7 @@ public class GUIMain extends javax.swing.JFrame {
         jLabel16.setText("Hey");
 
         jLabel17.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        jLabel17.setText("Answer 4 simple questions and we’ll show you if your lifestyle is sustainable… or just living in denial.");
+        jLabel17.setText("You're 60% there! Keep going!");
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/waving-hand-sign_1f44b.png"))); // NOI18N
 
@@ -721,15 +719,6 @@ public class GUIMain extends javax.swing.JFrame {
 
         jLabel23.setFont(new java.awt.Font("Inter 18pt SemiBold", 0, 16)); // NOI18N
         jLabel23.setText(",");
-
-        btnAnalytics.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        btnAnalytics.setForeground(new java.awt.Color(59, 118, 228));
-        btnAnalytics.setText("View Analytics");
-        btnAnalytics.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAnalyticsMouseClicked(evt);
-            }
-        });
 
         jLabel61.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/banklocker.png"))); // NOI18N
 
@@ -751,9 +740,7 @@ public class GUIMain extends javax.swing.JFrame {
                         .addComponent(jLabel18)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(jLabel61)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAnalytics)
-                .addGap(54, 54, 54))
+                .addGap(162, 162, 162))
         );
         roundedPanel4Layout.setVerticalGroup(
             roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -769,9 +756,7 @@ public class GUIMain extends javax.swing.JFrame {
                 .addComponent(jLabel17)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(roundedPanel4Layout.createSequentialGroup()
-                .addGroup(roundedPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel61, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAnalytics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel61)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1552,12 +1537,6 @@ public class GUIMain extends javax.swing.JFrame {
         history.setVisible(true);
     }//GEN-LAST:event_btnCreateGoal1MouseClicked
 
-    private void btnAnalyticsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnalyticsMouseClicked
-        // TODO add your handling code here:
-        GUIQuiz quiz = new GUIQuiz();
-        quiz.setVisible(true);
-    }//GEN-LAST:event_btnAnalyticsMouseClicked
-
     private void jLabel53MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel53MouseClicked
         shuffleMoney();
         JOptionPane.showMessageDialog(this, "New Envelope Generated!");
@@ -1593,7 +1572,6 @@ public class GUIMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnAnalytics;
     private javax.swing.JPanel btnArchive;
     private javax.swing.JPanel btnContactSupport;
     private javax.swing.JPanel btnCreateGoal;
