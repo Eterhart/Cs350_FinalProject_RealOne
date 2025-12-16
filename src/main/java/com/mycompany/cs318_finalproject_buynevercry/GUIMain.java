@@ -148,7 +148,6 @@ public class GUIMain extends javax.swing.JFrame {
     public void shuffleMoney() {
         String url = "jdbc:sqlite:buynevercry.db";
         
-        // 1. เช็คเลขซ้ำ (เหมือนเดิม)
         java.util.HashSet<Integer> usedNumbers = new java.util.HashSet<>();
         try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement("SELECT envelope_number FROM active_envelopes WHERE email = ?")) {
@@ -164,7 +163,6 @@ public class GUIMain extends javax.swing.JFrame {
             return; 
         }
 
-        // 2. สุ่มเลขใหม่
         int newRandom;
         do {
             newRandom = (int) (Math.random() * 100) + 1;
@@ -175,17 +173,12 @@ public class GUIMain extends javax.swing.JFrame {
         
         System.out.println("Shuffled (Pending): " + this.currentRandomAmount);
         
-        // 3. บันทึกสถานะ "ชั่วคราว" ลง user_progress (เพื่อให้เปิดซองแล้วเจอเลขนี้)
-        // แต่ ***ยังไม่เพิ่ม*** ลง active_envelopes
         updateProgressToDB(this.currentRandomAmount);
 
-        // 4. อัปเดตหน้าซอง (ให้เห็นเลข)
         if (envelopeWindow != null && envelopeWindow.isDisplayable()) {
             envelopeWindow.updateDisplay();
         }
         
-        // หมายเหตุ: ไม่ต้องเรียก updateEnvelopeStats() ตรงนี้ 
-        // เพราะ Stats ต้องไม่เปลี่ยนจนกว่าจะกด Save
     }
     public int getCurrentRandomAmount() {
         return currentRandomAmount;
@@ -198,31 +191,26 @@ public class GUIMain extends javax.swing.JFrame {
             this.savedCount++;
             this.isCurrentRoundSaved = true;
             
-            // 1. บันทึกเลขนี้ลง active_envelopes (ยืนยันการเก็บเงิน)
             String url = "jdbc:sqlite:buynevercry.db";
             String sqlInsert = "INSERT OR IGNORE INTO active_envelopes (email, envelope_number) VALUES (?, ?)";
             try (Connection conn = DriverManager.getConnection(url);
                  PreparedStatement pstmt = conn.prepareStatement(sqlInsert)) {
                 
                 pstmt.setString(1, userEmail);
-                pstmt.setInt(2, this.currentRandomAmount); // เอาเลขที่สุ่มได้มาบันทึก
+                pstmt.setInt(2, this.currentRandomAmount);
                 pstmt.executeUpdate();
                 
             } catch (SQLException e) {
                 System.out.println("Save Active Error: " + e.getMessage());
             }
 
-            // 2. เคลียร์สถานะชั่วคราวเป็น 0 (จบเทิร์น)
             updateProgressToDB(0); 
             this.currentRandomAmount = 0; 
             
             jLabel55.setText(savedCount + "/100 Envelopes");
             
-            // 3. *** สั่งอัปเดต Dashboard ทันที ***
-            // ค่า moneysavelabel1, jLabel47, 48, 49 จะเปลี่ยนตอนนี้แหละ
             updateEnvelopeStats(); 
             
-            // 4. อัปเดตหน้าตารางซอง (ให้เป็นสีฟ้า)
             if (progressWindow != null && progressWindow.isDisplayable()) {
                 progressWindow.loadAndShowData();
             }
@@ -434,10 +422,9 @@ public class GUIMain extends javax.swing.JFrame {
             System.out.println("Dashboard Error: " + e.getMessage());
         }
     }
-    // ฟังก์ชันอัปเดตสถานะ Envelope Challenge
     public void updateEnvelopeStats() {
         String url = "jdbc:sqlite:buynevercry.db";
-        final double TARGET_AMOUNT = 5050.0; // เป้าหมาย 5050
+        final double TARGET_AMOUNT = 5050.0;
         final int TOTAL_ENVELOPES = 100;
 
         double totalSaved = 0;
@@ -448,7 +435,6 @@ public class GUIMain extends javax.swing.JFrame {
 
         try (Connection conn = DriverManager.getConnection(url)) {
             
-            // 1. ดึงข้อมูลยอดเงินรวม (Sum) และจำนวนซอง (Count)
             String sqlEnv = "SELECT SUM(envelope_number) as total_val, COUNT(*) as count_val FROM active_envelopes WHERE email = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sqlEnv)) {
                 pstmt.setString(1, userEmail);
@@ -459,7 +445,6 @@ public class GUIMain extends javax.swing.JFrame {
                 }
             }
 
-            // 2. ดึงข้อมูลเงินเดือน
             String sqlSalary = "SELECT salary, days_per_week, hours_per_day FROM user_settings WHERE email = ?";
             try (PreparedStatement pstmt = conn.prepareStatement(sqlSalary)) {
                 pstmt.setString(1, userEmail);
@@ -471,21 +456,16 @@ public class GUIMain extends javax.swing.JFrame {
                 }
             }
 
-            // --- คำนวณและแสดงผล ---
 
-            // A. Moneysavelabel1 (ยอดที่เก็บได้จริง)
             moneysavelabel1.setText(String.format("%.0f", totalSaved));
 
-            // B. jLabel48 (ขาดอีกเท่าไหร่ถึง 5050)
             double remainingMoney = TARGET_AMOUNT - totalSaved;
             if (remainingMoney < 0) remainingMoney = 0;
             jLabel48.setText(String.format("%.0f", remainingMoney));
 
-            // C. jLabel49 (เหลืออีกกี่ซอง)
             int remainingEnvelopes = TOTAL_ENVELOPES - openCount;
             jLabel49.setText(String.valueOf(remainingEnvelopes));
 
-            // D. jLabel47 (ประหยัดเวลาทำงานไปกี่นาที)
             double moneyPerMinute = 0;
             double totalMinutesWork = 52 * workDays * workHours * 60;
             if (totalMinutesWork > 0) {
@@ -497,7 +477,6 @@ public class GUIMain extends javax.swing.JFrame {
                 timeSavedMinutes = totalSaved / moneyPerMinute;
             }
 
-            // แสดงผลเวลา (hr/min)
             int hrs = (int) timeSavedMinutes / 60;
             int mins = (int) timeSavedMinutes % 60;
             if (hrs > 0) {
@@ -506,11 +485,8 @@ public class GUIMain extends javax.swing.JFrame {
                 jLabel47.setText(String.format("%d min", mins));
             }
 
-            // E. ProgressBar & Percentage (ส่วนที่แก้ไข Logic)
-            // คำนวณ % จากยอดเงินเทียบกับ 5050
             double progressPercentage = (totalSaved / TARGET_AMOUNT) * 100;
             
-            // จำกัดไม่ให้เกิน 100% (เผื่อ error)
             if (progressPercentage > 100) progressPercentage = 100;
             
             int progressInt = (int) progressPercentage;
@@ -518,7 +494,6 @@ public class GUIMain extends javax.swing.JFrame {
             jProgressBar1.setMaximum(100);
             jProgressBar1.setValue(progressInt);
             
-            // แสดงตัวเลขเปอร์เซ็นต์
             jLabel46.setText(progressInt + "%");
             jLabel17.setText("You're "+progressInt + "% there! Keep going!");
 

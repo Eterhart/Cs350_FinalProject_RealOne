@@ -85,7 +85,7 @@ public class GUIGoalCreate extends javax.swing.JFrame {
         System.out.println("Error loading currency: " + e.getMessage());
     }
 
-    return "$"; // default
+    return "$"; 
 }
 
     private void calculateAndShowData() {
