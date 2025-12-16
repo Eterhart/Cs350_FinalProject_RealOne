@@ -17,6 +17,9 @@ import java.sql.*;
 
 public class GUIMain extends javax.swing.JFrame {
     
+    private GUISetting settingWindow;
+    private GUIEnvelope envelopeWindow;
+    
     private String userEmail;
     private GUIEnvelope currentEnvelope;
     
@@ -1181,15 +1184,26 @@ public class GUIMain extends javax.swing.JFrame {
 
     private void btnSettingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSettingMouseClicked
         // TODO add your handling code here:
-        GUISetting setting = new GUISetting(userEmail,this);
-        setting.setVisible(true);
-        
+        if (settingWindow == null || !settingWindow.isDisplayable()) {
+            settingWindow = new GUISetting(userEmail,this);
+            settingWindow.setVisible(true);
+        } else {
+            settingWindow.setVisible(true);
+            settingWindow.toFront();
+            settingWindow.requestFocus();
+        }
     }//GEN-LAST:event_btnSettingMouseClicked
 
     private void btnEnvelopeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEnvelopeMouseClicked
         // TODO add your handling code here:
-        GUIEnvelope envelope = new GUIEnvelope(userEmail);
-        envelope.setVisible(true);
+        if (envelopeWindow == null || !envelopeWindow.isDisplayable()) {
+            envelopeWindow = new GUIEnvelope();
+            envelopeWindow.setVisible(true);
+        } else {
+            envelopeWindow.setVisible(true);
+            envelopeWindow.toFront();
+            envelopeWindow.requestFocus();
+        }
     }//GEN-LAST:event_btnEnvelopeMouseClicked
 
     private void btnContactSupportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnContactSupportMouseClicked

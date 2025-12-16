@@ -16,6 +16,9 @@ import javax.swing.JOptionPane;
  */
 public class GUILogin extends javax.swing.JFrame {
     
+    private GUICreateAccount createAccountWindow;
+    private GUIForgotPassword forgotPasswordWindow;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUILogin.class.getName());
 
     /**
@@ -407,18 +410,29 @@ public class GUILogin extends javax.swing.JFrame {
     private void forgotpwbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotpwbtnMouseClicked
         // TODO add your handling code here:
         
+        if (forgotPasswordWindow == null || !forgotPasswordWindow.isDisplayable()) {
+        
         getContentPane().setBackground(new Color(255, 255, 255));
-
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
-        GUIForgotPassword uiresetpass = new GUIForgotPassword();
-        uiresetpass.setVisible(true);
+        
+        forgotPasswordWindow = new GUIForgotPassword();
+        forgotPasswordWindow.setVisible(true);
+    } else {
+        forgotPasswordWindow.setVisible(true);
+        forgotPasswordWindow.toFront();
+    }
     }//GEN-LAST:event_forgotpwbtnMouseClicked
 
     private void btnSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignupMouseClicked
         // TODO add your handling code here:
-        GUICreateAccount create = new GUICreateAccount();
-        create.setVisible(true);
+        if (createAccountWindow == null || !createAccountWindow.isDisplayable()) {
+        createAccountWindow = new GUICreateAccount();
+        createAccountWindow.setVisible(true);
+    } else {
+        createAccountWindow.setVisible(true);
+        createAccountWindow.toFront();
+    }
     }//GEN-LAST:event_btnSignupMouseClicked
 
     /**
