@@ -5,11 +5,13 @@
 package com.mycompany.cs318_finalproject_buynevercry;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import javax.swing.*;
 import java.sql.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -30,6 +32,7 @@ public class GUIGoalHistory extends javax.swing.JFrame {
         this.userEmail = email;
         
         initComponents();
+        historyTable.setRowHeight(44);
         getContentPane().setBackground(new Color(255, 255, 255));
         Image icon = new ImageIcon(getClass().getResource("/images/appicon_normal.png")).getImage();
         setIconImage(icon);
@@ -79,6 +82,30 @@ public class GUIGoalHistory extends javax.swing.JFrame {
     public GUIGoalHistory() {
         initComponents();
     }
+    
+    DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer() {
+    @Override
+    public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected,
+            boolean hasFocus, int row, int column) {
+
+        JLabel label = (JLabel) super.getTableCellRendererComponent(
+                table, value, isSelected, hasFocus, row, column);
+
+        label.setBackground(Color.decode("#FCFCFD"));
+        label.setForeground(Color.BLACK);
+        label.setOpaque(true);
+
+        // ระยะห่าง + เส้นล่าง
+        label.setBorder(BorderFactory.createMatteBorder(
+                0, 0, 1, 0, Color.decode("#EAECF0")
+        ));
+
+        label.setHorizontalAlignment(JLabel.CENTER);
+        return label;
+    }
+};
+
     private void loadHistoryData() {
         String[] columnNames = {"Date/Time", "Price", "Work Time", "Decision"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
@@ -111,6 +138,8 @@ public class GUIGoalHistory extends javax.swing.JFrame {
             }
             
             historyTable.setModel(model);
+            
+            for (int i = 0; i < historyTable.getColumnCount(); i++) { historyTable.getColumnModel().getColumn(i).setCellRenderer(cellRenderer); }
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -242,7 +271,8 @@ public class GUIGoalHistory extends javax.swing.JFrame {
             }
         ));
         historyTable.setGridColor(new java.awt.Color(234, 236, 240));
-        historyTable.setSelectionBackground(new java.awt.Color(252, 252, 253));
+        historyTable.setSelectionBackground(new java.awt.Color(0, 0, 0));
+        historyTable.setShowGrid(true);
         jScrollPane1.setViewportView(historyTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
