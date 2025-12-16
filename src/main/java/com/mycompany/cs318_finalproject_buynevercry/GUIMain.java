@@ -379,6 +379,7 @@ public class GUIMain extends javax.swing.JFrame {
                                         "PRIMARY KEY (email, envelope_number)" + 
                                         ");";
             stmt.execute(createActiveEnvSQL);
+            
 
         } catch (SQLException e) {
             System.out.println("Init DB Error: " + e.getMessage());
@@ -1064,7 +1065,7 @@ public class GUIMain extends javax.swing.JFrame {
         roundedPanel8.setPreferredSize(new java.awt.Dimension(350, 325));
 
         jLabel38.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
-        jLabel38.setText("$");
+        jLabel38.setText("฿");
 
         moneysavelabel2.setFont(new java.awt.Font("Inter 18pt Medium", 0, 18)); // NOI18N
         moneysavelabel2.setText("5,050");
@@ -1141,7 +1142,7 @@ public class GUIMain extends javax.swing.JFrame {
 
         jLabel66.setFont(new java.awt.Font("Inter 18pt Medium", 0, 14)); // NOI18N
         jLabel66.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel66.setText("$");
+        jLabel66.setText("฿");
 
         javax.swing.GroupLayout roundedPanel8Layout = new javax.swing.GroupLayout(roundedPanel8);
         roundedPanel8.setLayout(roundedPanel8Layout);

@@ -261,7 +261,7 @@ public class GUISetting extends javax.swing.JFrame {
         });
 
         currentcylabel.setFont(new java.awt.Font("Inter 18pt", 0, 14)); // NOI18N
-        currentcylabel.setText("$");
+        currentcylabel.setText("฿");
 
         javax.swing.GroupLayout roundedPanel3Layout = new javax.swing.GroupLayout(roundedPanel3);
         roundedPanel3.setLayout(roundedPanel3Layout);
@@ -478,6 +478,11 @@ public class GUISetting extends javax.swing.JFrame {
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "THB (฿)", "USD ($)", "EUR (€)", "JPY (¥)", "GBP (£)", "CNY (¥)" }));
         jComboBox3.setBorder(null);
         jComboBox3.setPreferredSize(new java.awt.Dimension(304, 41));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel5Layout = new javax.swing.GroupLayout(roundedPanel5);
         roundedPanel5.setLayout(roundedPanel5Layout);
@@ -550,6 +555,10 @@ public class GUISetting extends javax.swing.JFrame {
     private void jTextFieldInvestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInvestActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldInvestActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

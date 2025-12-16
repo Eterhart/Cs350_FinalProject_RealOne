@@ -1133,7 +1133,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Inter 18pt Medium" size="18" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="$"/>
+                    <Property name="text" type="java.lang.String" value="&#xe3f;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="moneysavelabel2">
@@ -1320,7 +1320,7 @@
                       <Font name="Inter 18pt Medium" size="14" style="0"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="$"/>
+                    <Property name="text" type="java.lang.String" value="&#xe3f;"/>
                   </Properties>
                 </Component>
               </SubComponents>

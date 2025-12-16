@@ -131,7 +131,7 @@ public class GUIEnvelope extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Inter 24pt ExtraBold", 0, 40)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(238, 53, 114));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("$");
+        jLabel3.setText("฿");
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(125, 120, 120)));

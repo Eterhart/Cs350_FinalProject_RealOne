@@ -447,7 +447,7 @@ public class GUICreateAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_salarytxtActionPerformed
 
     private void signinbtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signinbtnMouseClicked
-String username = usertxt.getText();
+        String username = usertxt.getText();
         String email = emailtxt.getText();
         String password = new String(pwdtxt.getPassword());
         
@@ -488,8 +488,10 @@ String username = usertxt.getText();
             pst.setString(2, email);
             pst.setString(3, password);
             
+            double salary = 0;
+            
             try {
-                double salary = Double.parseDouble(salaryStr);
+                salary = Double.parseDouble(salaryStr);
                 pst.setDouble(4, salary);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Yearly Salary must be a valid number.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
@@ -497,10 +499,25 @@ String username = usertxt.getText();
             }
 
             int row = pst.executeUpdate();
+
             if (row > 0) {
+                String sqlSettings = "INSERT INTO user_settings " +
+                                     "(email, salary, days_per_week, hours_per_day, investment_return, currency) " +
+                                     "VALUES (?, ?, 5, 8, 5.0, 'THB (฿)')";
+
+                try (PreparedStatement pstSet = con.prepareStatement(sqlSettings)) {
+                    pstSet.setString(1, email);
+                    pstSet.setDouble(2, salary);
+                    pstSet.executeUpdate();
+                } catch (SQLException ex) {
+                    System.out.println("Init Settings Error: " + ex.getMessage());
+                }
+                // ---------------------------------------------
+
                 JOptionPane.showMessageDialog(this, "Account Created Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }
+            
 
         } catch (Exception e) {
             if (e.getMessage().contains("UNIQUE constraint failed")) {
